@@ -1,63 +1,68 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import Styled from "styled-components";
-import { nominalTypeHack } from "prop-types";
+import Login from './Login';
 
-const SignupButton = Styled.button`
-display:flex;
-margin: auto;
-`;
-
-const LoginButton = Styled.button`
-display:flex;
-margin: auto;
-`;
-
-const UserInput = Styled.input`
-display:flex
-`;
-const PasswordInput = Styled.input`
-display:flex
-`;
 
 export default function Home() {
   return (
     <div>
-      <img
-        className="navbar-logo"
-        alt="Hair Care logo"
-        src="https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg"
-      />
-
-      <h3>Login</h3>
-
-      <div>
-        <label id="Username">
-          {"Username"}
-
-          <UserInput
-            id="Username"
-            type="text"
-            placeholder="Username"
-            className="home-username-input"
-          />
-        </label>
-      </div>
-      <label id="Password">
-        {"Password"}
-        <PasswordInput
-          id="Password"
-          type="Password"
-          placeholder="Password"
-          className="home-password-input"
-        />
-      </label>
-      <NavLink to="/dash" className="login-btn" >
-        <LoginButton>Login</LoginButton>
-      </NavLink>
-      <NavLink to="/sign-up" className="sign-up-btn">
-        <SignupButton>Sign Up</SignupButton>
-      </NavLink>
+      <Body>
+        <Section1>
+          <img src='https://images.unsplash.com/photo-1497433550656-7fb185be365e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9' alt='curly blonde hair and green leaves'/>
+          <h2>StylistFind</h2>
+        </Section1>
+        <Section2>
+          <div>
+            <Login/>
+            <Login/>
+          </div>
+        </Section2>
+      
+     </Body>
     </div>
   );
 }
+
+
+const Body = Styled.section`
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  dislay: flex;
+  flex-direction: column;
+  align-content: space-between;
+`;
+
+const Section1 = Styled.section`
+  height: 60vh;
+  width: 100vw;
+  img{
+    object-fit: cover;
+    position: relative;
+    // left: 0;
+    height: 100%;
+    width: 100vw
+  }
+  h2{
+    z-index: 5;
+    position: absolute;
+    left: 50px;
+    top: 150px;
+    font-size: 3.5rem;
+    background: #ffffffc0;
+    padding: 5px;
+  }
+`;
+
+const Section2 = Styled.section`
+  margin: 20px auto;
+  align-items: center;
+  div{
+    display: flex;
+    width: 90%;
+    justify-content: space-evenly;
+  }
+`;
+
+

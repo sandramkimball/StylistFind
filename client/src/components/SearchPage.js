@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import SearchCard from './SearchCard';
 import styled from 'styled-components';
-import {stylists, users} from '../data';
+import { axiosWithAuth } from './utilis/axiosWithAuth';
 
 
 function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState(stylists, users);
+    // const [searchResults, setSearchResults] = useState(stylists, users);
 
     
-    useEffect(()=> {
-        const results = stylists.filter(item=> item.city.toLowerCase().includes(searchTerm.toLowerCase()));
-        setSearchResults(results);
-    }, [searchTerm])
+    // useEffect(()=> {
+    //     axiosWithAuth()
+    //     .get()
+    //     const results = stylists.filter(item=> item.city.toLowerCase().includes(searchTerm.toLowerCase()));
+    //     setSearchResults(results);
+    // }, [searchTerm])
 
     const handleChange = e => {
         e.preventDefault();
@@ -38,13 +40,13 @@ function SearchPage() {
                 </form>
             </SearchBar>
 
-            <SearchContainer>
+            {/* <SearchContainer>
                 <div className='search-results'>
                         {searchResults.map(stylist=> (
                             <SearchCard key={stylist.id} stylist={stylist}/>
                         ))}
                 </div>
-            </SearchContainer>
+            </SearchContainer> */}
         </div>
     )
 }

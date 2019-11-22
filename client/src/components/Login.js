@@ -8,7 +8,7 @@ import { useUserContext } from './contexts/UserContext';
 import { useDataContext } from './contexts/DataContext';
 import PrivateRoute from './PrivateRoute';
 import {axiosWithAuth} from './utilis/axiosWithAuth';
-import {users, stylists} from '../data';
+// import {users, stylists} from '../data';
 
 
 
@@ -111,18 +111,19 @@ class Login extends React.Component {
         //   }
         return (
             <LoginPage>
-                <img src='https://images.unsplash.com/photo-1497433550656-7fb185be365e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9' alt='curly blonde hair and green leaves'/>
 
                 <LoginForm onSubmit={this.handleSubmit}>
-                    <h3>Welcome Back</h3>
+                    <h3>Login</h3>
                     <input type='text' name='username' value={this.state.credentials.username} 
                     placeholder="username" onChange={this.handleChange}/>
 
                     <input type='password' name='password' value={this.state.credentials.password} placeholder="password" onChange={this.handleChange}/>
 
-                    <button type='submit' onClick={this.login}>Login</button>
-                    <button type='submit' onClick={this.logout}>Logout</button>
-                    <NavLink to='/signup'><button>Signup</button></NavLink>
+                    <div>
+                        <button type='submit' onClick={this.login}>Login</button>
+                        <button type='submit' onClick={this.logout}>Logout</button>
+                        <NavLink to='/signup'><button>Signup</button></NavLink>
+                    </div>
                 </LoginForm>
 
             </LoginPage>
@@ -135,32 +136,31 @@ export default Login;
 
 
 const LoginPage = styled.div`
-    img{
-        height: 100vh;
-        width: 100vw;
-        object-fit: cover
-        position: fixed;
-        z-index: -1;
-        top: 0;
-        left: 0;
-    };
+    width: 50vh
 `;
 
 
 const LoginForm = styled.form`
     display:flex;
-    margin: 100px auto;
+    justify-content: center;
+    align-content: spece-evenly;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
     flex-direction: column;
     box-shadow: 1px 2px 4px #000;
     background: white;
     width: 350px;
+    height: 300px;
+    h3{margin: 0}
     input{
         width: 300px;
+        height: 25px;
         margin: 20px;
     }
     div{
-        display: flex;
-        justify-content: center
+        justify-content: space-evenly;
+        flex-direction: row
     }
     button{
         color: #000;

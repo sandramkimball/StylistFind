@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Form";
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 //COMPONENTS
 import { useUserContext } from './contexts/UserContext';
@@ -58,82 +57,11 @@ export default function SignUp(props) {
 
   return (
     <SignupPage>
-      <img alt='curly blonde hair and green leaves' src='https://images.unsplash.com/photo-1497433550656-7fb185be365e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9'/>
-      <SignupForm onSubmit={handleSubmit}>
       <h1>Sign Up</h1>
+      <img alt='curly blonde hair and green leaves' src='https://images.unsplash.com/photo-1497433550656-7fb185be365e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9'/>
+      <SignupForm >
 
-        <Form.Group controlId="formGroupEmail" className='input-grp'>
-          <Form.Control 
-          type="text" 
-          placeholder="Username"
-          id='username'
-          name='username'
-          placeholder='Username'
-          value={registrationInfo.username}
-          onChange={handleChange} />
-        </Form.Group>
-
-        <Form.Group controlId="formGroupEmail" className='input-grp'>
-          <Form.Control 
-            type="text" 
-            placeholder="Email"
-            id='email'
-            name='email'
-            value={registrationInfo.email} 
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formGroupPassword" className='input-grp'>
-          <Form.Control 
-            type="password" 
-            placeholder="Password" 
-            id='password'
-            name='password'
-            value={registrationInfo.password}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group /*as={Col}*/ controlId="formGridCity" className='input-grp'>
-          <Form.Control 
-            placeholder="City" 
-            type="text" 
-            id='city'
-            name='city'
-            value={registrationInfo.city}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        
-      <p>I am a Stylist</p>
-        <Form.Group controlId="formGroupUsertype" className='select-grp'>
-          <Form.Check 
-            type='checkbox'
-            value={registrationInfo.isStylist}
-            id='isStylist'
-            name='isStylist'
-            onChange={handleChange}
-          />         
-        </Form.Group>
-      {registrationInfo.isStylist && (
-        <Form.Group controlId="formGroupSalon" className='input-grp'>
-          <Form.Control 
-            type="text" 
-            placeholder="Salon Name" 
-            id='salon'
-            name='salon'
-            value={registrationInfo.salon}
-            onChange={handleChange}
-          />
-        </Form.Group>
-      )}
-
-        {user.error && <p>{user.error}</p>}
-        
-        <button type="submit">Submit</button>
-
-      </SignupForm>
+       </SignupForm> 
 
     </SignupPage>
   );
