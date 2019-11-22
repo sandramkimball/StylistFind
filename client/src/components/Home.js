@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import Styled from "styled-components";
-import Login from './Login';
+import Login from './Login'
+import SignUp from './SignUp';
 
 
 export default function Home() {
@@ -15,7 +16,9 @@ export default function Home() {
         <Section2>
           <div>
             <Login/>
-            <Login/>
+            <RegisterBtn>
+              <h3>Or Sign Up Here</h3>
+            </RegisterBtn>
           </div>
         </Section2>
       
@@ -62,6 +65,19 @@ const Section2 = Styled.section`
     display: flex;
     width: 90%;
     justify-content: space-evenly;
+  }
+`;
+
+const RegisterBtn = Styled.div`
+  width: 40vw;
+  align-items: center;
+  h3{
+    font-size: 3rem;
+    :hover{
+      transform: scale(1.1);
+      color: #80808095; 
+      cursor: pointer 
+    }
   }
 `;
 

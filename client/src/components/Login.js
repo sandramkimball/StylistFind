@@ -114,10 +114,21 @@ class Login extends React.Component {
 
                 <LoginForm onSubmit={this.handleSubmit}>
                     <h3>Login</h3>
-                    <input type='text' name='username' value={this.state.credentials.username} 
-                    placeholder="username" onChange={this.handleChange}/>
+                    <input 
+                        type='text' 
+                        name='username' 
+                        value={this.state.credentials.username} 
+                        placeholder="username" 
+                        onChange={this.handleChange}
+                    />
 
-                    <input type='password' name='password' value={this.state.credentials.password} placeholder="password" onChange={this.handleChange}/>
+                    <input 
+                        type='password' 
+                        name='password' 
+                        value={this.state.credentials.password} 
+                        placeholder="password" 
+                        onChange={this.handleChange}
+                    />
 
                     <div>
                         <button type='submit' onClick={this.login}>Login</button>
@@ -136,35 +147,40 @@ export default Login;
 
 
 const LoginPage = styled.div`
-    width: 50vh
+    width: 40vh;
+    height: 40vh;
+    align-items: center;
 `;
 
 
 const LoginForm = styled.form`
     display:flex;
     justify-content: center;
-    align-content: spece-evenly;
+    align-content: spece-between;
     align-items: center;
     margin: 0 auto;
     padding: 20px;
     flex-direction: column;
-    box-shadow: 1px 2px 4px #000;
+    box-shadow: 1px 2px 4px #80808095;
     background: white;
-    width: 350px;
-    height: 300px;
-    h3{margin: 0}
+    width: 60%;
+    height: 80%;
+    h3{margin: 0; font-size: 2rem}
     input{
-        width: 300px;
+        width: 90%;
         height: 25px;
         margin: 20px;
+        border:none;
+        border-bottom: 1px solid #80808095;
+        font-size: 1.25rem
     }
     div{
-        justify-content: space-evenly;
+        justify-content: space-between;
         flex-direction: row
     }
     button{
         color: #000;
-        font-size: 1rem;
+        font-size: 1.5rem;
         border: none;
         background: none;
         text-decoration: none;
