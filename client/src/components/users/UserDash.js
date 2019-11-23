@@ -13,19 +13,22 @@ export default function CustomerDash() {
     useEffect(()=>{
         axiosWithAuth()
         .get(`/api/users/${id}`)
-        .then(res=> { console.log(res.data);
+        .then(res=> { 
+            console.log(res.data);
             setCustomer(res.data)
         })
         .catch(err=>{console.log(err.response)});
     }, [])
 
     useEffect(()=> {
-        const customerId = (props.match.params.id);
-        const customerData = data.customer.find(el => el.id === customerId);
-        dispatchData({type: 'SET_CUSTOMER', payload: customerData})
+        const userId = (props.match.params.id);
+        const userData = data.users.find(el => el.id === userId);
+        dispatchData({type: 'SET_USER', payload: userData})
     }, [])
 
-    // {customer.usertype !=== 'user' || 'stylist'({ return <Redirect to='/login'></Redirect> })}
+    // if (customer.usertype !=== 'user' || 'stylist'){ 
+    //     return (<Redirect to='/login'></Redirect> )
+    // }
 
     return (
         <div>
@@ -33,11 +36,10 @@ export default function CustomerDash() {
         <section className = 'about-me'>
             <InfoBox>
                 <div>
-                    <img alt='stylist profile' src={customer.profile_img}/>
+                    <img alt='stylist profile' src={user.profile_img}/>
                 </div>
                 <div className='profile-text'>
-                    <h3>{customer.name}</h3>
-                    <p>{customer.city}</p>
+                    <h3>{user.name}</h3>
                     <NavLink to='edit-profile' className='edit-btn' >Edit</NavLink>
                 </div>
             </InfoBox>                
@@ -46,9 +48,9 @@ export default function CustomerDash() {
         <Saved>
             <h3>Your Saved Stylists</h3>
             <div>
-                {customer.saved_stylists.map(stylist=> (
+                {/* {customer.saved_stylists.map(stylist=> (
                 <SavedCard key={stylist.id} stylist={stylist}/>
-                ))}
+                ))} */}
             </div>
         </Saved>
         </div>

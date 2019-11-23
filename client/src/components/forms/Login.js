@@ -22,10 +22,16 @@ class Login extends React.Component {
     storage = props.match.headers.authorization;
 
     // useEffect(() => {
-    //     dispatchData({ type: 'IMPORT_USER_DATA', payload: testCustomers});
-    //     dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: testStylists});
-    //     dispatchData({ type: 'SET_STYLIST', payload: testStylists});
-    //     dispatchData({ type: 'SET_USER', payload: testCustomers});
+    //     const userId = (props.match.params.id);
+    //     const userData = data.users.find(el => el.id === userId);
+    //     const stylistData = data.stylists.find(el => el.id === userId);
+    //     if(userId.ussertype === 'user'){
+    //         dispatchData({ type: 'IMPORT_USER_DATA', payload: userData});
+    //         dispatchData({ type: 'SET_USER', payload: userData});
+    //     } else {
+    //         dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
+    //         dispatchData({ type: 'SET_STYLIST', payload: stylistData});
+    //     }       
     //   });
 
     handleChange = e =>{

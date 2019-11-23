@@ -6,47 +6,45 @@ import { axiosWithAuth } from '../utilis/axiosWithAuth';
 
 function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
-    // const [searchResults, setSearchResults] = useState(stylists, users);
+    const [searchResults, setSearchResults] = useState(stylists, users);
 
-    
-    // useEffect(()=> {
-    //     axiosWithAuth()
-    //     .get()
-    //     const results = stylists.filter(item=> item.city.toLowerCase().includes(searchTerm.toLowerCase()));
-    //     setSearchResults(results);
-    // }, [searchTerm])
+    //how to get from two apis? search location and name.
+    useEffect(()=> {
+        axiosWithAuth()
+        .get('/api/stylists') 
+        const results = stylists.filter(item=> item.city.toLowerCase().includes(searchTerm.toLowerCase()));
+        setSearchResults(results);
+    }, [searchTerm])
 
     const handleChange = e => {
         e.preventDefault();
         setSearchTerm(e.target.value)
     };
 
-    const handleSubmit = e => {
-        e.preventDefault();
-    }
+   
 
     return(
         <div>
             <SearchBar>
-                <h1>Now Viewing Stylists in {searchTerm}</h1>
-                <form onSubmit={handleSubmit}>
+                <h1>Find Stylists</h1>
+                <form onSubmit={handleChange}>
                     <input
-                    id='city'
+                    id='search_input'
                     type='text'
                     name='textfield'
-                    placeholder='Enter City'
+                    placeholder='Search'
                     value={searchTerm}
                     onChange={handleChange}/>
                 </form>
             </SearchBar>
 
-            {/* <SearchContainer>
+            <SearchContainer>
                 <div className='search-results'>
-                        {searchResults.map(stylist=> (
-                            <SearchCard key={stylist.id} stylist={stylist}/>
-                        ))}
+                    {searchResults.map(result=> (
+                        <SearchCard key={result.id} result={result}/>
+                    ))}
                 </div>
-            </SearchContainer> */}
+            </SearchContainer>
         </div>
     )
 }
