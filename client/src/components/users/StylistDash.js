@@ -21,13 +21,15 @@ export default function StylistDash(props) {
         setSavedStylist(e.target.value)
     }
 
-    const addStylist = savedStylist => {
-        // axiosWithAuth()
-        // .post(`/api/customer-dash`, savedStylist)
-        // .then(res=> {
-        //     localStorage.setItem('token', res.data.payload)
-        // })
-        // .catch(err=> console.log(err))
+    if(usertype === 'user'){
+        const addStylist = savedStylist => {
+            axiosWithAuth()
+            .post(`/api/user/${user.id}/saved`, savedStylist)
+            .then(res=> {
+                storage.setItem('token', res.data.payload)
+            })
+            .catch(err=> console.log(err))
+        }
     }
     
     const addImage = newImage => {
@@ -64,7 +66,13 @@ export default function StylistDash(props) {
                     <div className='profile-text'>
                         <h3>{stylist.salon}</h3>
                         <h3>{stylist.name}</h3>
-                        <p>{stylist.city}</p>
+                        <div className = 'address'>
+                            <p>{stylist.street_address}</p>
+                            <p>{stylist.city}</p>
+                            <p>{stylist.state}</p>
+                            <p>{stylist.zipcode}</p>
+                            <p>{stylist.country}</p>
+                        </div>
                         <p>{stylist.bio}</p>
 
                     <NavLink to='/edit-bio'>
@@ -82,15 +90,14 @@ export default function StylistDash(props) {
                         <AddImage/>
                     </div>  
                     <div>                    
-                    {stylist.images.map(image=> (
-                        <GalleryImg>
-                            <img src={`${image.imageUrl}`}/>
-                        </GalleryImg>
-                    ))}
+                        {stylist.map(stylist=> (
+                            <GalleryImg>
+                                <img src={`${stylist.image}`}/>
+                            </GalleryImg>
+                        ))}
                     </div>
                 </Gallery>
             </section>
-
         </div>
     )
 }
