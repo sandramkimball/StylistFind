@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {axiosWithAuth} from './utilis/axiosWithAuth';
+import {axiosWithAuth} from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
 import {Link, NavLink} from 'react-router-dom';
 

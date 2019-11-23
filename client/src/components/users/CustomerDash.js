@@ -10,63 +10,22 @@ import SavedCard from './SavedStylists';
 export default function CustomerDash() {
     const { data, dispatchData } = useDataContext();
 
-    let customer = {
-          id: 4,
-          password: 'Sierra',
-          username: 'Sierra',
-          name: 'Sierra',
-          email: 'sierra@gmail.com',
-          city: 'San Diego',
-          userType: 'user',
-          profile_img: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
-          reviews: [
-            {review: {
-              id: 1,
-              stylist_id: 1,
-              text: 'Sandy was soooo nice! She did great with my hair.'
-            }}
-          ],
-          saved_stylists: [
-            {
-              id: 1,
-              name: 'Stella',
-              salon: 'Stella\'s Salon',
-              city: 'Dallas',
-              profile_img: 'https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-            },
-            {
-                id: 2,
-                name: 'Hector',
-                salon: 'Hector\'s Barber Shop',
-                city: 'San Diego',
-                profile_img: 'https://images.unsplash.com/photo-1541705897117-dc56b6637c9e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-              },
-            {
-              id: 3,
-              name: 'Jessi',
-              salon: 'Jessi Stylz',
-              city: 'Boise',
-              profile_img: 'https://images.unsplash.com/photo-1534445538923-ab38438550d2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',}
-          ],
-        }
-   
+    useEffect(()=>{
+        axiosWithAuth()
+        .get(`/api/users/${id}`)
+        .then(res=> { console.log(res.data);
+            setCustomer(res.data)
+        })
+        .catch(err=>{console.log(err.response)});
+    }, [])
 
-    // useEffect(()=>{
-    //     axiosWithAuth()
-    //     .get(`/api/customers/${id}`)
-    //     .then(res=> { console.log(res.data);
-    //         setCustomer(res.data)
-    //     })
-    //     .catch(err=>{console.log(err.response)});
-    // }, [])
+    useEffect(()=> {
+        const customerId = (props.match.params.id);
+        const customerData = data.customer.find(el => el.id === customerId);
+        dispatchData({type: 'SET_CUSTOMER', payload: customerData})
+    }, [])
 
-    // useEffect(()=> {
-    //     const customerId = (props.match.params.id);
-    //     const customerData = data.customer.find(el => el.id === customerId);
-    //     dispatchData({type: 'SET_CUSTOMER', payload: customerData})
-    // }, [])
-
-    // if(!data.customer){ return <Redirect to='/login'></Redirect> }
+    // {customer.usertype !=== 'user' || 'stylist'({ return <Redirect to='/login'></Redirect> })}
 
     return (
         <div>

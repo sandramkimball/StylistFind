@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
-// import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 //COMPONENTS
 import { useUserContext } from '../contexts/UserContext';
@@ -16,48 +16,79 @@ export default function SignUp(props) {
     password: '',
     city: '',
     email: '',
-    isStylist: false,
+    usertype: 'user' || 'stylist',
     id: Date.now(),
   });
 
+  const [user, setUser] = useState();
+  const [stylist, setStylist] = useState();
 
-  const handleChange = e =>
+
+  handleChange = e =>
   setRegistrationInfo({ ...registrationInfo, [e.target.name]: e.target.value });
 
-  const handleSubmit = e => {
-    e.preventDefault();}
+  handleSubmit = e => {
+    useEffect(()=>{
+      e.preventDefault();
+      if(usertype ==='user'){
+        axiosWithAuth()
+        .post('/api/users')
+        .then(res=> {
+          console.log(res.data)
+          setUser(res.data)
+        })
+        .catch(err=>{console.log(err.response)})
+      }
 
-    // const users = [...testCustomers, ...testStylists];
-    // if (users.map(obj => obj.username).includes(registrationInfo.username)) {
-    //   dispatch({ type: 'REGISTRATION_FAILURE' });
-    // } else {
-    //   localStorage.setItem('token', 'register' + registrationInfo.username);
-    //   localStorage.setItem('usertype' + registrationInfo.isStylist);
-    //   dispatch({
-    //     type: 'REGISTRATION_SUCCESS',
-    //     username: registrationInfo.username,
-    //     city: registrationInfo.city,
-    //   });
-    //   if(user === 'stylist'){
-    //     props.history.push(`/stylist-dash/${registrationInfo.id}`)
-    //   } else {
-    //     props.history.push(`/customer-dash/${registrationInfo.id}`)
+      if(usertype === 'stylist'){
+        axiosWithAuth()
+        .post('/api/stylists')
+        .then(res=> {
+          console.log(res.data)
+          setStylist(res.data)
+        })
+        .catch(err=>{console.log(err.response)})
+      }
+  }, [])};
 
-    //   }
-    //   }
-    // };
+  useEffect(()=> {
+      const userId = (props.match.params.id);
+      const userData = data.users.find(el => el.id === userId);
+      dispatchData({type: 'SET_CUSTOMER', payload: customerData})
+  }, [])
 
-    // if (localStorage.getItem('token')) {
-    //   if (user.usertype === 'stylist') {
-    //     return <Redirect to='/stylist-dash' />;
-    //   } else {
-    //     return <Redirect to={`/customer-dash/${localStorage.getItem('customer')}`} />;
-    //   }
-    // }
+  const users = [...users, ...stylists];
+  const storage = props.match.headers.authorization;
+
+  if (users.map(obj => obj.username).includes(registrationInfo.username)) {
+    dispatch({ type: 'REGISTRATION_FAILURE' });
+  } else {
+    storage.setItem('token', 'register' + registrationInfo.username);
+    storage.setItem('usertype' + registrationInfo.usertype);
+        dispatch({
+          type: 'REGISTRATION_SUCCESS',
+          username: registrationInfo.username,
+          city: registrationInfo.city,
+        });
+  };
+  
+  if(user === 'stylist'){
+    props.history.push(`/stylist-dash/${registrationInfo.id}`)
+  } else {
+    props.history.push(`/user-dash/${registrationInfo.id}`)
+  };
+
+  if (storage.getItem('token')) {
+    if (user.usertype === 'stylist') {
+      return <Redirect to='/stylist-dash' />;
+    } else {
+      return <Redirect to={`/user-dash/${storage.getItem(user.id)}`} />;
+    }
+  };
 
   return (
     <SignupPage>
-      <SignupForm>
+      <SignupForm onSubmit = {this.handleSubmit}>
         <h3>Sign Up</h3>
 
         <input
@@ -98,8 +129,24 @@ export default function SignUp(props) {
           placeholder="email" 
           onChange={this.handleChange}
         />
+
+        <input 
+          type='radio'
+          label='user'
+          name='usertype'
+          value={this.state.credentials.usertype === stylist}
+          onChange={this.handleChange}
+        />
+
+        <input 
+          type='radio'
+          label='stylist'
+          name='usertype'
+          value={this.state.credentials.usertype === user}
+          onChange={this.handleChange}
+        />
   
-  {/* {usertype === stylist && ( */}
+  {usertype === stylist && (
       <div>
           <input
             type='text'
@@ -138,7 +185,7 @@ export default function SignUp(props) {
             onChange={this.handleChange}
           />
         </div>
-    {/* )} */}
+    )}
 
 
        </SignupForm> 

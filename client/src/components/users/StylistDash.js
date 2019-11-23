@@ -4,11 +4,10 @@ import styled from 'styled-components';
 
 
 //COMPONENTS
-import {useDataContext} from './contexts/DataContext';
-import {useUserContext} from './contexts/UserContext';
-import {axiosWithAuth} from './utilis/axiosWithAuth';
-import Reviews from './Reviews';
-import AddImage from './AddImage';
+import {useDataContext} from '../contexts/DataContext';
+import {useUserContext} from '../contexts/UserContext';
+import {axiosWithAuth} from '../utilis/axiosWithAuth';
+import AddImage from '../forms/AddImage';
 
 
 
@@ -41,11 +40,11 @@ export default function StylistDash(props) {
 
     useEffect(()=>{
         axiosWithAuth()
-        // .get(`/api/stylists/${id}`)
-        // .then(res=> { console.log(res.data);
-        //     setCustomer(res.data)
-        // })
-        // .catch(err=>{console.log(err.response)});
+        .get(`/api/stylists/${id}`)
+        .then(res=> { console.log(res.data);
+            setStylist(res.data)
+        })
+        .catch(err=>{console.log(err.response)});
     }, [])
 
 
@@ -76,13 +75,11 @@ export default function StylistDash(props) {
 
                 </InfoBox>                
             </section>
-            {/* <Reviews/> */}
 
             <section className = 'gallery'>
                 <Gallery>
                     <div> 
                         <AddImage/>
-                         
                     </div>  
                     <div>                    
                     {stylist.images.map(image=> (
@@ -92,7 +89,6 @@ export default function StylistDash(props) {
                     ))}
                     </div>
                 </Gallery>
-
             </section>
 
         </div>
