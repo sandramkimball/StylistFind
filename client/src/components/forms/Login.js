@@ -1,14 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import {BrowserRouter as Router, Route, Link, Switch, NavLink, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route, NavLink, Redirect} from 'react-router-dom';
 
 
 //COMPONENTS
-import { useUserContext } from './contexts/UserContext';
-import { useDataContext } from './contexts/DataContext';
-import PrivateRoute from './PrivateRoute';
-import {axiosWithAuth} from './utilis/axiosWithAuth';
-// import {users, stylists} from '../data';
+import { useUserContext } from '../contexts/UserContext';
+import { useDataContext } from '../contexts/DataContext';
+import PrivateRoute from '../PrivateRoute';
+import {axiosWithAuth} from '../utilis/axiosWithAuth';
 
 
 

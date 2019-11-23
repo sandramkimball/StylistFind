@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchCard from './SearchCard';
 import styled from 'styled-components';
-import { axiosWithAuth } from './utilis/axiosWithAuth';
+import { axiosWithAuth } from '../utilis/axiosWithAuth';
 
 
 function SearchPage() {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Redirect, NavLink} from 'react-router-dom';
 import styled from 'styled-components';
-import {useDataContext} from './contexts/DataContext';
+import {useDataContext} from '../contexts/DataContext';
 
 function SavedCard(props) {
     const { profile_img, name, id } = props.stylist;

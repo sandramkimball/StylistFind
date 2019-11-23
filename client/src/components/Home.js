@@ -1,8 +1,8 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Styled from "styled-components";
-import Login from './Login'
-import SignUp from './SignUp';
+import Login from './forms/Login'
+import SignUp from './forms/SignUp';
 
 
 export default function Home() {

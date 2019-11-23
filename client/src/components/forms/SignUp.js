@@ -3,9 +3,9 @@ import styled from 'styled-components';
 // import { Redirect } from 'react-router-dom';
 
 //COMPONENTS
-import { useUserContext } from './contexts/UserContext';
-import { useDataContext } from './contexts/DataContext';
-import { axiosWithAuth } from "./utilis/axiosWithAuth";
+import { useUserContext } from '../contexts/UserContext';
+import { useDataContext } from '../contexts/DataContext';
+import { axiosWithAuth } from "../utilis/axiosWithAuth";
 
 export default function SignUp(props) {
   const { user, dispatch } = useUserContext();

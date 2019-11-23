@@ -12,6 +12,7 @@ import DataProvider from './components/contexts/DataContext';
 
 //COMPONENTS
 import Nav from './components/Nav';
+import Home from './components/Home';
 import SearchPage from './components/SearchPage';
 import Reviews from './components/Reviews';
 import StylistDash from './components/StylistDash';
@@ -22,7 +23,6 @@ import PrivateRoute from './components/PrivateRoute';
 import EditBio from './components/EditBio';
 import EditProfile from './components/EditProfile';
 import AddImage from './components/AddImage';
-import Home from './components/Home';
 
 function App() {
   // const [stylist, setStylist] = useState(stylists)
