@@ -51,9 +51,9 @@ export const userReducer = (state = initialUserState, action) => {
         case 'LOGIN_TRUE':
             return {...state, isLoggedIn: true};
         case 'LOGIN_STYLIST':
-            return {...state, isStylist: true};
-        case 'LOGIN_CUSTOMER':
-            return {...state, isCustomer: true};
+            return {...state, usertype: 'stylist'};
+        case 'LOGIN_USER':
+            return {...state, usertype: 'user'};
 
         case 'REGISTRATION_SUCCESS':
             return{

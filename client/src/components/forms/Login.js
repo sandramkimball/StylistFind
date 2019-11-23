@@ -19,12 +19,14 @@ class Login extends React.Component {
         }
     };
 
-    //   useEffect(() => {
-    //     dispatchData({ type: 'IMPORT_CUSTOMER_DATA', payload: testCustomers});
+    storage = props.match.headers.authorization;
+
+    // useEffect(() => {
+    //     dispatchData({ type: 'IMPORT_USER_DATA', payload: testCustomers});
     //     dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: testStylists});
     //     dispatchData({ type: 'SET_STYLIST', payload: testStylists});
-    //     dispatchData({ type: 'SET_CUSTOMER', payload: testCustomers});
-    //   }, []);
+    //     dispatchData({ type: 'SET_USER', payload: testCustomers});
+    //   });
 
     handleChange = e =>{
         this.setState({
@@ -35,82 +37,68 @@ class Login extends React.Component {
         });
     };
 
-    login = e => {
-        e.preventDefault();
-        // axiosWithAuth()
-        // .post('/api/login', this.state.credentials)
-        // .then(res=> {
-        //     localStorage.setItem('token', res.data.payload);
-        //     this.props.history.push(`/search`);
-        // })
-        // .catch(err=>console.log('Access Denied, Cyborg!', err))
-    }
-
     logout = e => {
         e.preventDefault();
-    //     axiosWithAuth()
-    //     .post('/api/login', this.state.credentials)
-    //     .then(res=> {
-    //         localStorage.setItem('token', !res.data.payload);
-    //         this.props.history.push('/login');
-    //     })
-    //     .catch(err=>console.log('Have a nice trip', err))
-    }
+        axiosWithAuth()
+        .post('/api/login', this.state.credentials)
+        .then(res=> {
+            storage.setItem('token', !res.data.payload);
+            this.props.history.push('/login');
+        })
+        .catch(err=>console.log('You are logged out', err))
+    };
 
     handleSubmit = e => {
-            e.preventDefault();
-    // }
+        e.preventDefault();
+        useEffect(()=> {
+            axiosWithAuth()
+            .post('/api/auth/login', this.state.credentials)
+            .then(res=> {
+                storage.setItem('token', res.data.payload);
+            })
+            .catch(err=>console.log('Username or password incorrect.', err))
+        }, [])
 
-        // if( 
-        //     users.find(
-        //     obj=>
-        //         obj.username === credentials.username &&
-        //         obj.password === credentials.password
-        //     )
-        // ){
-        //     localStorage.setItem('token', 'user' + credentials.username);
-        //     localStorage.setItem('usertype', 'user');
-        //     dispatch({
-        //         type: 'LOGIN_SUCCESS',
-        //         usertype: 'user',
-        //         username: credentials.username,
-        //     });
-        //     dispatch({type: 'LOGIN_CUSTOMER'});
-        //     props.history.push(`/customer-dash/${props.customer.id}`);
-        // } else if (
-        //     stylists.find(
-        //     obj =>
-        //         obj.username === credentials.username &&
-        //         obj.password === credentials.password,
-        //     )
-        // ){
-        //     localStorage.setItem('token', 'stylist' + credentials.username);
-        //     localStorage.setItem('usertype', 'stylist');
-        //     dispatch({
-        //         type: 'LOGIN_SUCCESS',
-        //         usertype: 'stylist',
-        //         username: credentials.username,
-        //     });
-        //     dispatch({type: 'LOGIN_STYLIST'});
-        //     props.history.push(`/stylist-dash/${props.stylist.id}`);
-        // } else {
-        //     dispatch({type: 'LOGIN_FAILURE'})}
-    }
+        if(users.find(
+            obj=>
+                obj.username === credentials.username &&
+                obj.password === credentials.password
+            )
+        ){
+            storage.setItem('token', 'user' + credentials.username);
+            storage.setItem('usertype', 'user');
+            dispatch({
+                type: 'LOGIN_SUCCESS',
+                usertype: 'user',
+                username: credentials.username,
+            });
+            dispatch({type: 'LOGIN_USER'});
+            props.history.push(`/user-dash/${props.user.id}`);
+        } else if (
+            stylists.find(
+            obj =>
+                obj.username === credentials.username &&
+                obj.password === credentials.password,
+            )
+        ){
+            localStorage.setItem('token', 'stylist' + credentials.username);
+            localStorage.setItem('usertype', 'stylist');
+            dispatch({
+                type: 'LOGIN_SUCCESS',
+                usertype: 'stylist',
+                username: credentials.username,
+            });
+            dispatch({type: 'LOGIN_STYLIST'});
+            props.history.push(`/stylist-dash/${props.stylist.id}`);
+        } else {
+            dispatch({type: 'LOGIN_FAILURE'})}
+    };
+    
 
       
       render(){
-
-        // if (localStorage.getItem('token')) {
-        //     if (localStorage.getItem('usertype') === 'stylist') {
-        //       return <PrivateRoute to={`/stylist-dash/${localStorage.getItem('id')}`} />
-        //     } 
-        //     else if (localStorage.getItem('usertype') === 'user'){
-        //       return <PrivateRoute to={`/customer-dash/${localStorage.getItem('id')}`} />
-        //     } 
-        //   }
         return (
             <LoginPage>
-
                 <LoginForm onSubmit={this.handleSubmit}>
                     <h3>Login</h3>
                     <input 
@@ -135,11 +123,10 @@ class Login extends React.Component {
                         <NavLink to='/signup'><button>Signup</button></NavLink>
                     </div>
                 </LoginForm>
-
             </LoginPage>
         );
     }
-}
+};
 
 export default Login;
 
