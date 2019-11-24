@@ -8,7 +8,7 @@ import { useDataContext } from '../contexts/DataContext';
 import { axiosWithAuth } from "../utilis/axiosWithAuth";
 
 export default function SignUp(props) {
-  const { user, dispatch } = useUserContext();
+  const { user, stylist, dispatch } = useUserContext();
   const { dispatchData } = useDataContext();
 
   const [registrationInfo, setRegistrationInfo] = useState({
@@ -20,41 +20,40 @@ export default function SignUp(props) {
     id: Date.now(),
   });
 
-  const [user, setUser] = useState();
-  const [stylist, setStylist] = useState();
+  // const {user, setUser} = useState();
+  // const {stylist, setStylist} = useState();
 
 
-  handleChange = e =>
+  let handleChange = e =>
   setRegistrationInfo({ ...registrationInfo, [e.target.name]: e.target.value });
 
-  handleSubmit = e => {
-    useEffect(()=>{
-      e.preventDefault();
-      if(usertype ==='user'){
-        axiosWithAuth()
-        .post('/api/users')
-        .then(res=> {
-          console.log(res.data)
-          setUser(res.data)
-        })
-        .catch(err=>{console.log(err.response)})
-      }
+  let handleSubmit = e => {
+  //     e.preventDefault();
+  //     if(props.usertype ==='user'){
+  //       axiosWithAuth()
+  //       .post('/api/users')
+  //       .then(res=> {
+  //         console.log(res.data)
+  //         setUser(res.data)
+  //       })
+  //       .catch(err=>{console.log(err.response)})
+  //     }
 
-      if(usertype === 'stylist'){
-        axiosWithAuth()
-        .post('/api/stylists')
-        .then(res=> {
-          console.log(res.data)
-          setStylist(res.data)
-        })
-        .catch(err=>{console.log(err.response)})
-      }
-  }, [])};
+  //     if(props.usertype === 'stylist'){
+  //       axiosWithAuth()
+  //       .post('/api/stylists')
+  //       .then(res=> {
+  //         console.log(res.data)
+  //         setStylist(res.data)
+  //       })
+  //       .catch(err=>{console.log(err.response)})
+  //     }
+  // };
 
   useEffect(()=> {
       const userId = (props.match.params.id);
       const userData = data.users.find(el => el.id === userId);
-      dispatchData({type: 'SET_CUSTOMER', payload: customerData})
+      dispatchData({type: 'SET_CUSTOMER', payload: userData})
   }, [])
 
   const users = [...users, ...stylists];
@@ -71,6 +70,7 @@ export default function SignUp(props) {
           city: registrationInfo.city,
         });
   };
+}
   
   if(user === 'stylist'){
     props.history.push(`/stylist-dash/${registrationInfo.id}`)
@@ -88,101 +88,101 @@ export default function SignUp(props) {
 
   return (
     <SignupPage>
-      <SignupForm onSubmit = {this.handleSubmit}>
+      <SignupForm onSubmit = {handleSubmit}>
         <h3>Sign Up</h3>
 
         <input
           type='text'
           name='first_name'
-          value={this.state.credentials.first_name} 
+          value={first_name} 
           placeholder="first name" 
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
         <input
           type='text'
           name='last_name'
-          value={this.state.credentials.last_name} 
+          value={last_name} 
           placeholder="last name" 
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
 
         <input
           type='text'
           name='username'
-          value={this.state.credentials.username} 
+          value={username} 
           placeholder="username" 
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
 
         <input
           type='text'
           name='password'
-          value={this.state.credentials.password} 
+          value={password} 
           placeholder="password" 
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
 
         <input
           type='text'
           name='email'
-          value={this.state.credentials.email} 
+          value={email} 
           placeholder="email" 
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
 
         <input 
           type='radio'
           label='user'
           name='usertype'
-          value={this.state.credentials.usertype === stylist}
-          onChange={this.handleChange}
+          value={usertype === stylist}
+          onChange={handleChange}
         />
 
         <input 
           type='radio'
           label='stylist'
           name='usertype'
-          value={this.state.credentials.usertype === user}
-          onChange={this.handleChange}
+          value={usertype === user}
+          onChange={handleChange}
         />
   
-  {usertype === stylist && (
+  {props.usertype === 'stylist' && (
       <div>
           <input
             type='text'
             name='street_address'
-            value={this.state.credentials.street_address} 
+            value={street_address} 
             placeholder="street address" 
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
           <input
             type='text'
             name='city'
-            value={this.state.credentials.city} 
+            value={credentials.city} 
             placeholder="city" 
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
           <input
             type='text'
             name='country'
-            value={this.state.credentials.country} 
+            value={country} 
             placeholder="country" 
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
           <input
             type='text'
             name='zipcode'
-            value={this.state.credentials.zipcode} 
+            value={credentials.zipcode} 
             placeholder="zipcode" 
-            onChange={this.handleChange}
+            onChange={thihandleChange}
           />
 
           <input
             type='text'
             name='salon'
-            value={this.state.credentials.salon} 
+            value={salon} 
             placeholder="salon_name" 
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
         </div>
     )}

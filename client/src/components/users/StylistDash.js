@@ -13,18 +13,20 @@ import AddImage from '../forms/AddImage';
 
 export default function StylistDash(props) {
     const {savedStylist, setSavedStylist} = useState();
-    const stylist = props.stylist.find(
-        item => item.id === Number(props.match.params.dataID)
-    ); 
+    const {stylist, setStylist} = useState();
+    // const stylist = props.stylist.find(
+    //     item => item.id === Number(props.match.params.dataID)
+    // ); 
     
     const handleAddStylist = e => {
         setSavedStylist(e.target.value)
     }
 
-    if(usertype === 'user'){
+    if(props.usertype === 'user'){
+        let storage = props.res.headers.authorization;
         const addStylist = savedStylist => {
             axiosWithAuth()
-            .post(`/api/user/${user.id}/saved`, savedStylist)
+            .post(`/api/user/${props.user.id}/saved`, savedStylist)
             .then(res=> {
                 storage.setItem('token', res.data.payload)
             })
@@ -42,7 +44,7 @@ export default function StylistDash(props) {
 
     useEffect(()=>{
         axiosWithAuth()
-        .get(`/api/stylists/${id}`)
+        .get(`/api/stylists/${props.id}`)
         .then(res=> { console.log(res.data);
             setStylist(res.data)
         })

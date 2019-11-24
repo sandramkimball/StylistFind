@@ -11,39 +11,37 @@ import {axiosWithAuth} from '../utilis/axiosWithAuth';
 
 
 
-class Login extends React.Component {
-    state = {
-        credentials: {
-            username: '',
-            password: ''
-        }
+export default function Login(props) {
+
+    let storage = props.match.headers.authorization;
+
+    const { user, stylist, dispatch } = useUserContext();
+    const { dispatchData } = useDataContext();
+  
+    const [credentials, setCredentials] = useState({
+      username: '',
+      password: ''
+    });
+
+    useEffect(() => {
+        const userId = (props.match.params.id);
+        const userData = props.data.users.find(el => el.id === userId);
+        const stylistData = props.data.stylists.find(el => el.id === userId);
+        if(userId.ussertype === 'user'){
+            dispatchData({ type: 'IMPORT_USER_DATA', payload: userData});
+            dispatchData({ type: 'SET_USER', payload: userData});
+        } else {
+            dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
+            dispatchData({ type: 'SET_STYLIST', payload: stylistData});
+        }       
+      });
+
+    let handleChange = e =>{
+        setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
-    storage = props.match.headers.authorization;
-
-    // useEffect(() => {
-    //     const userId = (props.match.params.id);
-    //     const userData = data.users.find(el => el.id === userId);
-    //     const stylistData = data.stylists.find(el => el.id === userId);
-    //     if(userId.ussertype === 'user'){
-    //         dispatchData({ type: 'IMPORT_USER_DATA', payload: userData});
-    //         dispatchData({ type: 'SET_USER', payload: userData});
-    //     } else {
-    //         dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
-    //         dispatchData({ type: 'SET_STYLIST', payload: stylistData});
-    //     }       
-    //   });
-
-    handleChange = e =>{
-        this.setState({
-            credentials: {
-                ...this.state.credentials,
-                [e.target.name]: e.target.value
-            }
-        });
-    };
-
-    logout = e => {
+    let logout = e => {
+        let storage = props.match.headers.authorization;
         e.preventDefault();
         axiosWithAuth()
         .post('/api/login', this.state.credentials)
@@ -54,7 +52,7 @@ class Login extends React.Component {
         .catch(err=>console.log('You are logged out', err))
     };
 
-    handleSubmit = e => {
+    let handleSubmit = e => {
         e.preventDefault();
         useEffect(()=> {
             axiosWithAuth()
@@ -99,42 +97,39 @@ class Login extends React.Component {
         } else {
             dispatch({type: 'LOGIN_FAILURE'})}
     };
-    
-
-      
-      render(){
-        return (
+     
+     
+    return (
             <LoginPage>
-                <LoginForm onSubmit={this.handleSubmit}>
+                <LoginForm onSubmit={handleSubmit}>
                     <h3>Login</h3>
                     <input 
                         type='text' 
                         name='username' 
-                        value={this.state.credentials.username} 
+                        value={username} 
                         placeholder="username" 
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                     />
 
                     <input 
                         type='password' 
                         name='password' 
-                        value={this.state.credentials.password} 
+                        value={password} 
                         placeholder="password" 
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                     />
 
                     <div>
-                        <button type='submit' onClick={this.login}>Login</button>
-                        <button type='submit' onClick={this.logout}>Logout</button>
+                        <button type='submit' onClick={login}>Login</button>
+                        <button type='submit' onClick={logout}>Logout</button>
                         <NavLink to='/signup'><button>Signup</button></NavLink>
                     </div>
                 </LoginForm>
             </LoginPage>
         );
-    }
 };
 
-export default Login;
+
 
 
 
