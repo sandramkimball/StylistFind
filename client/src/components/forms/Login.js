@@ -12,7 +12,7 @@ import validateInput from './Validator';
 
 
 
-export default class Login extends React.Component {
+class Login extends React.Component {
 
     constructor(props){
         super(props);
@@ -45,7 +45,15 @@ export default class Login extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        if (this.isValid()){}
+        if (this.isValid()){
+            this.setState({errors: {}, isLoading: true});
+            axiosWithAuth()
+            .post('/api/auth/login', this.state)
+            .then(
+                (res)=> this.context.routher.push('/dashboard'),
+                (err)=> this.setState({errors: err.data.errors, isLoading: false})
+            )
+        }
             // const userId = (props.match.params.id);
             // const userData = props.data.users.find(el => el.id === userId);
             // const stylistData = props.data.stylists.find(el => el.id === userId);
@@ -57,6 +65,8 @@ export default class Login extends React.Component {
             //     dispatchData({ type: 'SET_STYLIST', payload: stylistData});
             // }    
     };
+
+    
 
     logout = e => {
         // let storage = props.match.headers.authorization;
@@ -155,8 +165,14 @@ export default class Login extends React.Component {
         )
 }};
 
+LoginForm.propTypes = {
+    login: React.PropTypes.func.isRequired
+}
 
-
+LoginForm.contextTypes = {
+    router: React.PropTypes.object.isRequired
+}
+export default connect(null, {login})(Login);
 
 
 const LoginPage = styled.div`

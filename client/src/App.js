@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
 import './App.css';
 
 // STYLING
@@ -32,8 +32,8 @@ function App() {
           <Nav/>
           <Home/>
           <Switch>
-            {/* <Route exact path='/' render={()=> <Redirect to='login'/>}/> */}
-            {/* <Route path="/signup" component={SignUp}/> */}
+            <Link to='/login'>Login</Link>
+            <Link to="/signup">Sign up</Link>
             <Route path="/user-dash" component={UserDash}/>
             <Route path="/stylist-dash" component={StylistDash}/>
             <Route path="/search" component={SearchPage}/>
