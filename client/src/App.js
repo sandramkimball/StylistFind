@@ -14,10 +14,10 @@ import DataProvider from './components/contexts/DataContext';
 import Nav from './components/Nav';
 import Home from './components/Home';
 import SearchPage from './components/search/SearchPage';
-import UserDash from './components/users.UserDash';
+import UserDash from './components/users/UserDash';
 import StylistDash from './components/users/StylistDash';
-import SignUp from './components/SignUp';
-import Login from './components/Login';
+import SignUp from './components/forms/SignUp';
+import Login from './components/forms/Login';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -32,8 +32,8 @@ function App() {
           <Nav/>
           <Home/>
           <Switch>
-            <Route exact path='/' render={()=> <Redirect to='login'/>}/>
-            <Route path="/signup" component={SignUp}/>
+            {/* <Route exact path='/' render={()=> <Redirect to='login'/>}/> */}
+            {/* <Route path="/signup" component={SignUp}/> */}
             <Route path="/user-dash" component={UserDash}/>
             <Route path="/stylist-dash" component={StylistDash}/>
             <Route path="/search" component={SearchPage}/>

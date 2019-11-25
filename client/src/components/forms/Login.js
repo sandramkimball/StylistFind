@@ -7,13 +7,13 @@ import {BrowserRouter as Router, Route, NavLink, Redirect} from 'react-router-do
 import { useUserContext } from '../contexts/UserContext';
 import { useDataContext } from '../contexts/DataContext';
 import PrivateRoute from '../PrivateRoute';
-import {axiosWithAuth} from '../utilis/axiosWithAuth';
+import axiosWithAuth from '../utilis/axiosWithAuth';
 
 
 
 export default function Login(props) {
 
-    let storage = props.match.headers.authorization;
+    // let storage = props.match.headers.authorization;
 
     const { user, stylist, dispatch } = useUserContext();
     const { dispatchData } = useDataContext();
@@ -23,18 +23,19 @@ export default function Login(props) {
       password: ''
     });
 
-    useEffect(() => {
-        const userId = (props.match.params.id);
-        const userData = props.data.users.find(el => el.id === userId);
-        const stylistData = props.data.stylists.find(el => el.id === userId);
-        if(userId.ussertype === 'user'){
-            dispatchData({ type: 'IMPORT_USER_DATA', payload: userData});
-            dispatchData({ type: 'SET_USER', payload: userData});
-        } else {
-            dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
-            dispatchData({ type: 'SET_STYLIST', payload: stylistData});
-        }       
-      });
+    let handleSubmit = e => {
+        e.preventDefault();
+            const userId = (props.match.params.id);
+            const userData = props.data.users.find(el => el.id === userId);
+            const stylistData = props.data.stylists.find(el => el.id === userId);
+            if(userId.ussertype === 'user'){
+                dispatchData({ type: 'IMPORT_USER_DATA', payload: userData});
+                dispatchData({ type: 'SET_USER', payload: userData});
+            } else {
+                dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
+                dispatchData({ type: 'SET_STYLIST', payload: stylistData});
+            }    
+    };
 
     let handleChange = e =>{
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -52,51 +53,56 @@ export default function Login(props) {
         .catch(err=>console.log('You are logged out', err))
     };
 
-    let handleSubmit = e => {
-        e.preventDefault();
-        useEffect(()=> {
-            axiosWithAuth()
-            .post('/api/auth/login', this.state.credentials)
-            .then(res=> {
-                storage.setItem('token', res.data.payload);
-            })
-            .catch(err=>console.log('Username or password incorrect.', err))
-        }, [])
+    // let handleSubmit = e => {
+    //     e.preventDefault();
 
-        if(users.find(
-            obj=>
-                obj.username === credentials.username &&
-                obj.password === credentials.password
-            )
-        ){
-            storage.setItem('token', 'user' + credentials.username);
-            storage.setItem('usertype', 'user');
-            dispatch({
-                type: 'LOGIN_SUCCESS',
-                usertype: 'user',
-                username: credentials.username,
-            });
-            dispatch({type: 'LOGIN_USER'});
-            props.history.push(`/user-dash/${props.user.id}`);
-        } else if (
-            stylists.find(
-            obj =>
-                obj.username === credentials.username &&
-                obj.password === credentials.password,
-            )
-        ){
-            localStorage.setItem('token', 'stylist' + credentials.username);
-            localStorage.setItem('usertype', 'stylist');
-            dispatch({
-                type: 'LOGIN_SUCCESS',
-                usertype: 'stylist',
-                username: credentials.username,
-            });
-            dispatch({type: 'LOGIN_STYLIST'});
-            props.history.push(`/stylist-dash/${props.stylist.id}`);
-        } else {
-            dispatch({type: 'LOGIN_FAILURE'})}
-    };
+    //         axiosWithAuth()
+    //         .post('/api/auth/login', this.state.credentials)
+    //         .then(res=> {
+    //             storage.setItem('token', res.data.payload);
+    //             if(res.data.usertype === 'stylists'){
+    //                 setStylist(res.data)
+    //             } else if (res.data.usertype === 'user'){
+    //                 setUser(res.data)
+    //             } 
+    //         })
+    //         .catch(err=>console.log('Username or password incorrect.', err))
+    // };
+
+    //     if(users.find(
+    //         obj=>
+    //             obj.username === credentials.username &&
+    //             obj.password === credentials.password
+    //         )
+    //     ){
+    //         storage.setItem('token', 'user' + credentials.username);
+    //         storage.setItem('usertype', 'user');
+    //         dispatch({
+    //             type: 'LOGIN_SUCCESS',
+    //             usertype: 'user',
+    //             username: credentials.username,
+    //         });
+    //         dispatch({type: 'LOGIN_USER'});
+    //         props.history.push(`/user-dash/${props.user.id}`);
+    //     } else if (
+    //         this.stylists.find(
+    //         obj =>
+    //             obj.username === credentials.username &&
+    //             obj.password === credentials.password,
+    //         )
+    //     ){
+    //         localStorage.setItem('token', 'stylist' + credentials.username);
+    //         localStorage.setItem('usertype', 'stylist');
+    //         dispatch({
+    //             type: 'LOGIN_SUCCESS',
+    //             usertype: 'stylist',
+    //             username: credentials.username,
+    //         });
+    //         dispatch({type: 'LOGIN_STYLIST'});
+    //         props.history.push(`/stylist-dash/${props.stylist.id}`);
+    //     } else {
+    //         dispatch({type: 'LOGIN_FAILURE'})}
+    // };
      
      
     return (
@@ -106,7 +112,7 @@ export default function Login(props) {
                     <input 
                         type='text' 
                         name='username' 
-                        value={username} 
+                        value={this.username} 
                         placeholder="username" 
                         onChange={handleChange}
                     />
@@ -114,14 +120,14 @@ export default function Login(props) {
                     <input 
                         type='password' 
                         name='password' 
-                        value={password} 
+                        value={this.password} 
                         placeholder="password" 
                         onChange={handleChange}
                     />
 
                     <div>
-                        <button type='submit' onClick={login}>Login</button>
-                        <button type='submit' onClick={logout}>Logout</button>
+                        <button type='submit' onClick={this.login}>Login</button>
+                        <button type='submit' onClick={this.logout}>Logout</button>
                         <NavLink to='/signup'><button>Signup</button></NavLink>
                     </div>
                 </LoginForm>

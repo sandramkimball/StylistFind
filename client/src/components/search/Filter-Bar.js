@@ -2,14 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function FilterBar(){
+    // const [filterOpt, setFilterOpt] = useState('');
+    // const [filterResults, setFilterResults] = useState(stylists, salons);
+    // const [sortResults, setSortResults] = useState(stylists, salons);
+    
+    function alphabetical(filterResults){
+        return filterResults.sort()
+    }
 
-    function filterResults(){
+    function price_asc(filterResults){
+        return filterResults
+    }
+    function price_desc(filterResults){
+        return filterResults
+    }
+    function nearest(filterResults){
+        return filterResults
+    }
+
+
+    function filterResults(c){
        let x, i;
        x = document.getElementsByClassName('filterDiv');
        if (c == 'all') c = '';
        //trigger "display" css class:
        x.filter(()=> {
-           removeClass(x[i], show);
+           removeClass(x[i], 'show');
            if (x[i].className.indexOf(c) > -1) addClass(x[i], 'show')
        })
     };
@@ -44,7 +62,7 @@ export default function FilterBar(){
     var filterContainer = document.getElementById('selectedFilter')
     var filters = filterContainer.getElementsByClassName('li')
     filters.map(()=> {
-        filters[i].addEventListener('click', function(){
+        filters.map().addEventListener('click', function(){
             var current = document.getElementsByClassName('active');
             current[0].className = current[0].className.replace('active', '');
             this.className += ' active';
@@ -53,6 +71,7 @@ export default function FilterBar(){
 
     return (
         <div>
+            <BAR>
             <div className = 'Sort'>
                 <h4>Sort By</h4>
                 <i class="fas fa-chevron-down"></i>
@@ -60,25 +79,29 @@ export default function FilterBar(){
                     <input
                         label='Nearest'
                         type='radio'
-                        value='nearest'
+                        name='nearest'
+                        value={nearest}
                         onClick={filterResults}
                     />
                     <input
                         label='Alphabetical'
                         type='radio'
-                        value='nearest'
+                        name='alphabetical'
+                        value={alphabetical}
                         onClick={filterResults}
                     />
                     <input
                         label='Price (Asc)'
                         type='radio'
-                        value='price_asc'
+                        name='price_asc'
+                        value={price_asc}
                         onClick={filterResults}
                     />
                     <input
                         label='Price (Desc)'
                         type='radio'
-                        value='price_desc'
+                        name='price_desc'
+                        value={price_desc}
                         onClick={filterResults}
                     />
                 </form>
@@ -127,10 +150,20 @@ export default function FilterBar(){
                         />
                 </form>
             </div>
+            </BAR>
         </div>
     )
 }
 
 let BAR = styled.div`
-
+    display: flex;
+    width: 100%;
+    height: 100px;
+    justify-content: space-between;
+    content-align: center;
+    border: 1px solid orange;
+    input{
+        height: 50px;
+        font-size: 1rem;
+    }
 `;

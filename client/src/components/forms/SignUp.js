@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
-
 //COMPONENTS
 import { useUserContext } from '../contexts/UserContext';
 import { useDataContext } from '../contexts/DataContext';
 import { axiosWithAuth } from "../utilis/axiosWithAuth";
 
+
+
 export default function SignUp(props) {
   const { user, stylist, dispatch } = useUserContext();
   const { dispatchData } = useDataContext();
+  // const {user, setUser} = useState();
+  // const {stylist, setStylist} = useState();
 
   const [registrationInfo, setRegistrationInfo] = useState({
     username: '',
     password: '',
+    first_name: '',
+    last_name: '',
+    street_address: '',
     city: '',
+    zipcode: '',
+    state: '',
+    country: '',
+    salon: '',
     email: '',
     usertype: 'user' || 'stylist',
     id: Date.now(),
   });
-
-  // const {user, setUser} = useState();
-  // const {stylist, setStylist} = useState();
 
 
   let handleChange = e =>
@@ -50,13 +57,18 @@ export default function SignUp(props) {
   //     }
   // };
 
-  useEffect(()=> {
+    //USER
       const userId = (props.match.params.id);
-      const userData = data.users.find(el => el.id === userId);
-      dispatchData({type: 'SET_CUSTOMER', payload: userData})
-  }, [])
+      const userData = props.data.users.find(el => el.id === userId);
+      dispatchData({type: 'SET_USER', payload: userData})
 
-  const users = [...users, ...stylists];
+    //STYLIST
+      const stylistId = (props.match.params.id);
+      const stylistData = props.data.stylists.find(el => el.id === stylistId);
+      dispatchData({type: 'SET_STYLIST', payload: stylistData})
+
+  const users = [...users];
+  const stylists = [ ...stylists];
   const storage = props.match.headers.authorization;
 
   if (users.map(obj => obj.username).includes(registrationInfo.username)) {
@@ -78,11 +90,11 @@ export default function SignUp(props) {
     props.history.push(`/user-dash/${registrationInfo.id}`)
   };
 
-  if (storage.getItem('token')) {
+  if ('token') {
     if (user.usertype === 'stylist') {
-      return <Redirect to='/stylist-dash' />;
+      return <Redirect to={`/stylist-dash/:${stylist.id}`} />;
     } else {
-      return <Redirect to={`/user-dash/${storage.getItem(user.id)}`} />;
+      return <Redirect to={`/user-dash/:${user.id}`} />;
     }
   };
 
@@ -94,14 +106,14 @@ export default function SignUp(props) {
         <input
           type='text'
           name='first_name'
-          value={first_name} 
+          value={this.first_name} 
           placeholder="first name" 
           onChange={handleChange}
         />
         <input
           type='text'
           name='last_name'
-          value={last_name} 
+          value={this.last_name} 
           placeholder="last name" 
           onChange={handleChange}
         />
@@ -109,7 +121,7 @@ export default function SignUp(props) {
         <input
           type='text'
           name='username'
-          value={username} 
+          value={this.username} 
           placeholder="username" 
           onChange={handleChange}
         />
@@ -117,7 +129,7 @@ export default function SignUp(props) {
         <input
           type='text'
           name='password'
-          value={password} 
+          value={this.password} 
           placeholder="password" 
           onChange={handleChange}
         />
@@ -125,7 +137,7 @@ export default function SignUp(props) {
         <input
           type='text'
           name='email'
-          value={email} 
+          value={this.email} 
           placeholder="email" 
           onChange={handleChange}
         />
@@ -134,7 +146,7 @@ export default function SignUp(props) {
           type='radio'
           label='user'
           name='usertype'
-          value={usertype === stylist}
+          value={this.usertype === stylist}
           onChange={handleChange}
         />
 
@@ -142,7 +154,7 @@ export default function SignUp(props) {
           type='radio'
           label='stylist'
           name='usertype'
-          value={usertype === user}
+          value={this.usertype === user}
           onChange={handleChange}
         />
   
@@ -151,36 +163,36 @@ export default function SignUp(props) {
           <input
             type='text'
             name='street_address'
-            value={street_address} 
+            value={this.street_address} 
             placeholder="street address" 
             onChange={handleChange}
           />
           <input
             type='text'
             name='city'
-            value={credentials.city} 
+            value={this.city} 
             placeholder="city" 
             onChange={handleChange}
           />
           <input
             type='text'
             name='country'
-            value={country} 
+            value={this.country} 
             placeholder="country" 
             onChange={handleChange}
           />
           <input
             type='text'
             name='zipcode'
-            value={credentials.zipcode} 
+            value={this.zipcode} 
             placeholder="zipcode" 
-            onChange={thihandleChange}
+            onChange={handleChange}
           />
 
           <input
             type='text'
             name='salon'
-            value={salon} 
+            value={this.salon} 
             placeholder="salon_name" 
             onChange={handleChange}
           />

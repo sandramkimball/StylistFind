@@ -6,7 +6,7 @@ import styled from 'styled-components';
 //COMPONENTS
 import {useDataContext} from '../contexts/DataContext';
 import {useUserContext} from '../contexts/UserContext';
-import {axiosWithAuth} from '../utilis/axiosWithAuth';
+import axiosWithAuth from '../utilis/axiosWithAuth';
 import AddImage from '../forms/AddImage';
 
 

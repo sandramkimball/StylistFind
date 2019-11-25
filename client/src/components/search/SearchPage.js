@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import SearchCard from './SearchCard';
 import styled from 'styled-components';
-import { axiosWithAuth } from '../utilis/axiosWithAuth';
+import axiosWithAuth from '../utilis/axiosWithAuth';
+import FilterBar from './Filter-Bar';
 
 
-function SearchPage() {
+function SearchPage({stylists, salons}) {
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState(stylists, users);
+    const [searchResults, setSearchResults] = useState(stylists, salons);
 
     //how to get from two apis? search location and name.
     useEffect(()=> {
         axiosWithAuth()
         .get('/api/stylists') 
-        const results = stylists.filter(item=> item.city.toLowerCase().includes(searchTerm.toLowerCase()));
-        setSearchResults(results);
-    }, [searchTerm])
+        .then(res=> {
+            const results = res.stylists.filter(item=> item.city.toLowerCase().includes(searchTerm.toLowerCase()));
+                    setSearchResults(results);
+        })
+    }, [searchTerm]);
 
     const handleChange = e => {
         e.preventDefault();
@@ -25,6 +28,7 @@ function SearchPage() {
 
     return(
         <div>
+            <div>
             <SearchBar>
                 <h1>Find Stylists</h1>
                 <form onSubmit={handleChange}>
@@ -37,6 +41,8 @@ function SearchPage() {
                     onChange={handleChange}/>
                 </form>
             </SearchBar>
+            <FilterBar/>
+        </div>
 
             <SearchContainer>
                 <div className='search-results'>
@@ -58,6 +64,10 @@ const SearchContainer = styled.div`
     display: flex;
     flex-direction: column;
     border: 1px solid #80808095;
+`;
+const Container = styled.div`
+    display: flex;
+    flex-direction: column
 `;
 
 const SearchBar = styled.form`

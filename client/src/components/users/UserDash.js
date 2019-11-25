@@ -5,20 +5,22 @@ import styled from 'styled-components';
 //COMPONENTS
 import {useDataContext} from '../contexts/DataContext';
 import SavedCard from './SavedStylists';
+import axiosWithAuth from '../utilis/axiosWithAuth';
 
 
-export default function CustomerDash() {
+export default function UserDash(props) {
     const { data, dispatchData } = useDataContext();
 
-    useEffect(()=>{
-        axiosWithAuth()
-        .get(`/api/users/${id}`)
-        .then(res=> { 
-            console.log(res.data);
-            setCustomer(res.data)
-        })
-        .catch(err=>{console.log(err.response)});
-    }, [])
+    // useEffect(()=>{
+    //     axiosWithAuth()
+    //     .get(`/api/users/:id`)
+    //     .then(res=> { 
+    //         const userId = (props.match.params.id);
+    //         const userData = data.users.find(el => el.id === userId);
+    //         dispatchData({type: 'SET_USER', payload: userData})
+    //     })
+    //     .catch(err=>{console.log(err.response)});
+    // }, [])
 
     useEffect(()=> {
         const userId = (props.match.params.id);
@@ -32,14 +34,14 @@ export default function CustomerDash() {
 
     return (
         <div>
-        <h1>Customer Dashboard</h1>
+        <h1>Your Dashboard</h1>
         <section className = 'about-me'>
             <InfoBox>
                 <div>
-                    <img alt='stylist profile' src={user.profile_img}/>
+                    <img alt='stylist profile' src={this.userData.profile_img}/>
                 </div>
                 <div className='profile-text'>
-                    <h3>{user.name}</h3>
+                    <h3>{this.userData.first_name}</h3>
                     <NavLink to='edit-profile' className='edit-btn' >Edit</NavLink>
                 </div>
             </InfoBox>                
