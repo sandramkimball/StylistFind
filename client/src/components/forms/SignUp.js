@@ -8,33 +8,35 @@ import { axiosWithAuth } from "../utilis/axiosWithAuth";
 
 
 
-export default function SignUp(props) {
-  const { user, stylist, dispatch } = useUserContext();
-  const { dispatchData } = useDataContext();
+export default class SignUp extends React.Component {
+  // const { user, stylist, dispatch } = useUserContext();
+  // const { dispatchData } = useDataContext();
   // const {user, setUser} = useState();
   // const {stylist, setStylist} = useState();
 
-  const [registrationInfo, setRegistrationInfo] = useState({
-    username: '',
-    password: '',
-    first_name: '',
-    last_name: '',
-    street_address: '',
-    city: '',
-    zipcode: '',
-    state: '',
-    country: '',
-    salon: '',
-    email: '',
-    usertype: 'user' || 'stylist',
-    id: Date.now(),
-  });
+  constructor(props){
+    super(props);
+    this.state = { 
+      username: '',
+      password: '',
+      first_name: '',
+      last_name: '',
+      street_address: '',
+      city: '',
+      zipcode: '',
+      state: '',
+      country: '',
+      salon: '',
+      email: '',
+      usertype: 'user' || 'stylist',
+      id: Date.now(),
+}};
 
 
-  let handleChange = e =>
+  handleChange = e =>
   setRegistrationInfo({ ...registrationInfo, [e.target.name]: e.target.value });
 
-  let handleSubmit = e => {
+  handleSubmit = e => {
   //     e.preventDefault();
   //     if(props.usertype ==='user'){
   //       axiosWithAuth()
@@ -84,20 +86,21 @@ export default function SignUp(props) {
   };
 }
   
-  if(user === 'stylist'){
-    props.history.push(`/stylist-dash/${registrationInfo.id}`)
-  } else {
-    props.history.push(`/user-dash/${registrationInfo.id}`)
-  };
+  // if(usertype === 'stylist'){
+  //   props.history.push(`/stylist-dash/${registrationInfo.id}`)
+  // } else {
+  //   props.history.push(`/user-dash/${registrationInfo.id}`)
+  // };
 
-  if ('token') {
-    if (user.usertype === 'stylist') {
-      return <Redirect to={`/stylist-dash/:${stylist.id}`} />;
-    } else {
-      return <Redirect to={`/user-dash/:${user.id}`} />;
-    }
-  };
+  // if ('token') {
+  //   if (user.usertype === 'stylist') {
+  //     return <Redirect to={`/stylist-dash/:${stylist.id}`} />;
+  //   } else {
+  //     return <Redirect to={`/user-dash/:${user.id}`} />;
+  //   }
+  // };
 
+  render(){
   return (
     <SignupPage>
       <SignupForm onSubmit = {handleSubmit}>
@@ -108,14 +111,14 @@ export default function SignUp(props) {
           name='first_name'
           value={this.first_name} 
           placeholder="first name" 
-          onChange={handleChange}
+          onChange={this.handleChange}
         />
         <input
           type='text'
           name='last_name'
           value={this.last_name} 
           placeholder="last name" 
-          onChange={handleChange}
+          onChange={this.handleChange}
         />
 
         <input
@@ -123,7 +126,7 @@ export default function SignUp(props) {
           name='username'
           value={this.username} 
           placeholder="username" 
-          onChange={handleChange}
+          onChange={this.handleChange}
         />
 
         <input
@@ -131,7 +134,7 @@ export default function SignUp(props) {
           name='password'
           value={this.password} 
           placeholder="password" 
-          onChange={handleChange}
+          onChange={this.handleChange}
         />
 
         <input
@@ -139,7 +142,7 @@ export default function SignUp(props) {
           name='email'
           value={this.email} 
           placeholder="email" 
-          onChange={handleChange}
+          onChange={this.handleChange}
         />
 
         <input 
@@ -147,7 +150,7 @@ export default function SignUp(props) {
           label='user'
           name='usertype'
           value={this.usertype === stylist}
-          onChange={handleChange}
+          onChange={this.handleChange}
         />
 
         <input 
@@ -155,7 +158,7 @@ export default function SignUp(props) {
           label='stylist'
           name='usertype'
           value={this.usertype === user}
-          onChange={handleChange}
+          onChange={this.handleChange}
         />
   
   {props.usertype === 'stylist' && (
@@ -165,28 +168,28 @@ export default function SignUp(props) {
             name='street_address'
             value={this.street_address} 
             placeholder="street address" 
-            onChange={handleChange}
+            onChange={this.handleChange}
           />
           <input
             type='text'
             name='city'
             value={this.city} 
             placeholder="city" 
-            onChange={handleChange}
+            onChange={this.handleChange}
           />
           <input
             type='text'
             name='country'
             value={this.country} 
             placeholder="country" 
-            onChange={handleChange}
+            onChange={this.handleChange}
           />
           <input
             type='text'
             name='zipcode'
             value={this.zipcode} 
             placeholder="zipcode" 
-            onChange={handleChange}
+            onChange={this.handleChange}
           />
 
           <input
@@ -194,7 +197,7 @@ export default function SignUp(props) {
             name='salon'
             value={this.salon} 
             placeholder="salon_name" 
-            onChange={handleChange}
+            onChange={this.handleChange}
           />
         </div>
     )}
@@ -203,7 +206,7 @@ export default function SignUp(props) {
        </SignupForm> 
     </SignupPage>
   );
-}
+}}
 
 const SignupPage = styled.div`
     width: 60vw

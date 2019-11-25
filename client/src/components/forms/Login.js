@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {BrowserRouter as Router, Route, NavLink, Redirect} from 'react-router-dom';
 
@@ -8,49 +8,66 @@ import { useUserContext } from '../contexts/UserContext';
 import { useDataContext } from '../contexts/DataContext';
 import PrivateRoute from '../PrivateRoute';
 import axiosWithAuth from '../utilis/axiosWithAuth';
+import validateInput from './Validator';
 
 
 
-export default function Login(props) {
+export default class Login extends React.Component {
 
-    // let storage = props.match.headers.authorization;
+    constructor(props){
+        super(props);
+        this.state={
+            username: '',
+            password: '',
+            errors: {},
+            isLoading: false
+        };
 
-    const { user, stylist, dispatch } = useUserContext();
-    const { dispatchData } = useDataContext();
-  
-    const [credentials, setCredentials] = useState({
-      username: '',
-      password: ''
-    });
-
-    let handleSubmit = e => {
-        e.preventDefault();
-            const userId = (props.match.params.id);
-            const userData = props.data.users.find(el => el.id === userId);
-            const stylistData = props.data.stylists.find(el => el.id === userId);
-            if(userId.ussertype === 'user'){
-                dispatchData({ type: 'IMPORT_USER_DATA', payload: userData});
-                dispatchData({ type: 'SET_USER', payload: userData});
-            } else {
-                dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
-                dispatchData({ type: 'SET_STYLIST', payload: stylistData});
-            }    
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     };
 
-    let handleChange = e =>{
-        setCredentials({ ...credentials, [e.target.name]: e.target.value });
+
+    // const { user, stylist, dispatch } = useUserContext();
+    // const { dispatchData } = useDataContext();
+
+    handleChange = e =>{
+        this.setState({ [e.target.name]: e.target.value });
     };
 
-    let logout = e => {
-        let storage = props.match.headers.authorization;
+    isValid(){
+        const {errors, isValid} = validateInput(this.state);
+        if(!isValid){
+            this.setState({errors});
+        }
+        return isValid
+    };
+
+    handleSubmit = e => {
         e.preventDefault();
-        axiosWithAuth()
-        .post('/api/login', this.state.credentials)
-        .then(res=> {
-            storage.setItem('token', !res.data.payload);
-            this.props.history.push('/login');
-        })
-        .catch(err=>console.log('You are logged out', err))
+        if (this.isValid()){}
+            // const userId = (props.match.params.id);
+            // const userData = props.data.users.find(el => el.id === userId);
+            // const stylistData = props.data.stylists.find(el => el.id === userId);
+            // if(userId.ussertype === 'user'){
+            //     dispatchData({ type: 'IMPORT_USER_DATA', payload: userData});
+            //     dispatchData({ type: 'SET_USER', payload: userData});
+            // } else {
+            //     dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
+            //     dispatchData({ type: 'SET_STYLIST', payload: stylistData});
+            // }    
+    };
+
+    logout = e => {
+        // let storage = props.match.headers.authorization;
+        // e.preventDefault();
+        // axiosWithAuth()
+        // .post('/api/login', this.state.credentials)
+        // .then(res=> {
+        //     storage.setItem('token', !res.data.payload);
+        //     this.props.history.push('/login');
+        // })
+        // .catch(err=>console.log('You are logged out', err))
     };
 
     // let handleSubmit = e => {
@@ -104,17 +121,19 @@ export default function Login(props) {
     //         dispatch({type: 'LOGIN_FAILURE'})}
     // };
      
-     
+    render(){
+        const {error, username, password, isLoading} = this.state;
     return (
             <LoginPage>
-                <LoginForm onSubmit={handleSubmit}>
+                <LoginForm onSubmit={this.handleSubmit}>
                     <h3>Login</h3>
                     <input 
                         type='text' 
                         name='username' 
                         value={this.username} 
                         placeholder="username" 
-                        onChange={handleChange}
+                        error={errors.username}
+                        onChange={this.handleChange}
                     />
 
                     <input 
@@ -122,18 +141,19 @@ export default function Login(props) {
                         name='password' 
                         value={this.password} 
                         placeholder="password" 
-                        onChange={handleChange}
+                        errors={errors.password}
+                        onChange={this.handleChange}
                     />
 
                     <div>
-                        <button type='submit' onClick={this.login}>Login</button>
-                        <button type='submit' onClick={this.logout}>Logout</button>
+                        <button type='submit' onClick={this.handleSubmit}>Login</button>
+                        {/* {token && (<button type='submit' onClick={this.logout}>Logout</button>)} */}
                         <NavLink to='/signup'><button>Signup</button></NavLink>
                     </div>
                 </LoginForm>
             </LoginPage>
-        );
-};
+        )
+}};
 
 
 
