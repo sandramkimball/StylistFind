@@ -22,20 +22,20 @@ export default function StylistDash(props) {
         setSavedStylist(e.target.value)
     }
 
-    if(props.usertype === 'user'){
-        let storage = props.res.headers.authorization;
-        const addStylist = savedStylist => {
-            axiosWithAuth()
-            .post(`/api/user/${props.user.id}/saved`, savedStylist)
-            .then(res=> {
-                storage.setItem('token', res.data.payload)
-            })
-            .catch(err=> console.log(err))
-        }
-    }
+    // if(props.usertype === 'user'){
+    //     let storage = props.res.headers.authorization;
+    //     const addStylist = savedStylist => {
+    //         axiosWithAuth()
+    //         .post(`/user/${props.user.id}/saved`, savedStylist)
+    //         .then(res=> {
+    //             storage.setItem('token', res.data.payload)
+    //         })
+    //         .catch(err=> console.log(err))
+    //     }
+    // }
     
     const addImage = newImage => {
-        localStorage().post(`/api/stylist-dash/${stylist.id}`, newImage)
+        localStorage().post(`/stylist/${stylist.id}`, newImage)
         .then(res=> {
             localStorage.setItem('token', res.data.payload)
         })
@@ -44,7 +44,7 @@ export default function StylistDash(props) {
 
     useEffect(()=>{
         axiosWithAuth()
-        .get(`/api/stylists/${props.id}`)
+        .get(`/stylists/${props.id}`)
         .then(res=> { console.log(res.data);
             setStylist(res.data)
         })

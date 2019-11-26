@@ -9,13 +9,17 @@ function SearchPage({stylists, salons}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState(stylists, salons);
 
-    //how to get from two apis? search location and name.
+    //Two apis? search location+name against salon+stylists.
     useEffect(()=> {
         axiosWithAuth()
-        .get('/api/stylists') 
+        .get('stylists') 
         .then(res=> {
-            const results = res.stylists.filter(item=> item.city.toLowerCase().includes(searchTerm.toLowerCase()));
-                    setSearchResults(results);
+            console.log('LIST OF STYLISTS:', res);
+            const results = res.data.stylists.filter(item=> item.city.toLowerCase().includes(searchTerm.toLowerCase()));
+            setSearchResults(results);
+        })
+        .catch(err=> {
+            console.log(err)
         })
     }, [searchTerm]);
 
@@ -29,7 +33,7 @@ function SearchPage({stylists, salons}) {
     return(
         <div>
             <div>
-            <SearchBar>
+                <SearchBar>
                 <h1>Find Stylists</h1>
                 <form onSubmit={handleChange}>
                     <input
@@ -41,22 +45,27 @@ function SearchPage({stylists, salons}) {
                     onChange={handleChange}/>
                 </form>
             </SearchBar>
-            <FilterBar/>
-        </div>
-
-            <SearchContainer>
-                <div className='search-results'>
-                    {searchResults.map(result=> (
-                        <SearchCard key={result.id} result={result}/>
-                    ))}
-                </div>
-            </SearchContainer>
+            </div>
+            <BodyContainer>
+                {/* <FilterBar/> */}
+                <SearchContainer>
+                    <div className='search-results'>
+                        <p>Test Stylists</p>
+                        {/* {searchResults.map(result=> (
+                            <SearchCard key={result.id} result={result}/>
+                        ))} */}
+                    </div>
+                </SearchContainer>
+            </BodyContainer>
         </div>
     )
 }
 
 export default SearchPage;
 
+const BodyContainer = styled.div`
+    display: flex
+`;
 
 const SearchContainer = styled.div`
     margin: 0 auto;  
@@ -70,7 +79,7 @@ const Container = styled.div`
     flex-direction: column
 `;
 
-const SearchBar = styled.form`
+const SearchBar = styled.div`
     width: 80%;
     margin: 10px auto;
     display: flex;

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 //COMPONENTS
 import { useUserContext } from '../contexts/UserContext';
 import { useDataContext } from '../contexts/DataContext';
-import { axiosWithAuth } from "../utilis/axiosWithAuth";
+import axiosWithAuth from "../utilis/axiosWithAuth";
 
 
 
@@ -30,67 +30,68 @@ export default class SignUp extends React.Component {
       email: '',
       usertype: 'user' || 'stylist',
       id: Date.now(),
-}};
+      errors: {},
+      isLoading: false,
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  };
 
 
-  handleChange = e =>
-  setRegistrationInfo({ ...registrationInfo, [e.target.name]: e.target.value });
+  handleChange = e =>{
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   handleSubmit = e => {
-  //     e.preventDefault();
-  //     if(props.usertype ==='user'){
-  //       axiosWithAuth()
-  //       .post('/api/users')
-  //       .then(res=> {
-  //         console.log(res.data)
-  //         setUser(res.data)
-  //       })
-  //       .catch(err=>{console.log(err.response)})
-  //     }
+      e.preventDefault();
+      if(this.state.usertype ==='user'){
+        axiosWithAuth()
+        .post('/api/register', this.state)
+        .then(
+          (res)=> this.context.router.push(`api/user-dashboard/:id`),
+          (err)=> this.setState({errors: err.data.errors, isLoading: false})
+        )
+        .catch(err=>{console.log(err.response)})
+      }
 
-  //     if(props.usertype === 'stylist'){
-  //       axiosWithAuth()
-  //       .post('/api/stylists')
-  //       .then(res=> {
-  //         console.log(res.data)
-  //         setStylist(res.data)
-  //       })
-  //       .catch(err=>{console.log(err.response)})
-  //     }
-  // };
+      if(this.state.usertype === 'stylist'){
+        axiosWithAuth()
+        .post('/api/register', this.state)
+        .then(
+          (res)=> this.context.router.push(`api/search`),
+          (err)=> this.setState({errors: err.data.errors, isLoading: false})
+        )
+        .catch(err=>{console.log(err.response)})
+      }
+  };
 
     //USER
-      const userId = (props.match.params.id);
-      const userData = props.data.users.find(el => el.id === userId);
-      dispatchData({type: 'SET_USER', payload: userData})
+    // useEffect(()=> {
+    //   const userId = (props.match.params.id);
+    //   const userData = props.data.users.find(el => el.id === userId);
+    //   dispatchData({type: 'SET_USER', payload: userData})
 
-    //STYLIST
-      const stylistId = (props.match.params.id);
-      const stylistData = props.data.stylists.find(el => el.id === stylistId);
-      dispatchData({type: 'SET_STYLIST', payload: stylistData})
+    // //STYLIST
+    //   const stylistId = (props.match.params.id);
+    //   const stylistData = props.data.stylists.find(el => el.id === stylistId);
+    //   dispatchData({type: 'SET_STYLIST', payload: stylistData})
 
-  const users = [...users];
-  const stylists = [ ...stylists];
-  const storage = props.match.headers.authorization;
+    //   const users = [...users];
+    //   const stylists = [ ...stylists];
+    //   const storage = props.match.headers.authorization;
 
-  if (users.map(obj => obj.username).includes(registrationInfo.username)) {
-    dispatch({ type: 'REGISTRATION_FAILURE' });
-  } else {
-    storage.setItem('token', 'register' + registrationInfo.username);
-    storage.setItem('usertype' + registrationInfo.usertype);
-        dispatch({
-          type: 'REGISTRATION_SUCCESS',
-          username: registrationInfo.username,
-          city: registrationInfo.city,
-        });
-  };
-}
-  
-  // if(usertype === 'stylist'){
-  //   props.history.push(`/stylist-dash/${registrationInfo.id}`)
-  // } else {
-  //   props.history.push(`/user-dash/${registrationInfo.id}`)
-  // };
+    //   if (users.map(obj => obj.username).includes(registrationInfo.username)) {
+    //     dispatch({ type: 'REGISTRATION_FAILURE' });
+    //   } else {
+    //     storage.setItem('token', 'register' + registrationInfo.username);
+    //     storage.setItem('usertype' + registrationInfo.usertype);
+    //         dispatch({
+    //           type: 'REGISTRATION_SUCCESS',
+    //           username: registrationInfo.username,
+    //           city: registrationInfo.city,
+    //         });
+    //   };    
+    // };
 
   // if ('token') {
   //   if (user.usertype === 'stylist') {
@@ -103,7 +104,7 @@ export default class SignUp extends React.Component {
   render(){
   return (
     <SignupPage>
-      <SignupForm onSubmit = {handleSubmit}>
+      <SignupForm onSubmit = {this.handleSubmit}>
         <h3>Sign Up</h3>
 
         <input
@@ -149,7 +150,7 @@ export default class SignUp extends React.Component {
           type='radio'
           label='user'
           name='usertype'
-          value={this.usertype === stylist}
+          value={this.usertype === 'stylist'}
           onChange={this.handleChange}
         />
 
@@ -157,11 +158,11 @@ export default class SignUp extends React.Component {
           type='radio'
           label='stylist'
           name='usertype'
-          value={this.usertype === user}
+          value={this.usertype === 'user'}
           onChange={this.handleChange}
         />
   
-  {props.usertype === 'stylist' && (
+  {this.usertype === 'stylist' && (
       <div>
           <input
             type='text'

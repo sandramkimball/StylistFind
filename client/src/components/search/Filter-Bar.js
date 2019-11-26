@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
+import {useSelectMode} from '../../hooks/useSelectMode';
 
 export default function FilterBar(){
     // const [filterOpt, setFilterOpt] = useState('');
     // const [filterResults, setFilterResults] = useState(stylists, salons);
     // const [sortResults, setSortResults] = useState(stylists, salons);
-    
+    const [selected, setSelected] = useSelectMode(true || false)
+
+    const toggleMode = e => {
+        e.preventDefault();
+        setSelected(!selected)
+    }
+
     function alphabetical(filterResults){
         return filterResults.sort()
     }
-
     function price_asc(filterResults){
         return filterResults
     }
@@ -19,7 +25,6 @@ export default function FilterBar(){
     function nearest(filterResults){
         return filterResults
     }
-
 
     function filterResults(c){
        let x, i;
@@ -43,7 +48,7 @@ export default function FilterBar(){
             }
         })
         element.className = arr1.join(' ');
-    }
+    };
 
     //hide unselected elements
     function removeClass(element, name){
@@ -56,11 +61,11 @@ export default function FilterBar(){
             }
         })
         element.className = arr1.join(' ');
-    }
+    };
 
     //add 'selected' class to selected radio option
     var filterContainer = document.getElementById('selectedFilter')
-    var filters = filterContainer.getElementsByClassName('li')
+    var filters = filterContainer.getElementsByTagName('option')
     filters.map(()=> {
         filters.map().addEventListener('click', function(){
             var current = document.getElementsByClassName('active');
@@ -72,10 +77,34 @@ export default function FilterBar(){
     return (
         <div>
             <BAR>
-            <div className = 'Sort'>
-                <h4>Sort By</h4>
-                <i class="fas fa-chevron-down"></i>
-                <form>
+            <div className = 'Filters'>
+                <div className= 'menu-container'>
+                    <select onClick={this.toggleMode} className={this.selected ? 'toggle toggled' : 'toggle'}>
+                        <option>Stylists</option>
+                        <option>Salons</option>
+                    </select>
+                    <select onClick={this.toggleMode} className={this.selected ? 'toggle toggled' : 'toggle'}>
+                        <option>Posts</option>
+                        <option>Reviews</option>
+                    </select>
+                    <select onClick={this.toggleMode} className={this.selected ? 'toggle toggled' : 'toggle'}>
+                        <option>Ethnic</option>
+                        <option>Color</option>
+                        <option>Blowout</option>
+                        <option>Perm</option>
+                    </select>
+                    <select onClick={this.toggleMode} className={this.selected ? 'toggle toggled' : 'toggle'}>
+                        <option>Nearest</option>
+                        <option>Price (Asc)</option>
+                        <option>Price (Desc)</option>
+                        <option>Alphabetical</option>
+                    </select>
+                </div>
+
+
+                {/* <form>
+                    <i class="fas fa-chevron-down"></i>
+                    <h4>Sort By</h4>
                     <input
                         label='Nearest'
                         type='radio'
@@ -105,24 +134,24 @@ export default function FilterBar(){
                         onClick={filterResults}
                     />
                 </form>
-            </div>
-
-            <div className = 'Filter'>
-                <h4>Filters</h4>
-                <i class="fas fa-chevron-down"></i>
                 <form>
+                    <i class="fas fa-chevron-down"></i>
+                    <h4>Type</h4>
                     <input
-                        label='Posts Only'
+                        label='Salons'
                         type='radio'
-                        value='posts-only'
+                        value='salons-only'
                         onClick={filterResults}
                     />
                     <input
-                        label='Reviews Only'
+                        label='Stylists'
                         type='radio'
-                        value='reviews-only'
+                        value='stylists-only'
                         onClick={filterResults}
                     />
+                </form>
+                <form>
+                    <i class="fas fa-chevron-down"></i>
                     <h4>Specialty</h4>
                         <input
                             label='Brazilian Blowout'
@@ -149,6 +178,22 @@ export default function FilterBar(){
                             onClick={filterResults}
                         />
                 </form>
+                <form> */}
+                    {/* <i class="fas fa-chevron-down"></i>
+                    <h4>More</h4>
+                    <input
+                        label='Posts Only'
+                        type='radio'
+                        value='posts-only'
+                        onClick={filterResults}
+                    />
+                    <input
+                        label='Reviews Only'
+                        type='radio'
+                        value='reviews-only'
+                        onClick={filterResults}
+                    />
+                </form> */}
             </div>
             </BAR>
         </div>
@@ -167,3 +212,6 @@ let BAR = styled.div`
         font-size: 1rem;
     }
 `;
+
+
+

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
 import './App.css';
 
@@ -21,8 +21,7 @@ import Login from './components/forms/Login';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
-  // const [stylist, setStylist] = useState(stylists)
-  // const [user, setUser] = useState(users)
+
   return (
     <div className="App">
       <GlobalStyle/>
@@ -32,29 +31,24 @@ function App() {
           <Nav/>
           <Home/>
           <Switch>
-            <Link to='/login'>Login</Link>
-            <Link to="/signup">Sign up</Link>
-            <Route path="/user-dash" component={UserDash}/>
-            <Route path="/stylist-dash" component={StylistDash}/>
-            <Route path="/search" component={SearchPage}/>
+            <Route path="/signup" component={SignUp}/>
 
-          {/* <Route 
-            path='/customer-dash' 
-            render={ props => 
-            <CustomerDash customer={user} {...props}/>
-          }/>
-          
-          <Route path='/stylist-dash/:dataID' 
-          render={props=> 
-          <StylistDash stylist={stylist} {...props}/>
-          } /> */}
+            <Route path='/search' 
+              render={props=> 
+              <SearchPage stylists={props.stylists} salons={props.salons} {...props}/>
+            } />
 
-          {/* <Route path='/search' 
+            {/* <Route 
+              path='/user/:id/dash' 
+              render={ props => 
+              <UserDash user={props.user} {...props}/>
+            }/>*/}
+
+            <Route path='/stylist/:id/dash' 
             render={props=> 
-            <SearchPage stylist={stylist} {...props}/>
-          } /> */}
+            <StylistDash stylist={props.stylist} {...props}/>
+            } />
 
-        
         </Switch>
         </Router>
       </DataProvider>

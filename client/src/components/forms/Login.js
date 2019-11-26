@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {BrowserRouter as Router, Route, NavLink, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, NavLink, Redirect} from 'react-router-dom';
 
 
 //COMPONENTS
@@ -8,7 +8,6 @@ import { useUserContext } from '../contexts/UserContext';
 import { useDataContext } from '../contexts/DataContext';
 import PrivateRoute from '../PrivateRoute';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import validateInput from './Validator';
 
 
 
@@ -19,7 +18,6 @@ class Login extends React.Component {
         this.state={
             username: '',
             password: '',
-            errors: {},
             isLoading: false
         };
 
@@ -35,25 +33,15 @@ class Login extends React.Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    isValid(){
-        const {errors, isValid} = validateInput(this.state);
-        if(!isValid){
-            this.setState({errors});
-        }
-        return isValid
-    };
-
     handleSubmit = e => {
         e.preventDefault();
-        if (this.isValid()){
-            this.setState({errors: {}, isLoading: true});
+            this.setState({isLoading: true});
             axiosWithAuth()
             .post('/api/auth/login', this.state)
             .then(
-                (res)=> this.context.routher.push('/dashboard'),
-                (err)=> this.setState({errors: err.data.errors, isLoading: false})
-            )
-        }
+                (res)=> console.log(res.data),
+                (res)=> this.context.router.push(`api/search`),
+                (err)=> this.setState({ isLoading: false})
             // const userId = (props.match.params.id);
             // const userData = props.data.users.find(el => el.id === userId);
             // const stylistData = props.data.stylists.find(el => el.id === userId);
@@ -64,20 +52,19 @@ class Login extends React.Component {
             //     dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
             //     dispatchData({ type: 'SET_STYLIST', payload: stylistData});
             // }    
-    };
+    )};
 
     
 
     logout = e => {
-        // let storage = props.match.headers.authorization;
-        // e.preventDefault();
-        // axiosWithAuth()
-        // .post('/api/login', this.state.credentials)
-        // .then(res=> {
-        //     storage.setItem('token', !res.data.payload);
-        //     this.props.history.push('/login');
-        // })
-        // .catch(err=>console.log('You are logged out', err))
+        e.preventDefault();
+        axiosWithAuth()
+        .post('/api/login', !this.state)
+        .then(
+            (res)=> this.context.router.push('/'),
+            (err)=> this.setState({isLoading: false})
+        )
+        .catch(err=>console.log('You are logged out', err))
     };
 
     // let handleSubmit = e => {
@@ -132,7 +119,7 @@ class Login extends React.Component {
     // };
      
     render(){
-        const {error, username, password, isLoading} = this.state;
+        const {username, password, isLoading} = this.state;
     return (
             <LoginPage>
                 <LoginForm onSubmit={this.handleSubmit}>
@@ -142,7 +129,6 @@ class Login extends React.Component {
                         name='username' 
                         value={this.username} 
                         placeholder="username" 
-                        error={errors.username}
                         onChange={this.handleChange}
                     />
 
@@ -151,7 +137,6 @@ class Login extends React.Component {
                         name='password' 
                         value={this.password} 
                         placeholder="password" 
-                        errors={errors.password}
                         onChange={this.handleChange}
                     />
 
@@ -165,14 +150,15 @@ class Login extends React.Component {
         )
 }};
 
-LoginForm.propTypes = {
-    login: React.PropTypes.func.isRequired
-}
+// LoginForm.propTypes = {
+//     login: React.PropTypes.func.isRequired
+// }
 
-LoginForm.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
-export default connect(null, {login})(Login);
+// LoginForm.contextTypes = {
+//     router: React.PropTypes.object.isRequired
+// }
+
+export default Login;
 
 
 const LoginPage = styled.div`
@@ -180,7 +166,6 @@ const LoginPage = styled.div`
     height: 40vh;
     align-items: center;
 `;
-
 
 const LoginForm = styled.form`
     display:flex;

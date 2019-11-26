@@ -5,7 +5,7 @@ export default function axiosWithAuth() {
   const token = localStorage.getItem('token');
 
   return axios.create({
-    baseURL: 'https://stylistfind-db.herokuapp.com/', // Be sure to update!
+    baseURL: 'https://stylistfind-db.herokuapp.com/api', // Be sure to update!
     headers: {
       Authorization: token,
     },
