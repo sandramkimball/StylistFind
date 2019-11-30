@@ -202,6 +202,7 @@ export default class SignUp extends React.Component {
           />
         </div>
     )}
+    <button>Register</button>
 
 
        </SignupForm> 
@@ -211,6 +212,8 @@ export default class SignUp extends React.Component {
 
 const SignupPage = styled.div`
     width: 60vw
+    margin: 0 auto;
+    
 `;
 
 const SignupForm = styled.form`
@@ -224,7 +227,6 @@ const SignupForm = styled.form`
     box-shadow: 1px 2px 4px #000;
     background: white;
     width: 350px;
-    height: 300px;
     h3{margin: 0}
     input{
         width: 300px;
@@ -236,9 +238,10 @@ const SignupForm = styled.form`
         flex-direction: row
     }
     button{
-        color: #000;
-        font-size: 1rem;
-        border: none;
+      color: #000;
+        font-size: 1.25rem;
+        border: 1px solid black;
+        padding: 10px 20px;
         background: none;
         text-decoration: none;
         color: black;

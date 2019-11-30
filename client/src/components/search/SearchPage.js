@@ -3,23 +3,23 @@ import SearchCard from './SearchCard';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import FilterBar from './Filter-Bar';
-
+import {MapContainer} from './Map';
 
 function SearchPage({stylists, salons}) {
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState(stylists, salons);
+    const [searchResults, setSearchResults] = useState();
 
     //Two apis? search location+name against salon+stylists.
     useEffect(()=> {
         axiosWithAuth()
-        .get('stylists') 
+        .get('/search') 
         .then(res=> {
             console.log('LIST OF STYLISTS:', res);
-            const results = res.data.stylists.filter(item=> item.city.toLowerCase().includes(searchTerm.toLowerCase()));
+            const results = res.data.filter(item=> item.salon.toLowerCase().includes(searchTerm.toLowerCase()));
             setSearchResults(results);
         })
         .catch(err=> {
-            console.log(err)
+            console.log('FACEPALM', err)
         })
     }, [searchTerm]);
 
@@ -28,7 +28,7 @@ function SearchPage({stylists, salons}) {
         setSearchTerm(e.target.value)
     };
 
-   
+    
 
     return(
         <div>
@@ -45,15 +45,15 @@ function SearchPage({stylists, salons}) {
                     onChange={handleChange}/>
                 </form>
             </SearchBar>
+            <MapContainer/>
             </div>
             <BodyContainer>
-                {/* <FilterBar/> */}
+                <FilterBar/>
                 <SearchContainer>
                     <div className='search-results'>
-                        <p>Test Stylists</p>
-                        {/* {searchResults.map(result=> (
+                        {searchResults.map(result=> (
                             <SearchCard key={result.id} result={result}/>
-                        ))} */}
+                        ))}
                     </div>
                 </SearchContainer>
             </BodyContainer>

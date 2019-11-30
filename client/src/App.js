@@ -29,26 +29,12 @@ function App() {
         <DataProvider>
         <Router>
           <Nav/>
-          <Home/>
           <Switch>
+            <Route exact path='/' component={Home}/>
             <Route path="/signup" component={SignUp}/>
-
-            <Route path='/search' 
-              render={props=> 
-              <SearchPage stylists={props.stylists} salons={props.salons} {...props}/>
-            } />
-
-            {/* <Route 
-              path='/user/:id/dash' 
-              render={ props => 
-              <UserDash user={props.user} {...props}/>
-            }/>*/}
-
-            <Route path='/stylist/:id/dash' 
-            render={props=> 
-            <StylistDash stylist={props.stylist} {...props}/>
-            } />
-
+            <Route path='/search' component={SearchPage}/>
+            <Route path='/users/:id/dash' component={UserDash}  />
+            <Route path='/stylists/:id/dash' component={StylistDash}/>
         </Switch>
         </Router>
       </DataProvider>

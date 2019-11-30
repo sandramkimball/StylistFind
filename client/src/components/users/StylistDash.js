@@ -63,7 +63,7 @@ export default function StylistDash(props) {
             <section className = 'about-me'>
                 <InfoBox>
                     <div>
-                        <img src={`${stylist.profile_img}`} alt='profile of stylist, shop'/>
+                        <img src={`${stylist.profile_img}`} alt='profile of stylist, salon'/>
                     </div>
                     <div className='profile-text'>
                         <h3>{stylist.salon}</h3>

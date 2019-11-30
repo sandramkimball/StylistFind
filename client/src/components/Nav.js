@@ -14,7 +14,9 @@ function Nav(props) {
 
     return(
         <NavBar>
-            <img alt='logo purple girl' src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
+            <NavLink to='/'>
+                <img alt='logo purple girl' src='https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg'/>
+            </NavLink>
 
             {props.location.pathname === '/signup' && (
                 <NavLink to='/login'>Login</NavLink>
@@ -25,16 +27,16 @@ function Nav(props) {
             )}
 
             {localStorage.getItem('usertype') === 'stylist' && (
-                <NavLink to='/stylist-dash'>Dash</NavLink>
+                <NavLink to='/stylists/:id/dash'>Dash</NavLink>
             )}
 
-            {localStorage.getItem('usertype') === 'customer' && (
-                <NavLink to='/customer-dash'>Dash</NavLink>
+            {localStorage.getItem('usertype') === 'user' && (
+                <NavLink to='/users/:id/dash'>Dash</NavLink>
             )}
 
-          <NavLink to='/search' >Search</NavLink>
-          <NavLink to='/customer-dash'>Customer</NavLink>
-          <NavLink to='/stylist-dash'>Stylist</NavLink> 
+          <NavLink to='/search'>Search</NavLink>
+          <NavLink to='/users/:id/dash'>User</NavLink>
+          <NavLink to='/stylists/:id/dash'>Stylist</NavLink> 
           <NavLink to='/login'>Login</NavLink>
 
           

@@ -123,12 +123,12 @@ class Login extends React.Component {
     return (
             <LoginPage>
                 <LoginForm onSubmit={this.handleSubmit}>
-                    <h3>Login</h3>
+                    <h3>Welcome Back</h3>
                     <input 
                         type='text' 
                         name='username' 
                         value={this.username} 
-                        placeholder="username" 
+                        placeholder="Username" 
                         onChange={this.handleChange}
                     />
 
@@ -136,14 +136,12 @@ class Login extends React.Component {
                         type='password' 
                         name='password' 
                         value={this.password} 
-                        placeholder="password" 
+                        placeholder="Password" 
                         onChange={this.handleChange}
                     />
 
                     <div>
                         <button type='submit' onClick={this.handleSubmit}>Login</button>
-                        {/* {token && (<button type='submit' onClick={this.logout}>Logout</button>)} */}
-                        <NavLink to='/signup'><button>Signup</button></NavLink>
                     </div>
                 </LoginForm>
             </LoginPage>
@@ -194,8 +192,9 @@ const LoginForm = styled.form`
     }
     button{
         color: #000;
-        font-size: 1.5rem;
-        border: none;
+        font-size: 1.25rem;
+        border: 1px solid black;
+        padding: 10px 20px;
         background: none;
         text-decoration: none;
         color: black;

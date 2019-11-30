@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "google-maps-react": "^2.0.2",
     "lodash": "^4.17.15",
     "react-router-dom": "^5.1.2",
     "validator": "^12.1.0"
