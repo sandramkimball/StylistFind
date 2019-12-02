@@ -82,6 +82,9 @@ const SearchContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow: scroll;
+    .search-results{
+        width: 100%
+    }
 `;
 
 

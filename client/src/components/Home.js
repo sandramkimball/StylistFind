@@ -11,7 +11,16 @@ export default function Home() {
       <Body>
         <Section1>
           <img src='https://images.unsplash.com/photo-1497433550656-7fb185be365e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9' alt='curly blonde hair and green leaves'/>
-          <h2>StylistFind</h2>
+          <SearchBar>
+            <h1>Find Stylists</h1>
+            <form >
+                <input
+                id='search_input'
+                type='text'
+                name='textfield'
+                placeholder='Enter location, salon or stylist name...'/>
+            </form>
+          </SearchBar>
         </Section1>
         <Section2>
           <div>
@@ -21,19 +30,6 @@ export default function Home() {
             </RegisterBtn>
           </div>
         </Section2>
-        <Section3>
-          <SearchBar>
-                  <h1>Find Stylists</h1>
-                  <form >
-                      <input
-                      id='search_input'
-                      type='text'
-                      name='textfield'
-                      placeholder='Enter location, salon or stylist name...'/>
-                  </form>
-              </SearchBar>
-        </Section3>
-      
      </Body>
     </div>
   );
@@ -55,18 +51,43 @@ const Section1 = Styled.section`
   img{
     object-fit: cover;
     position: relative;
-    // left: 0;
     height: 100%;
     width: 100vw
   }
-  h2{
-    z-index: 5;
-    position: absolute;
-    left: 50px;
-    top: 150px;
-    font-size: 3.5rem;
-    background: #ffffffc0;
-    padding: 5px;
+`;
+
+const SearchBar = Styled.div`
+  width: 60%;
+  margin: 10px auto;
+  background: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 5;
+  position: absolute;
+  top: 30vh;
+  left: 20vw;
+  border-radius: 5px 3px;
+  border: 1px solid gray;
+  h1{font-size: 2.75rem; padding: 0; margin: 0 }
+  form{
+    border: none;
+    height: 30px;
+    margin-left: 20px;
+    width: 60%
+    button{
+        background: none;
+        border: 1px solid black;
+        padding: 7px;
+    }
+    input{
+        border: none;
+        height: 40px;
+        width: 100%;
+        text-align: left;
+        border-bottom: 1.5px solid gray;
+    }
   }
 `;
 
@@ -96,47 +117,6 @@ const RegisterBtn = Styled.div`
   }
 `;
 
-const Section3 = Styled.div`
-  height: 50vh;
-  width: 90vw;
-  margin: 0 auto;
-  padding: 20px 0;
-  // border-top: 2px solid black;
-  // border-bottom: 2px solid black;
-  background: url('https://cdn.stocksnap.io/img-thumbs/960w/JHCQ2KZPR0.jpg');
-  background-size: cover;
-  h4{
-    color: purple;
-    text-align: left;
-  }
-`;
 
-const SearchBar = Styled.div`
-    width: 80%;
-    margin: 10px auto;
-    background: #fff;
-    padding: 20px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    form{
-        border: none;
-        height: 30px;
-        margin-left: 20px;
-        width: 35%
 
-        button{
-            background: none;
-            border: 1px solid black;
-            padding: 7px;
-        }
-        input{
-            border: none;
-            height: 40px;
-            width: 100%;
-            text-align: left;
-            border-bottom: 1.5px solid gray;
 
-        }
-    }
-`;

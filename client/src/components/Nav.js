@@ -15,7 +15,7 @@ function Nav(props) {
     return(
         <NavBar>
             <NavLink to='/'>
-                <Logo>S</Logo>
+                <Logo>Stylist Find</Logo>
             </NavLink>
             <div>
                 {/* {props.location.pathname === '/signup' && (
@@ -59,11 +59,11 @@ function Nav(props) {
 export default withRouter(Nav);
 
 const Logo = styled.h1`
-    background: linear-gradient(to bottom right, #a473aa, #92aed5);
+    background: linear-gradient(to bottom right, #a473aa, #faa41a);
     border-radius: 50%;
     width: 65px;
     height: 65px;
-    font-size: 3rem;
+    font-size: 25px;
     margin: 0 auto;
     padding: 0;
     color: #fff;
@@ -74,14 +74,15 @@ const NavBar = styled.nav`
     background: #fff; 
     display: flex;
     justify-content: center;
-    align-items: baseline;
+    align-items: center;
     border-bottom: 1px solid gray;
     height: 70px;
     justify-content: space-between;
     padding: 0 10px;
     a{
         text-decoration: none;
-        color: #000;
+        color: #faa41a;
+        font-weight: 600;
     }
     img{
         height: 100px;
