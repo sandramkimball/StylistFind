@@ -29,26 +29,26 @@ export default function UserDash(props) {
     }, [])
 
     // if (customer.usertype !=== 'user' || 'stylist'){ 
-    //     return (<Redirect to='/login'></Redirect> )
+    //     return (<Redirect to='/'></Redirect> )
     // }
 
     return (
         <div>
-        <h1>Your Dashboard</h1>
+        <h1>Your Profile</h1>
         <section className = 'about-me'>
             <InfoBox>
                 <div>
-                    <img alt='stylist profile' src={this.userData.profile_img}/>
+                    <img alt='user profile' src={this.userData.profile_img}/>
                 </div>
                 <div className='profile-text'>
                     <h3>{this.userData.first_name}</h3>
-                    <NavLink to='edit-profile' className='edit-btn' >Edit</NavLink>
+                    <NavLink to='edit-profile' className='edit-btn'>Edit</NavLink>
                 </div>
             </InfoBox>                
         </section>
 
         <Saved>
-            <h3>Your Saved Stylists</h3>
+            <h3>Bookmarked</h3>
             <div>
                 {/* {customer.saved_stylists.map(stylist=> (
                 <SavedCard key={stylist.id} stylist={stylist}/>
@@ -61,22 +61,21 @@ export default function UserDash(props) {
 }
 
 const InfoBox = styled.div`
-    border-bottom: 1px solid #80808075;
+    border: 1px solid #80808075;
+    border-radius: 4px;
     text-align: left;
     padding: 20px;
     width: 85%;
-    height: 400px;
+    // height: 400px;
     margin: 20px auto;
     display: flex;
     align-items: center;
     align-content: center;
-
     img{
-        height: 300px;
-        width: 300px;
+        height: 250px;
+        width: 250px;
         object-fit: cover;
-        border-radius: 50%
-        
+        border-radius: 50%   
     }
     div:nth-child(1){
         width: 40%;
@@ -91,7 +90,6 @@ const InfoBox = styled.div`
     }
 `;
 
-
 const Saved = styled.div`
     width: 85%;
     padding: 10px;
@@ -104,14 +102,6 @@ const Saved = styled.div`
 
 
 
-// const initialBio = {
-//     name: '',
-//     savedStylists: [],
-//     imageUrl: '',
-//     address: '',
-//     email: '',
-//     id: '',
-// }
 // const handleDelete = (id) => {
     //     axiosWithAuth()
     //     .delete(`/api/${stylist.id}`).then(res=> {

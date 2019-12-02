@@ -4,9 +4,9 @@ import {BrowserRouter as Router, NavLink, Redirect} from 'react-router-dom';
 
 
 //COMPONENTS
-import { useUserContext } from '../contexts/UserContext';
-import { useDataContext } from '../contexts/DataContext';
-import PrivateRoute from '../PrivateRoute';
+// import { useUserContext } from '../contexts/UserContext';
+// import { useDataContext } from '../contexts/DataContext';
+// import PrivateRoute from '../PrivateRoute';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
 

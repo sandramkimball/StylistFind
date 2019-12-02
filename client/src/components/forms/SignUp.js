@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
 //COMPONENTS
-import { useUserContext } from '../contexts/UserContext';
-import { useDataContext } from '../contexts/DataContext';
+// import { useUserContext } from '../contexts/UserContext';
+// import { useDataContext } from '../contexts/DataContext';
 import axiosWithAuth from "../utilis/axiosWithAuth";
 
 

@@ -1,44 +1,41 @@
 import {Map, GoogleApiWrapper, Marker} from 'google-maps-react';
-import React from 'react';
-
-const mapStyles = {
-    width: '100%',
-    height: '100%'
-};
-
-export class MapContainer extends Component {
+import React, {useState} from 'react';
 
 
-    constructor(props){
-        super(props);
-        this.state={
-            salons:[{zipcode: 92021}]
-        }
+
+export function MapContainer(props) {
+
+    const [zipcodes, setZipcodes] = useState([])
+        
+    const mapStyles = {
+        width: '95%',
+        height: '30vh',
+        border: '1px solid black',
+        margin: '0 auto',
+      
+
     };
 
-    displayMarkers = () => {
-        return this.state.salons.map((salon, index)=> {
-            return <Marker key={index} id={index} position ={{}}
+    const displayMarkers = () => {
+        return zipcodes.map((zipcode, index)=> {
+            return <Marker key={index} id={index} position ={zipcode}
             onClick={()=> console.log('Map was clicked')}/>
         })
     };
 
     
-
-    render() {
-        return (
-            <Map 
-                google={this.props.google}
-                zoom={8}
-                style={mapStyles}
-                initialCenter={{zipcode: 92021}}
-            >
-                {this.displayMarkers()}
-            </Map>
-        )
-    }
+    return (
+        <Map 
+            google={props.google}
+            zoom={8}
+            style={mapStyles}
+            initialCenter={{zipcode: 92021}}
+        >
+            {displayMarkers()}
+        </Map>
+    )
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'TOKEN'
+    apiKey: 'Beautiful Hair'
 })(MapContainer);

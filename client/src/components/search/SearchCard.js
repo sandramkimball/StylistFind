@@ -3,21 +3,19 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
 
-
-
 function SearchCard(props)  {
-    const { profile_img, first_name, last_name, salon, bio, id, email } = props.result;
+    const { profile_img, first_name, last_name, email, salon, bio, id, street_address, zipcode } = props.result;
 
     return (
         <Card>
-            <Link to={`/stylist-dash/${id}`}>
+            <Link to={`/stylists/${id}/dash`} props={props.result}>
                 <img src={profile_img} alt='stylist profile'/>
                 <div>
-                    <h3>{salon}</h3>
-                    {/* <h4>{first_name} {last_name}</h4>  */}
-                    {/* <p>Address: {city}</p> */}
-                    {/* <p>{email}</p>
-                    <p>{bio}</p> */}
+                    <h3>Salon: {salon}</h3>
+                    <h4>{first_name} {last_name}</h4> 
+                    <p>{street_address}, {zipcode}</p>
+                    <p>{email}</p>
+                    <p>{bio}</p>
                 </div>
             </Link>
         </Card>
@@ -26,8 +24,9 @@ function SearchCard(props)  {
 
 
 const Card = styled.div`
-    height: 300px;
-    width: 100%;
+    height: 200px;
+    width: 95%;
+    margin: 0 auto;
     margin-bottom: 10px;
     box-shadow: .5px 2px 3px #000;
     background: white;
@@ -36,8 +35,8 @@ const Card = styled.div`
     flex-direction: row;
     h3{border-bottom: 1px solid #80808095; padding-bottom: 5px;}
     img{
-        height: 300px;
-        width: 300px;
+        height: 100%;
+        width: 250px;
         object-fit: cover;
         display: flex;
         margin-right: 20px;

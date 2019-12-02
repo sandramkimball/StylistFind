@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import {useSelectMode} from '../../hooks/useSelectMode';
+// import {useSelectMode} from '../../hooks/useSelectMode';
 
 export default function FilterBar(){
     // const [filterOpt, setFilterOpt] = useState('');
@@ -106,7 +106,7 @@ export default function FilterBar(){
 let SIDEBAR = styled.div`
     display: flex;
     flex-direction: column;
-    width: 30vw;
+    width: 30%;
     max-width: 330px;
     height: 100vh;
     position: fixed;

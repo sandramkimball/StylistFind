@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
 import './App.css';
 
 // STYLING
@@ -17,8 +17,8 @@ import SearchPage from './components/search/SearchPage';
 import UserDash from './components/users/UserDash';
 import StylistDash from './components/users/StylistDash';
 import SignUp from './components/forms/SignUp';
-import Login from './components/forms/Login';
-import PrivateRoute from './components/PrivateRoute';
+// import Login from './components/forms/Login';
+// import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 

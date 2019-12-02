@@ -1,8 +1,8 @@
 import React from "react";
-import { Route, NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 import Styled from "styled-components";
 import Login from './forms/Login'
-import SignUp from './forms/SignUp';
+// import SignUp from './forms/SignUp';
 
 
 export default function Home() {
@@ -101,8 +101,10 @@ const Section3 = Styled.div`
   width: 90vw;
   margin: 0 auto;
   padding: 20px 0;
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
+  // border-top: 2px solid black;
+  // border-bottom: 2px solid black;
+  background: url('https://cdn.stocksnap.io/img-thumbs/960w/JHCQ2KZPR0.jpg');
+  background-size: cover;
   h4{
     color: purple;
     text-align: left;
@@ -112,7 +114,6 @@ const Section3 = Styled.div`
 const SearchBar = Styled.div`
     width: 80%;
     margin: 10px auto;
-    border: 1px solid gray;
     background: #fff;
     padding: 20px;
     display: flex;

@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {axiosWithAuth} from '../utilis/axiosWithAuth';
+import React, {useState} from 'react';
+// import {axiosWithAuth} from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
 
 const initialImage = {
     imageUrl: '',

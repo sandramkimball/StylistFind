@@ -13,17 +13,13 @@ import AddImage from '../forms/AddImage';
 
 export default function StylistDash(props) {
     const {savedStylist, setSavedStylist} = useState();
-    const {stylist, setStylist} = useState();
-    // const stylist = props.stylist.find(
-    //     item => item.id === Number(props.match.params.dataID)
-    // ); 
+    const [stylist, setStylist] = useState([]);
     
     const handleAddStylist = e => {
         setSavedStylist(e.target.value)
     }
 
     // if(props.usertype === 'user'){
-    //     let storage = props.res.headers.authorization;
     //     const addStylist = savedStylist => {
     //         axiosWithAuth()
     //         .post(`/user/${props.user.id}/saved`, savedStylist)
@@ -31,8 +27,7 @@ export default function StylistDash(props) {
     //             storage.setItem('token', res.data.payload)
     //         })
     //         .catch(err=> console.log(err))
-    //     }
-    // }
+    // }}
     
     const addImage = newImage => {
         localStorage().post(`/stylist/${stylist.id}`, newImage)
@@ -44,22 +39,19 @@ export default function StylistDash(props) {
 
     useEffect(()=>{
         axiosWithAuth()
-        .get(`/stylists/${props.id}`)
-        .then(res=> { console.log(res.data);
-            setStylist(res.data)
+        .get(`/stylists/profile/${props.id}`)
+        .then(res=> { 
+            console.log('Stylist Data: ', res.data);
+            setStylist(res.data);
         })
-        .catch(err=>{console.log(err.response)});
+        .catch(err=>{console.log('SKSKRR ERROR: ', err)});
     }, [])
 
 
     return (
         <div>
-            <h1>Stylist Profile</h1>
-
-            <SaveButton>
-                Save Stylist
-            </SaveButton>
-
+            <h1>{stylist.first_name}</h1>
+            <SaveButton>Bookmark</SaveButton>
             <section className = 'about-me'>
                 <InfoBox>
                     <div>
@@ -67,8 +59,8 @@ export default function StylistDash(props) {
                     </div>
                     <div className='profile-text'>
                         <h3>{stylist.salon}</h3>
-                        <h3>{stylist.name}</h3>
-                        <div className = 'address'>
+                        <h3>{stylist.first_name} {stylist.last_name}</h3>
+                        <div className='address'>
                             <p>{stylist.street_address}</p>
                             <p>{stylist.city}</p>
                             <p>{stylist.state}</p>
@@ -76,27 +68,23 @@ export default function StylistDash(props) {
                             <p>{stylist.country}</p>
                         </div>
                         <p>{stylist.bio}</p>
-
-                    <NavLink to='/edit-bio'>
-                        <p className='edit-btn'>Edit</p>
-                    </NavLink>
-
+                        <NavLink to='/edit-bio'>
+                            <p className='edit-btn'>Edit</p>
+                        </NavLink>
                     </div>
-
                 </InfoBox>                
             </section>
-
             <section className = 'gallery'>
                 <Gallery>
                     <div> 
                         <AddImage/>
                     </div>  
                     <div>                    
-                        {stylist.map(stylist=> (
+                        {/* {stylist.map(stylist=> (
                             <GalleryImg>
                                 <img src={`${stylist.image}`}/>
                             </GalleryImg>
-                        ))}
+                        ))} */}
                     </div>
                 </Gallery>
             </section>

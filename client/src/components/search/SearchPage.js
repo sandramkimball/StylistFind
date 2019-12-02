@@ -3,11 +3,11 @@ import SearchCard from './SearchCard';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import FilterBar from './Filter-Bar';
-import {MapContainer} from './Map';
+import GoogleApiWrapper from './Map';
 
-function SearchPage({stylists, salons}) {
+function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState();
+    const [searchResults, setSearchResults] = useState([]);
 
     //Two apis? search location+name against salon+stylists.
     useEffect(()=> {
@@ -28,8 +28,6 @@ function SearchPage({stylists, salons}) {
         setSearchTerm(e.target.value)
     };
 
-    
-
     return(
         <div>
             <div>
@@ -45,7 +43,9 @@ function SearchPage({stylists, salons}) {
                     onChange={handleChange}/>
                 </form>
             </SearchBar>
-            <MapContainer/>
+            <MapContainer>
+                <GoogleApiWrapper/>
+            </MapContainer>
             </div>
             <BodyContainer>
                 <FilterBar/>
@@ -67,36 +67,50 @@ const BodyContainer = styled.div`
     display: flex
 `;
 
+const MapContainer = styled.div`
+    position: fixed;
+    right: 0;
+    width: 30%;
+    max-width: 330px;
+    height: 100vh;
+    border-left: 2px solid gray;
+`;
+
 const SearchContainer = styled.div`
     margin: 0 auto;  
-    width: 80%;
+    width: 60%;
     display: flex;
     flex-direction: column;
-    border: 1px solid #80808095;
+    overflow: scroll;
 `;
-const Container = styled.div`
-    display: flex;
-    flex-direction: column
-`;
+
 
 const SearchBar = styled.div`
     width: 80%;
-    margin: 10px auto;
+    margin: 10px ;
     display: flex;
-    justify-content: space-between;
+    // justify-content: center;
     align-items: center;
+    position: relative;
     form{
-        border-bottom: 1.5px solid gray;
-        height: 30px;
-
+        border: none;
+        margin-left: 20px;
+        height: 40px;
+        width: 50%;
         button{
             background: none;
             border: 1px solid black;
             padding: 7px;
         }
         input{
-            border: none;
-            width: 200px;
+            border: 1px solid black;
+            border-radius: 4px;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            padding-left: 5px;
+            font-size: 1rem;
         }
+        input:focus{border: 1px solid gray}
     }
 `;
