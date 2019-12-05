@@ -1,9 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { BrowserRouter as Router, NavLink} from 'react-router-dom';
 import styled from 'styled-components';
-
-
-//COMPONENTS
 // import {useDataContext} from '../contexts/DataContext';
 // import {useUserContext} from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
@@ -13,29 +10,19 @@ import AddPost from '../forms/AddPost';
 
 
 export default function StylistDash(props) {
-    const {savedStylist, setSavedStylist} = useState();
     const [stylist, setStylist] = useState([]);
     const [posts, setPosts] = useState([]);
     let id = props.id;
     // if(props.usertype === 'stylist'){
     //     const addStylist = savedStylist => {
     //         axiosWithAuth()
-    //         .post(`/stylist/${props.user.id}`)
+    //         .post(`/stylist/${props.user.id}/posts`)
     //         .then(res=> {
     //             localStorage.setItem('token', res.data.payload)
     //         })
     //         .catch(err=> console.log(err))
     // }}
     
-    const addImage = newImage => {
-       axiosWithAuth(`/stylists/${props.id}`)
-       .post(newImage)
-       .then(res=> {
-            localStorage.setItem('token', res.data.payload)
-        })
-        .catch(err=> console.log(err))
-    }
-
     useEffect(()=>{
         axiosWithAuth()
         .get(`/stylists/profile/3`)

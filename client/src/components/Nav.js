@@ -59,7 +59,6 @@ function Nav(props) {
 export default withRouter(Nav);
 
 const Logo = styled.h1`
-    // background: linear-gradient(to bottom right, #a473aa, #faa41a);
     font-size: 32px;
     margin: 0 auto;
     padding: 5px 20px;
@@ -68,7 +67,7 @@ const Logo = styled.h1`
 `;
 
 const NavBar = styled.nav`
-    background: #fff; 
+    background: #f1effb; 
     display: flex;
     justify-content: center;
     align-items: center;
