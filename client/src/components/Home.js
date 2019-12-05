@@ -2,11 +2,13 @@ import React, {useState, useEffect} from "react";
 import {  NavLink } from "react-router-dom";
 import Styled from "styled-components";
 import Reviews from './reviews/Reviews';
+import Posts from './posts/Posts';
 import axiosWithAuth from "./utilis/axiosWithAuth";
 
 
 export default function Home() {
   const [recentPosts, setRecentPosts] = useState([]);
+  const [recentReviews, setRecentReviews] = useState([]);
   
   useEffect(()=>{
     axiosWithAuth()
@@ -43,7 +45,7 @@ export default function Home() {
         <Section3>
           <div>
             <h1>Latest Posts</h1>
-            
+            <Posts props={recentPosts}/>
           </div>
         </Section3>
      </Body>

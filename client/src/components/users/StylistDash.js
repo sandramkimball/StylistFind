@@ -7,7 +7,8 @@ import styled from 'styled-components';
 // import {useDataContext} from '../contexts/DataContext';
 // import {useUserContext} from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import AddImage from '../forms/AddImage';
+import PostCard from '../posts/PostCard';
+import AddPost from '../forms/AddPost';
 
 
 
@@ -85,16 +86,11 @@ export default function StylistDash(props) {
             <section className = 'gallery'>
                 <Gallery>
                     <div> 
-                        <AddImage/>
+                        <AddPost/>
                     </div>  
-                    <div>                    
-                        {posts.map(post=> (
-                            <GalleryImg>
-                                <img src={`${post.image}`}/>
-                                <p>{post.comment}</p>
-                            </GalleryImg>
-                        ))}
-                    </div>
+                    {posts.map(post=> (
+                        <PostCard props={post}/>
+                    ))}
                 </Gallery>
             </section>
         </div>
@@ -169,20 +165,4 @@ const Gallery = styled.div`
     }
 `;
 
-const GalleryImg = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: 5px;
-    padding: 0;
-    box-shadow: .5px 1px 3px black;
-    min-height: 300px;
-    img{
-        object-fit: cover;
-        margin-bottom: 0;
-    }
-    p{
-        font-size: 1.125rem
-        text-align: left; 
-        padding: 5px;
-    }
-`;
+
