@@ -2,27 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import ReviewForm from './ReviewForm';
 import {useUserContext} from '../contexts/UserContext';
+import ReviewCard from './ReviewCards';
 
 
 const Reviews = props => {
     const { user, dispatch } = useUserContext();
 
     return (
-        <ReviewList>
-            <h1>Reviews</h1>
+        <div>
             <ReviewForm/>
-            {user.isCustomer && (
-                <ReviewForm/>
-                )}
+            <ReviewList>
+            <h1>Reviews</h1>
             <ul>
                 <li>Review:</li>
                 <li>Review:</li>
-
-            {/* {props.reviews.map(item=> (
-                <li>{item}</li>
-            ))} */}
+                {props.reviews.map(item=> (
+                    <ReviewCard item={item}/>
+                ))}
             </ul>
         </ReviewList>
+        </div>
     )
 }
 
