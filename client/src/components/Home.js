@@ -1,63 +1,146 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {  NavLink } from "react-router-dom";
 import Styled from "styled-components";
-import { nominalTypeHack } from "prop-types";
+import Reviews from './reviews/Reviews';
+import Posts from './posts/Posts';
+import axiosWithAuth from "./utilis/axiosWithAuth";
 
-const SignupButton = Styled.button`
-display:flex;
-margin: auto;
-`;
-
-const LoginButton = Styled.button`
-display:flex;
-margin: auto;
-`;
-
-const UserInput = Styled.input`
-display:flex
-`;
-const PasswordInput = Styled.input`
-display:flex
-`;
 
 export default function Home() {
+  const [recentPosts, setRecentPosts] = useState([]);
+  const [recentReviews, setRecentReviews] = useState([]);
+  
+  useEffect(()=>{
+    axiosWithAuth()
+    .get('/')
+    .then(res=> {
+      console.log(res.data)
+      setRecentPosts(res.data.posts);
+    })
+    .catch(err=> {console.log(err)})
+  }, [])
+
   return (
     <div>
-      <img
-        className="navbar-logo"
-        alt="Hair Care logo"
-        src="https://img.pngio.com/hair-salon-clipart-hair-stylist-png-hair-extension-logo-ideas-736-hair-stylist-png-images-736_797.jpg"
-      />
-
-      <h3>Login</h3>
-
-      <div>
-        <label id="Username">
-          {"Username"}
-
-          <UserInput
-            id="Username"
-            type="text"
-            placeholder="Username"
-            className="home-username-input"
-          />
-        </label>
-      </div>
-      <label id="Password">
-        {"Password"}
-        <PasswordInput
-          id="Password"
-          type="Password"
-          placeholder="Password"
-          className="home-password-input"
-        />
-      </label>
-      <NavLink to="/dash" className="login-btn" >
-        <LoginButton>Login</LoginButton>
-      </NavLink>
-      <NavLink to="/sign-up" className="sign-up-btn">
-        <SignupButton>Sign Up</SignupButton>
-      </NavLink>
+      <Body>
+        <Section1>
+          <img src='https://images.unsplash.com/photo-1497433550656-7fb185be365e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9' alt='curly blonde hair and green leaves'/>
+          <SearchBar>
+            <h1>Find Stylists</h1>
+            <form >
+                <input
+                id='search_input'
+                type='text'
+                name='textfield'
+                placeholder='Enter location, salon or stylist name...'/>
+            </form>
+          </SearchBar>
+        </Section1>
+        <Section2>
+          <div>
+            <h1>Latest Reviews</h1>
+            <Reviews props={recentPosts}/>
+          </div>
+        </Section2>
+        <Section3>
+          <div>
+            <h1>Latest Posts</h1>
+            <Posts props={recentPosts}/>
+          </div>
+        </Section3>
+     </Body>
     </div>
   );
 }
+
+
+const Body = Styled.section`
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  dislay: flex;
+  flex-direction: column;
+  align-content: space-between;
+`;
+
+const Section1 = Styled.section`
+  height: 60vh;
+  width: 100vw;
+  img{
+    object-fit: cover;
+    position: relative;
+    height: 100%;
+    width: 100vw
+  }
+`;
+
+const Section2 = Styled.section`
+  width: 100vw;
+  h1{font-size: 2rem;}
+  div{
+      width: 90%;
+      margin: 0 auto;
+    }
+`;
+
+const Section3 = Styled.section`
+  width: 100vw;
+  h1{font-size: 2rem;}
+  div{
+      width: 90%;
+      margin: 0 auto;
+    }
+`;
+
+const SearchBar = Styled.div`
+  width: 60%;
+  margin: 10px auto;
+  background: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 5;
+  position: absolute;
+  top: 30vh;
+  left: 20vw;
+  border-radius: 5px 3px;
+  h1{font-size: 2.75rem; padding: 0; margin: 0 }
+  form{
+    border: none;
+    height: 30px;
+    margin-left: 20px;
+    width: 60%
+    button{
+        background: none;
+        border: 1px solid black;
+        padding: 7px;
+    }
+    input{
+        border: none;
+        height: 40px;
+        width: 100%;
+        text-align: left;
+        border-bottom: 1.5px solid gray;
+    }
+  }
+`;
+
+const RegisterBtn = Styled.div`
+  width: 40vw;
+  align-items: center;
+  a{text-decoration: none;}
+  h3{
+    font-size: 3rem;
+    color: purple;
+    :hover{
+      transform: scale(1.1);
+      color: #80808095; 
+      cursor: pointer;
+    }
+  }
+`;
+
+
+
+

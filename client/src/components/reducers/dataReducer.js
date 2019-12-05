@@ -5,7 +5,7 @@ export const initialState ={
     stylistData: [],
     stylist: '',
     savedStylists: [],
-    clientData: [],
+    userData: [],
     reviews: [],
     imageUrl: '',
     images: [],
@@ -41,10 +41,10 @@ export const dataReducer = (state = initialState, action) => {
                 error: action.payload
             }
 
-        case 'IMPORT_CUSTOMER_DATA':
+        case 'IMPORT_USER_DATA':
             return {
                 ...state,
-                customerData: action.payload,
+                useerData: action.payload,
                 hasData: true,
             }
         
@@ -77,10 +77,10 @@ export const dataReducer = (state = initialState, action) => {
                 savedStylists: [...state.savedStylists, {savedStylist: action.payload}]
             }
 
-        case 'SET_CUSTOMER':
+        case 'SET_USER':
             return{
                 ...state,
-                customer: action.payload
+                user: action.payload
             }
         case 'DELETE_SAVED_STYLIST':
             return {
