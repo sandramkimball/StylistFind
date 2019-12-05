@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ReviewForm from './ReviewForm';
-import {useUserContext} from './contexts/UserContext';
+import {useUserContext} from '../contexts/UserContext';
 
 
 const Reviews = props => {

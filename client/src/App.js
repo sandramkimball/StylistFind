@@ -17,7 +17,7 @@ import SearchPage from './components/search/SearchPage';
 import UserDash from './components/users/UserDash';
 import StylistDash from './components/users/StylistDash';
 import SignUp from './components/forms/SignUp';
-// import Login from './components/forms/Login';
+import Login from './components/forms/Login';
 // import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -32,6 +32,7 @@ function App() {
           <Switch>
             <Route exact path='/' component={Home}/>
             <Route path="/signup" component={SignUp}/>
+            <Route path="/login" component={Login}/>
             <Route path='/search' component={SearchPage}/>
             <Route path='/users/:id/dash' component={UserDash}  />
             <Route path='/stylists/:id/dash' component={StylistDash}/>

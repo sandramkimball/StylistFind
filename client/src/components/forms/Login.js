@@ -163,6 +163,7 @@ const LoginPage = styled.div`
     width: 40vh;
     height: 40vh;
     align-items: center;
+    margin: 0 auto;
 `;
 
 const LoginForm = styled.form`
@@ -175,7 +176,7 @@ const LoginForm = styled.form`
     flex-direction: column;
     box-shadow: 1px 2px 4px #80808095;
     background: white;
-    width: 60%;
+    width: 100%;
     height: 80%;
     h3{margin: 0; font-size: 2rem}
     input{

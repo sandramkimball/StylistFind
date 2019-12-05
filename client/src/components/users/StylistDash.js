@@ -16,19 +16,15 @@ export default function StylistDash(props) {
     const [stylist, setStylist] = useState([]);
     const [posts, setPosts] = useState([]);
     let id = props.id;
-    const handleAddStylist = e => {
-        setSavedStylist(e.target.value)
-    }
-
-    if(props.usertype === 'user'){
-        const addStylist = savedStylist => {
-            axiosWithAuth()
-            .post(`/user/${props.user.id}/saved`, savedStylist)
-            .then(res=> {
-                // setItem('token', res.data.payload)
-            })
-            .catch(err=> console.log(err))
-    }}
+    // if(props.usertype === 'stylist'){
+    //     const addStylist = savedStylist => {
+    //         axiosWithAuth()
+    //         .post(`/stylist/${props.user.id}`)
+    //         .then(res=> {
+    //             localStorage.setItem('token', res.data.payload)
+    //         })
+    //         .catch(err=> console.log(err))
+    // }}
     
     const addImage = newImage => {
        axiosWithAuth(`/stylists/${props.id}`)
@@ -51,7 +47,7 @@ export default function StylistDash(props) {
 
     useEffect(()=>{
         axiosWithAuth()
-        .get(`/stylists/profile/${id}/posts`)
+        .get(`/stylists/profile/3/posts`)
         .then(res=> { 
             console.log('Posts Data: ', res.data);
             setPosts(res.data);
@@ -63,7 +59,6 @@ export default function StylistDash(props) {
     return (
         <div>
             <h1>{stylist.first_name} {stylist.last_name}</h1>
-            <SaveButton>★</SaveButton>
             <section className = 'about-me'>
                 <InfoBox>
                     <div>
@@ -112,6 +107,8 @@ const SaveButton = styled.button`
     background: none;
     color: gray;
     font-size: 3rem;
+    position: absolute;
+    right: 5vw;
     :hover{ 
         color: gold;
         cursor: pointer;

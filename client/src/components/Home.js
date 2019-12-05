@@ -1,8 +1,6 @@
 import React from "react";
 import {  NavLink } from "react-router-dom";
 import Styled from "styled-components";
-import Login from './forms/Login'
-// import SignUp from './forms/SignUp';
 
 
 export default function Home() {
@@ -24,10 +22,7 @@ export default function Home() {
         </Section1>
         <Section2>
           <div>
-            <Login/>
-            <RegisterBtn>
-              <NavLink to='/signup'><h3>Or Sign Up Here</h3></NavLink>
-            </RegisterBtn>
+            <h1>Latest Posts</h1>
           </div>
         </Section2>
      </Body>
@@ -56,6 +51,15 @@ const Section1 = Styled.section`
   }
 `;
 
+const Section2 = Styled.section`
+  width: 100vw;
+  h1{font-size: 2rem;}
+  div{
+      width: 90%;
+      margin: 0 auto;
+    }
+`;
+
 const SearchBar = Styled.div`
   width: 60%;
   margin: 10px auto;
@@ -69,7 +73,6 @@ const SearchBar = Styled.div`
   top: 30vh;
   left: 20vw;
   border-radius: 5px 3px;
-  border: 1px solid gray;
   h1{font-size: 2.75rem; padding: 0; margin: 0 }
   form{
     border: none;
@@ -88,17 +91,6 @@ const SearchBar = Styled.div`
         text-align: left;
         border-bottom: 1.5px solid gray;
     }
-  }
-`;
-
-const Section2 = Styled.section`
-  margin: 20px auto;
-  align-items: center; 
-  div{
-    display: flex;
-    width: 90%;
-    justify-content: space-evenly;
-    a{text-deoration: none} 
   }
 `;
 
