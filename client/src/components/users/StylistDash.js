@@ -4,15 +4,13 @@ import styled from 'styled-components';
 // import {useDataContext} from '../contexts/DataContext';
 // import {useUserContext} from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import PostCard from '../posts/PostCard';
+import Posts from '../posts/Posts';
 import AddPost from '../forms/AddPost';
 
 
 
 export default function StylistDash(props) {
     const [stylist, setStylist] = useState([]);
-    const [posts, setPosts] = useState([]);
-    let id = props.id;
     // if(props.usertype === 'stylist'){
     //     const addStylist = savedStylist => {
     //         axiosWithAuth()
@@ -33,17 +31,6 @@ export default function StylistDash(props) {
         .catch(err=>{console.log('SKSKRR ERROR: ', err)});
     }, [])
 
-    useEffect(()=>{
-        axiosWithAuth()
-        .get(`/stylists/profile/3/posts`)
-        .then(res=> { 
-            console.log('Posts Data: ', res.data);
-            setPosts(res.data);
-        })
-        .catch(err=>{console.log('PHKHHK POST ERROR: ', err)});
-    }, [])
-
-
     return (
         <div>
             <h1>{stylist.first_name} {stylist.last_name}</h1>
@@ -59,10 +46,7 @@ export default function StylistDash(props) {
                             <p>{stylist.email}</p>
                             <p>{stylist.salon}</p>
                             <p>{stylist.street_address}</p>
-                            <p>{stylist.city}</p>
-                            <p>{stylist.state}</p>
-                            <p>{stylist.zipcode}</p>
-                            <p>{stylist.country}</p>
+                            <p>{stylist.city}, {stylist.state} {stylist.zipcode}</p>
                         </div>
                         <NavLink to='/edit-bio'>
                             <p className='edit-btn'>Edit</p>
@@ -72,31 +56,15 @@ export default function StylistDash(props) {
             </section>
             <section className = 'gallery'>
                 <Gallery>
-                    <div> 
-                        <AddPost/>
-                    </div>  
-                    {posts.map(post=> (
-                        <PostCard props={post}/>
-                    ))}
+                    <AddPost/>
+                    <div>
+                        <Posts key={props.id} props={props}/>
+                    </div>
                 </Gallery>
             </section>
         </div>
     )
 }
-
-
-const SaveButton = styled.button`
-    border: none;
-    background: none;
-    color: gray;
-    font-size: 3rem;
-    position: absolute;
-    right: 5vw;
-    :hover{ 
-        color: gold;
-        cursor: pointer;
-    }
-`;
 
 const InfoBox = styled.div`
     border-bottom: 1px solid #80808075;
@@ -134,7 +102,6 @@ const InfoBox = styled.div`
 const Gallery = styled.div`
     width: 85%;
     margin: 0 auto;
-    pading: 100px
     h3{ align-text: center}
     div{
         display: flex;
