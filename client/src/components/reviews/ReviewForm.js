@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import styled from 'styled-components';
 import {useDataContext} from '../contexts/DataContext';
-import {axiosWithAuth} from '../utilis/axiosWithAuth';
+import axiosWithAuth from '../utilis/axiosWithAuth';
 
 const ReviewForm = (props) => {
     const {data, dispatchData} = useDataContext();

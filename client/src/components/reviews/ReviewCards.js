@@ -1,6 +1,12 @@
+import React from 'react';
 import styled from 'styled-components';
 
-export default ReviewCard = (props) => {
+const ReviewCard = (props) => {
+
+    var ImageStack = (props) => {
+        
+    };
+
     return (
         <div>
             <Card>
@@ -9,7 +15,6 @@ export default ReviewCard = (props) => {
                 <h5>at {props.salon}</h5>
                 <p>{props.date}</p>
                 <p>Comment</p>
-                <img src=''/>
             </Card>
         </div>
     )
@@ -22,9 +27,7 @@ const Card = styled.div`
     box-shadow: 0px 1px 1px black;
     display: flex;
     flex-direction: column;
-    img{
-        height: 200px;
-        width: 100%;
-        object-fit: cover;
-    }
+    padding: 4px;
 `;
+
+export default ReviewCard;

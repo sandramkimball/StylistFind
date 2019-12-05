@@ -10,17 +10,12 @@ const Reviews = props => {
 
     return (
         <div>
-            <ReviewForm/>
             <ReviewList>
-            <h1>Reviews</h1>
-            <ul>
-                <li>Review:</li>
-                <li>Review:</li>
-                {props.reviews.map(item=> (
+                <p>Faux Review</p>>
+                {/* {props.reviews.map(item=> (
                     <ReviewCard item={item}/>
-                ))}
-            </ul>
-        </ReviewList>
+                ))} */}
+            </ReviewList>
         </div>
     )
 }
@@ -29,12 +24,8 @@ export default Reviews;
 
 const ReviewList = styled.div`
     width: 80%;
-    max-height: 30%;
-    margin: 50px auto;
+    margin: 10vh auto;
     text-align: left;
-    ul li{
-        padding: 10px;
-        border-bottom: 1.5px solid gray;
-        list-style-type: none
-    }
+    border: 1px solid gray;
+    p{height: 250px; width: 200px; border: 1px solid purple}
 `;

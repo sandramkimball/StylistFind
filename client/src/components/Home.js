@@ -1,9 +1,23 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {  NavLink } from "react-router-dom";
 import Styled from "styled-components";
+import Reviews from './reviews/Reviews';
+import axiosWithAuth from "./utilis/axiosWithAuth";
 
 
 export default function Home() {
+  const [recentPosts, setRecentPosts] = useState([]);
+  
+  useEffect(()=>{
+    axiosWithAuth()
+    .get('/')
+    .then(res=> {
+      console.log(res.data)
+      setRecentPosts(res.data.posts);
+    })
+    .catch(err=> {console.log(err)})
+  }, [])
+
   return (
     <div>
       <Body>
@@ -22,9 +36,16 @@ export default function Home() {
         </Section1>
         <Section2>
           <div>
-            <h1>Latest Posts</h1>
+            <h1>Latest Reviews</h1>
+            <Reviews props={recentPosts}/>
           </div>
         </Section2>
+        <Section3>
+          <div>
+            <h1>Latest Posts</h1>
+            
+          </div>
+        </Section3>
      </Body>
     </div>
   );
@@ -52,6 +73,15 @@ const Section1 = Styled.section`
 `;
 
 const Section2 = Styled.section`
+  width: 100vw;
+  h1{font-size: 2rem;}
+  div{
+      width: 90%;
+      margin: 0 auto;
+    }
+`;
+
+const Section3 = Styled.section`
   width: 100vw;
   h1{font-size: 2rem;}
   div{
