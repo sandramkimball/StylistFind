@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {  NavLink } from "react-router-dom";
+// import {  NavLink } from "react-router-dom";
 import Styled from "styled-components";
 import Reviews from './reviews/Reviews';
 import Posts from './posts/Posts';
@@ -30,7 +30,7 @@ export default function Home() {
         review.date.replace('-', '').sort(function(a, b){return a-b}));
       setRecentReviews(latestReviews);
     })
-    .catch(err=> {console.log('Latest Post Error: ', err)})
+    .catch(err=> {console.log('Latest Review Error: ', err)})
   }, [])
 
   return (

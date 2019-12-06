@@ -11,22 +11,14 @@ import AddPost from '../forms/AddPost';
 
 export default function StylistDash(props) {
     const [stylist, setStylist] = useState([]);
-    // if(props.usertype === 'stylist'){
-    //     const addStylist = savedStylist => {
-    //         axiosWithAuth()
-    //         .post(`/stylist/${props.user.id}/posts`)
-    //         .then(res=> {
-    //             localStorage.setItem('token', res.data.payload)
-    //         })
-    //         .catch(err=> console.log(err))
-    // }}
     
     useEffect(()=>{
+        const id = props.id;
         axiosWithAuth()
-        .get(`/stylists/profile/3`)
+        .get(`/stylists/profile/${id}`)
         .then(res=> { 
             console.log('Stylist Data: ', res.data);
-            setStylist(res.data);
+            setStylist(res.data)
         })
         .catch(err=>{console.log('SKSKRR ERROR: ', err)});
     }, [])
@@ -48,9 +40,10 @@ export default function StylistDash(props) {
                             <p>{stylist.street_address}</p>
                             <p>{stylist.city}, {stylist.state} {stylist.zipcode}</p>
                         </div>
+                        {/* {'usertype' === 'stlyist' &&(
                         <NavLink to='/edit-bio'>
                             <p className='edit-btn'>Edit</p>
-                        </NavLink>
+                        </NavLink>)} */}
                     </div>
                 </InfoBox>                
             </section>
@@ -106,10 +99,6 @@ const Gallery = styled.div`
     div{
         display: flex;
         flex-wrap: wrap; 
-    }
-    div:nth-child(1){
-        justify-content: flex-end;
-        margin: 10px;
     }
     img{
         margin: 5px;

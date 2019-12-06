@@ -38,5 +38,4 @@ const ReviewList = styled.div`
     margin: 10vh auto;
     text-align: left;
     border: 1px solid gray;
-    p{height: 200px; width: 400px; border: 1px solid purple}
 `;

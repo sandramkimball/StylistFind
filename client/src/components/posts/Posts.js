@@ -7,9 +7,9 @@ function Posts(props) {
     const [posts, setPosts] = useState([]);
 
     useEffect(()=>{
-        const id = props.id
+        const id = props.id;
         axiosWithAuth()
-        .get(`/stylists/profile/3/posts`)
+        .get(`/stylists/profile/${id}/posts`)
         .then(res=> { 
             console.log('Posts: ', res.data);
             setPosts(res.data);

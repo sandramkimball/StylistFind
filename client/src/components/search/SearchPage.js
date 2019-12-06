@@ -9,7 +9,6 @@ function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
-    //Two apis? search location+name against salon+stylists.
     useEffect(()=> {
         axiosWithAuth()
         .get('/search') 
@@ -32,20 +31,20 @@ function SearchPage() {
         <div>
             <div>
                 <SearchBar>
-                <h1>Find Stylists</h1>
-                <form onSubmit={handleChange}>
-                    <input
-                    id='search_input'
-                    type='text'
-                    name='textfield'
-                    placeholder='Search'
-                    value={searchTerm}
-                    onChange={handleChange}/>
-                </form>
-            </SearchBar>
-            <MapContainer>
-                <GoogleApiWrapper/>
-            </MapContainer>
+                    <h1>Find Stylists</h1>
+                    <form onSubmit={handleChange}>
+                        <input
+                        id='search_input'
+                        type='text'
+                        name='textfield'
+                        placeholder='Search'
+                        value={searchTerm}
+                        onChange={handleChange}/>
+                    </form>
+                </SearchBar>
+                <MapContainer>
+                    <GoogleApiWrapper/>
+                </MapContainer>
             </div>
             <BodyContainer>
                 <FilterBar/>
