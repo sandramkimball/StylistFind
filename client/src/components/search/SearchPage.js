@@ -42,19 +42,19 @@ function SearchPage() {
                         onChange={handleChange}/>
                     </form>
                 </SearchBar>
-                <MapContainer>
-                    <GoogleApiWrapper/>
-                </MapContainer>
             </div>
             <BodyContainer>
                 <FilterBar/>
                 <SearchContainer>
-                    <div className='search-results'>
+                    
                         {searchResults.map(result=> (
                             <SearchCard key={result.id} result={result}/>
                         ))}
-                    </div>
+                    
                 </SearchContainer>
+                <MapContainer>
+                    <GoogleApiWrapper/>
+                </MapContainer>
             </BodyContainer>
         </div>
     )
@@ -76,22 +76,21 @@ const MapContainer = styled.div`
 `;
 
 const SearchContainer = styled.div`
-    margin: 0 auto;  
-    width: 60%;
+    margin: 0 auto;
+    max-width:100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     overflow: scroll;
-    .search-results{
-        width: 100%
-    }
+    position: fixed;
+    left: 30%;
+    bottom: 0;
 `;
-
 
 const SearchBar = styled.div`
     width: 80%;
     margin: 10px ;
     display: flex;
-    // justify-content: center;
     align-items: center;
     position: relative;
     form{

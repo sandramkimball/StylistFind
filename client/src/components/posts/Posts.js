@@ -32,7 +32,7 @@ function Posts(props) {
 export default Posts;
 
 const Card = Styled.div`
-    width: 100%;
+    width: 90%;
     margin: 10vh auto;
     text-align: left;
     display: flex;
