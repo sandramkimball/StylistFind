@@ -5,6 +5,11 @@ import axiosWithAuth from '../utilis/axiosWithAuth';
 
 function Posts(props) {
     const [posts, setPosts] = useState([]);
+    
+    const selectPost=e=>{
+        e.preventDefault();
+        
+    }
 
     useEffect(()=>{
         const id = props.id;
@@ -22,7 +27,7 @@ function Posts(props) {
         <div>
             <Card>
                 {posts.map(post=> (
-                    <PostCard key={post.id} post={post}/>
+                    <PostCard key={post.id} post={post} onClick={selectPost}/>
                 ))}                
             </Card>
         </div>
@@ -36,4 +41,10 @@ const Card = Styled.div`
     text-align: left;
     display: flex;
     flex-wrap: wrap;
+    .selected{
+        position: absolute;
+        z-index: 5;
+        margin: 0 auto;
+        transform: scale(3);
+    }
 `;
