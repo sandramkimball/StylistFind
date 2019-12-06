@@ -15,7 +15,7 @@ function SearchCard(props)  {
 
     return (
         <Card>
-            <Link to={`/stylists/${id}/dash`} key={props.result.id} id={props.id} props={props}>
+            <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
                 <img src={profile_img} alt='stylist profile'/>
                 <div>
                     <h3>{salon}</h3>
@@ -33,9 +33,8 @@ function SearchCard(props)  {
 
 const Card = styled.div`
     height: 220px;
-    width: 90%;
-    margin: 0 auto;
-    margin-bottom: 10px;
+    width: 600px;
+    margin: 5px auto;
     box-shadow: .5px 2px 3px #000;
     background: white;
     text-align: left;
@@ -46,7 +45,7 @@ const Card = styled.div`
     p{padding: 0; margin: 0; }
     img{
         height: 100%;
-        width: 25%;
+        width: 30%;
         object-fit: cover;
         display: flex;
         margin-right: 20px;
@@ -57,7 +56,7 @@ const Card = styled.div`
         text-decoration: none;
         color: black
     }
-    :hover{transform: scale(1.025)}
+    :hover{transform: scale(1.005)}
 `;
 
 export default SearchCard

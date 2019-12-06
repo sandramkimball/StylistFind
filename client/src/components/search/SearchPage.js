@@ -9,7 +9,6 @@ function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
-    //Two apis? search location+name against salon+stylists.
     useEffect(()=> {
         axiosWithAuth()
         .get('/search') 
@@ -32,30 +31,28 @@ function SearchPage() {
         <div>
             <div>
                 <SearchBar>
-                <h1>Find Stylists</h1>
-                <form onSubmit={handleChange}>
-                    <input
-                    id='search_input'
-                    type='text'
-                    name='textfield'
-                    placeholder='Search'
-                    value={searchTerm}
-                    onChange={handleChange}/>
-                </form>
-            </SearchBar>
-            <MapContainer>
-                <GoogleApiWrapper/>
-            </MapContainer>
+                    <h1>Find Stylists</h1>
+                    <form onSubmit={handleChange}>
+                        <input
+                        id='search_input'
+                        type='text'
+                        name='textfield'
+                        placeholder='Search'
+                        value={searchTerm}
+                        onChange={handleChange}/>
+                    </form>
+                </SearchBar>
             </div>
             <BodyContainer>
                 <FilterBar/>
                 <SearchContainer>
-                    <div className='search-results'>
-                        {searchResults.map(result=> (
-                            <SearchCard key={result.id} result={result}/>
-                        ))}
-                    </div>
+                    {searchResults.map(result=> (
+                        <SearchCard key={result.id} result={result}/>
+                    ))}
                 </SearchContainer>
+                <MapContainer>
+                    <GoogleApiWrapper/>
+                </MapContainer>
             </BodyContainer>
         </div>
     )
@@ -77,22 +74,28 @@ const MapContainer = styled.div`
 `;
 
 const SearchContainer = styled.div`
-    margin: 0 auto;  
-    width: 60%;
+    margin: 0 auto;
+    max-width:100%;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
-    .search-results{
-        width: 100%
+    justify-content: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: fixed;
+    left: 30%;
+    bottom: 0;
+    padding-bottom: 10px;
+    ::-webkit-scrollbar{ width: 12px}
+    ::-webkit-scrollbar-thumb{
+        background: gray;
+        border-radius: 6px;
     }
 `;
-
 
 const SearchBar = styled.div`
     width: 80%;
     margin: 10px ;
     display: flex;
-    // justify-content: center;
     align-items: center;
     position: relative;
     form{

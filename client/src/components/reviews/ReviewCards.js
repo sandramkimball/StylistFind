@@ -1,20 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ReviewCard = (props) => {
+function ReviewCard (props) {
+    const {image, username, stylist, review, date, salon} = props.review;
 
-    var ImageStack = (props) => {
-        
-    };
 
     return (
         <div>
             <Card>
-                <h4>{props.username}</h4>
-                <h5>{props.stylist}</h5>
-                <h5>at {props.salon}</h5>
-                <p>{props.date}</p>
-                <p>Comment</p>
+                <h4>{review}</h4>
+                <p>{date} {stylist}</p>
+                <p>by {username}</p>
+                <img src={image}/>
             </Card>
         </div>
     )
@@ -22,12 +19,20 @@ const ReviewCard = (props) => {
 
 
 const Card = styled.div`
-    width: 200px;
-    border-radius: 4px;
-    box-shadow: 0px 1px 1px black;
+    max-width: 360px;
+    max-height: 425px;
+    border: 1px solid purple
     display: flex;
     flex-direction: column;
-    padding: 4px;
+    border-radius: 4px;
+    padding: 0 0 4px 0;
+    box-shadow: 0px 1px 2px black;
+    img{
+        object-fit: cover;
+        width: 350px;
+        height: 250px;
+        margin: 0 0;
+    }
 `;
 
 export default ReviewCard;
