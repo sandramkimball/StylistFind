@@ -1,20 +1,31 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import ReviewForm from './ReviewForm';
-import {useUserContext} from '../contexts/UserContext';
 import ReviewCard from './ReviewCards';
-
+import axiosWithAuth from '../utilis/axiosWithAuth';
 
 const Reviews = props => {
-    const { user, dispatch } = useUserContext();
+    const [reviews, setReviews] = useState([]);
+
+    useEffect(()=>{
+        const id = 1;
+        axiosWithAuth()
+        .get(`/search/reviews`)
+        .then(res=> { 
+            console.log('Review: ', res.data);
+            setReviews(res.data.filter(review=> {
+                return (review.user_id === id)
+            }));
+        })
+        .catch(err=>{console.log('GHH REVIEW ERROR: ', err)
+        });
+    }, [])
 
     return (
         <div>
             <ReviewList>
-                <p>Faux Review</p>>
-                {/* {props.reviews.map(item=> (
-                    <ReviewCard item={item}/>
-                ))} */}
+                {reviews.map(review=> (
+                    <ReviewCard key={review.id} review={review}/>
+                ))}
             </ReviewList>
         </div>
     )
@@ -23,7 +34,7 @@ const Reviews = props => {
 export default Reviews;
 
 const ReviewList = styled.div`
-    width: 80%;
+    width: 100%;
     margin: 10vh auto;
     text-align: left;
     border: 1px solid gray;

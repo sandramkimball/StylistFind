@@ -1,20 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ReviewCard = (props) => {
+function ReviewCard (props) {
+    const {image, username, stylist, review, date, salon} = props.review;
 
-    var ImageStack = (props) => {
-        
-    };
 
     return (
         <div>
             <Card>
-                <h4>{props.username}</h4>
-                <h5>{props.stylist}</h5>
-                <h5>at {props.salon}</h5>
-                <p>{props.date}</p>
-                <p>Comment</p>
+                <h4>{review}</h4>
+                <p>{date} {stylist}</p>
+                <p>by {username}</p>
+                <img src={image}/>
             </Card>
         </div>
     )

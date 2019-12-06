@@ -14,11 +14,23 @@ export default function Home() {
     axiosWithAuth()
     .get('/search/posts')
     .then(res=> {
-      console.log('Latest posts: ', res);
-      // var latest = res.data.filter(item=> item.date.)
+      console.log('Latest Posts: ', res);
+      // var latest = res.data.filter(item=> item.date.replace('-', '').sort(function(a, b)return{a-b}));
       // setRecentPosts(latest);
     })
-    .catch(err=> {console.log(err)})
+    .catch(err=> {console.log('Latest Post Error: ', err)})
+  }, [])
+
+  useEffect(()=>{
+    axiosWithAuth()
+    .get('/search/reviews')
+    .then(res=> {
+      console.log('Latest Reviews: ', res);
+      var latestReviews = res.data.filter(review=> 
+        review.date.replace('-', '').sort(function(a, b){return a-b}));
+      setRecentReviews(latestReviews);
+    })
+    .catch(err=> {console.log('Latest Post Error: ', err)})
   }, [])
 
   return (
@@ -40,7 +52,7 @@ export default function Home() {
         <Section2>
           <div>
             <h1>Latest Reviews</h1>
-            <Reviews props={recentPosts}/>
+            <Reviews props={recentReviews}/>
           </div>
         </Section2>
         <Section3>
@@ -78,10 +90,7 @@ const Section1 = Styled.section`
 const Section2 = Styled.section`
   width: 100vw;
   h1{font-size: 2rem;}
-  div{
-      width: 90%;
-      margin: 0 auto;
-    }
+  div{margin: 0 auto}
 `;
 
 const Section3 = Styled.section`
