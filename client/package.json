@@ -17,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build --output public",
     "test": "react-scripts test",
-    "server": "nodemon"
+    "server": "nodemon",
+    "now-build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
