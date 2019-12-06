@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build --output public",
+    "build": "react-scripts build",
     "server": "nodemon"
   }
 }
