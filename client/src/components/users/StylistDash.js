@@ -5,12 +5,17 @@ import styled from 'styled-components';
 // import {useUserContext} from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import Posts from '../posts/Posts';
-import AddPost from '../forms/AddPost';
+// import AddPost from '../forms/AddPost';
 
 
 
 export default function StylistDash(props) {
     const [stylist, setStylist] = useState([]);
+
+    const openAddPost = e => {
+        e.preventDefault();
+        console.log('Will open add post form.')
+    }
     
     useEffect(()=>{
         const id = props.id;
@@ -49,7 +54,7 @@ export default function StylistDash(props) {
             </section>
             <section className = 'gallery'>
                 <Gallery>
-                    <AddPost/>
+                    <p class='open-btn' onClick={openAddPost}>Add Post</p>
                     <div>
                         <Posts key={props.id} props={props}/>
                     </div>
@@ -106,6 +111,18 @@ const Gallery = styled.div`
         object-fit: cover;
         box-shadow: .5px 1px 3px black;
     }
+    .open-btn{
+        background: white;
+        max-width: 100px;
+        border: 1px solid black;
+        font-size: 1rem;
+        height: 1.5rem;
+        :hover{
+            transform: scale(1.025); 
+            border: 1px solid #80808075;
+            color: #80808075;
+            cursor: pointer;
+        }
 `;
 
 
