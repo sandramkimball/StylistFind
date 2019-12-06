@@ -1,7 +1,7 @@
 {
     "version": 2,
     "name": "StylistFind-FE",
-    "builds": [{ "src": "StylistFind-FE/package.json", "use": "@now/static-build", "config": {"distDir": "build"} }],
+    "builds": [{ "src": "StylistFind-FE/package.json", "use": "@now/node-server", "config": {"distDir": "build"} }],
     "routes": [
         { "src": "/(.*)", "dest": "StylistFind-FE/$1" }
     ]
