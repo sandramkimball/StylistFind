@@ -12,10 +12,11 @@ export default function Home() {
   
   useEffect(()=>{
     axiosWithAuth()
-    .get('/')
+    .get('/search/posts')
     .then(res=> {
-      console.log(res.data)
-      setRecentPosts(res.data.posts);
+      console.log('Latest posts: ', res);
+      // var latest = res.data.filter(item=> item.date.)
+      // setRecentPosts(latest);
     })
     .catch(err=> {console.log(err)})
   }, [])
@@ -85,11 +86,8 @@ const Section2 = Styled.section`
 
 const Section3 = Styled.section`
   width: 100vw;
+  div{margin: 0 auto}
   h1{font-size: 2rem;}
-  div{
-      width: 90%;
-      margin: 0 auto;
-    }
 `;
 
 const SearchBar = Styled.div`

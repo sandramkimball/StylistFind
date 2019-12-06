@@ -8,9 +8,9 @@ function PostCard(props) {
         <div>
             <Card>
                 <img src={image}/>
-                <h4>by{username}</h4>
                 <h4>{comment}</h4>
-                <p>on {date} at {salon}</p>
+                <p>{date} {salon}</p>
+                <p>by {username}</p>
            </Card>
         </div>
     )
@@ -19,25 +19,22 @@ function PostCard(props) {
 export default PostCard;
 
 const Card = Styled.div`
-    width: 300px;
+    max-width: 310px;
+    max-height: 450px;
     display: flex;
-    justify-content: flex-start;
     flex-direction: column;
     text-align: left;
     margin: 5px;
-    box-shadow: .5px 1px 3px black;
+    padding: 0 0 4px 0;
+    box-shadow: .5px 1px 2px black;
     border-radius: 4px;
+    box-sizing: border-box;
     img{
         object-fit: cover;
-        width: 100%;
-        height: 70%;
-        margin: 0;
-        border: 1px solid green;
+        width: 300px;
+        height: 300px;
+        margin: 0 0;
     }
-    h4{font-size: 1.125rem; margin: 0}
-    p{
-        font-size: 1rem
-        text-align: left; 
-        margin: 0;
-    }
+    h4{font-size: 1.025rem; margin: 0 0; padding: 0 4px;}
+    p{font-size: 1rem; margin: 0 0;  padding: 0 5px;}
 `;

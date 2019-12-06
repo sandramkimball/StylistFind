@@ -35,8 +35,6 @@ const Card = Styled.div`
     width: 100%;
     margin: 10vh auto;
     text-align: left;
-    border: 2px solid orange;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
 `;
