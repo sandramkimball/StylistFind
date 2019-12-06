@@ -1,11 +1,10 @@
 import React, { useState, useEffect} from 'react';
-import { BrowserRouter as Router, NavLink} from 'react-router-dom';
+import { BrowserRouter as Router, Link} from 'react-router-dom';
 import styled from 'styled-components';
 // import {useDataContext} from '../contexts/DataContext';
 // import {useUserContext} from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import Posts from '../posts/Posts';
-// import AddPost from '../forms/AddPost';
 
 
 
@@ -18,12 +17,12 @@ export default function StylistDash(props) {
     }
     
     useEffect(()=>{
-        const id = props.id;
+        const id = props.match.params.id;
         axiosWithAuth()
         .get(`/stylists/profile/${id}`)
         .then(res=> { 
             console.log('Stylist Data: ', res.data);
-            setStylist(res.data)
+            setStylist(res.data['0']);
         })
         .catch(err=>{console.log('SKSKRR ERROR: ', err)});
     }, [])
@@ -54,9 +53,9 @@ export default function StylistDash(props) {
             </section>
             <section className = 'gallery'>
                 <Gallery>
-                    <p class='open-btn' onClick={openAddPost}>Add Post</p>
+                    <p className='open-btn' onClick={openAddPost}>Add Post</p>
                     <div>
-                        <Posts key={props.id} props={props}/>
+                        <Posts key={stylist.id} id={stylist.id} stylist={stylist}/>
                     </div>
                 </Gallery>
             </section>
@@ -79,18 +78,15 @@ const InfoBox = styled.div`
         object-fit: cover;
         margin-right: 20px;
     }
-    div:nth-child(1){
-    }
     .profile-text{
         align-items: center;
-        font-size: 2rem;
+        font-size: 1.2rem;
+        div p{
+            font-size: 1rem;
+            margin: 2px 0;
+            color: gray;
+        }
     }
-    .address{
-        font-size: 1.5rem;
-        padding-top: 10px;
-        border-top: 1px solid gray;
-    }
-    p{ font-size: 1.125rem}
     .edit-btn{
         color: #80808075;
         :hover{color: #000}
@@ -98,18 +94,12 @@ const InfoBox = styled.div`
 `;
 
 const Gallery = styled.div`
-    width: 85%;
+    width: 90%;
     margin: 0 auto;
     h3{ align-text: center}
     div{
         display: flex;
         flex-wrap: wrap; 
-    }
-    img{
-        margin: 5px;
-        height: 300px;
-        object-fit: cover;
-        box-shadow: .5px 1px 3px black;
     }
     .open-btn{
         background: white;
@@ -122,7 +112,7 @@ const Gallery = styled.div`
             border: 1px solid #80808075;
             color: #80808075;
             cursor: pointer;
-        }
+    }
 `;
 
 

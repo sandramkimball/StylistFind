@@ -46,11 +46,9 @@ function SearchPage() {
             <BodyContainer>
                 <FilterBar/>
                 <SearchContainer>
-                    
-                        {searchResults.map(result=> (
-                            <SearchCard key={result.id} result={result}/>
-                        ))}
-                    
+                    {searchResults.map(result=> (
+                        <SearchCard key={result.id} result={result}/>
+                    ))}
                 </SearchContainer>
                 <MapContainer>
                     <GoogleApiWrapper/>
@@ -81,10 +79,17 @@ const SearchContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     position: fixed;
     left: 30%;
     bottom: 0;
+    padding-bottom: 10px;
+    ::-webkit-scrollbar{ width: 12px}
+    ::-webkit-scrollbar-thumb{
+        background: gray;
+        border-radius: 6px;
+    }
 `;
 
 const SearchBar = styled.div`

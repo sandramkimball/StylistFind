@@ -15,7 +15,7 @@ function SearchCard(props)  {
 
     return (
         <Card>
-            <Link to={`/stylists/${id}/dash`} key={props.result.id} id={props.id} props={props}>
+            <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
                 <img src={profile_img} alt='stylist profile'/>
                 <div>
                     <h3>{salon}</h3>
