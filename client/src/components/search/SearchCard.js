@@ -57,7 +57,7 @@ const Card = styled.div`
         text-decoration: none;
         color: black
     }
-    :hover{transform: scale(1.025)}
+    :hover{transform: scale(1.005)}
 `;
 
 export default SearchCard

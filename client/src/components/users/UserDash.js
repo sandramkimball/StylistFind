@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 //COMPONENTS
 import {useDataContext} from '../contexts/DataContext';
-import SavedCard from './SavedStylists';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
 

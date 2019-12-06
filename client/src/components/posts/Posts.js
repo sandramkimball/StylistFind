@@ -3,7 +3,7 @@ import PostCard from './PostCard';
 import Styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
-const Posts = props => {
+function Posts(props) {
     const [posts, setPosts] = useState([]);
 
     useEffect(()=>{
@@ -11,12 +11,11 @@ const Posts = props => {
         axiosWithAuth()
         .get(`/stylists/profile/3/posts`)
         .then(res=> { 
-            console.log('Posts Res.Data: ', res.data);
-            const posts = res.data;
-            // setPosts(posts);
-            console.log('Posts: ', posts);
+            console.log('Posts: ', res.data);
+            setPosts(res.data);
         })
-        .catch(err=>{console.log('PHKHHK POST ERROR: ', err)});
+        .catch(err=>{console.log('PHKHHK POST ERROR: ', err)
+        });
     }, [])
 
     return (
@@ -39,4 +38,5 @@ const Card = Styled.div`
     border: 2px solid orange;
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
 `;
