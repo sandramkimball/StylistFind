@@ -2,7 +2,7 @@
     "version": 2,
     "name": "StylistFind-FE",
     "builds": [{ 
-        "src": "StylistFind-FE/package.json", 
+        "src": "StylistFind-FE/client/package.json", 
         "use": "@now/static-build", 
         "config": {"distDir": "build"} 
         }],
