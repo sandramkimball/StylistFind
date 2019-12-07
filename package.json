@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@now/static-build": "^0.13.0",
     "google-maps-react": "^2.0.2",
     "lodash": "^4.17.15",
     "react-router-dom": "^5.1.2",
