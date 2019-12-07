@@ -2,11 +2,17 @@
     "version": 2,
     "name": "StylistFind-FE",
     "builds": [{ 
-        "src": "StylistFind-FE/client/package.json", 
-        "use": "@now/static-build", 
+        "src": "client/package.json", 
+        "use": "@now/next", 
         "config": {"distDir": "build"} 
         }],
     "routes": [
-        { "src": "/(.*)", "dest": "StylistFind-FE/client/$1" }
+        { 
+            "src": "/(.*)", 
+            "dest": "/client/$1",
+            "headers" : {
+                "x-request-path": "$1"
+            } 
+        }
     ]
   }
