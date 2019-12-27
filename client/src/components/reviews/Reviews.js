@@ -3,29 +3,17 @@ import styled from 'styled-components';
 import ReviewCard from './ReviewCards';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
-const Reviews = props => {
+const Reviews = (props) => {
     const [reviews, setReviews] = useState([]);
-
-    useEffect(()=>{
-        const id = 1;
-        axiosWithAuth()
-        .get(`/search/reviews`)
-        .then(res=> { 
-            console.log('Review: ', res.data);
-            setReviews(res.data.filter(review=> {
-                return (review.user_id === id)
-            }));
-        })
-        .catch(err=>{console.log('GHH REVIEW ERROR: ', err)
-        });
-    }, [])
+    setReviews(props);
+    // console.log('REVIEWS.JS:', reviews )
 
     return (
         <div>
             <ReviewList>
-                {reviews.map(review=> (
-                    <ReviewCard key={review.id} review={review}/>
-                ))}
+                {/* {reviews.map(userReview=> (
+                    <ReviewCard key={userReview.id} userReview={userReview}/>
+                ))} */}
             </ReviewList>
         </div>
     )

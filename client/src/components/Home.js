@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 // import {  NavLink } from "react-router-dom";
 import Styled from "styled-components";
 import Reviews from './reviews/Reviews';
+import ReviewCard from './reviews/ReviewCards';
 import Posts from './posts/Posts';
 import axiosWithAuth from "./utilis/axiosWithAuth";
 
@@ -9,6 +10,20 @@ import axiosWithAuth from "./utilis/axiosWithAuth";
 export default function Home() {
   const [recentPosts, setRecentPosts] = useState([]);
   const [recentReviews, setRecentReviews] = useState([]);
+
+  useEffect(()=>{
+    axiosWithAuth()
+    .get('/search/reviews')
+    .then(res=> {
+      console.log(res.data);
+      setRecentReviews(res.data)
+      // console.log('recentReviews in HOME: ', res.data);
+      // var latestReviews = res.data.filter(review=> 
+      //   review.date.replace('-', '').sort(function(a, b){return a-b}));
+    })
+    .catch(err=> {console.log('Latest Review Error: ', err)})
+  }, [])
+
   
   useEffect(()=>{
     axiosWithAuth()
@@ -21,23 +36,12 @@ export default function Home() {
     .catch(err=> {console.log('Latest Post Error: ', err)})
   }, [])
 
-  useEffect(()=>{
-    axiosWithAuth()
-    .get('/search/reviews')
-    .then(res=> {
-      console.log('Latest Reviews: ', res);
-      var latestReviews = res.data.filter(review=> 
-        review.date.replace('-', '').sort(function(a, b){return a-b}));
-      setRecentReviews(latestReviews);
-    })
-    .catch(err=> {console.log('Latest Review Error: ', err)})
-  }, [])
-
+  
   return (
     <div>
       <Body>
         <Section1>
-          <img src='https://images.unsplash.com/photo-1497433550656-7fb185be365e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9' alt='curly blonde hair and green leaves'/>
+          <img src='https://images.unsplash.com/photo-1573641287741-f6e223d81a0f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80' alt='curly blonde hair and green leaves'/>
           <SearchBar>
             <h1>Find Stylists</h1>
             <form >
@@ -50,15 +54,18 @@ export default function Home() {
           </SearchBar>
         </Section1>
         <Section2>
+          <h1>Latest Reviews </h1>
           <div>
-            <h1>Latest Reviews</h1>
-            <Reviews props={recentReviews}/>
+            {recentReviews.map(userReview=> (
+                <ReviewCard key={userReview.id} userReview={userReview}/>
+            ))}
+            {/* <Reviews props={recentReviews} /> */}
           </div>
         </Section2>
         <Section3>
           <div>
             <h1>Latest Posts</h1>
-            <Posts props={recentPosts}/>
+            <Posts key={3} id={3}/>
           </div>
         </Section3>
      </Body>
@@ -88,13 +95,15 @@ const Section1 = Styled.section`
 `;
 
 const Section2 = Styled.section`
-  width: 100vw;
+  width: 90vw;
+  margin: 0 auto;
   h1{font-size: 2rem;}
-  div{margin: 0 auto}
+  div{margin: 0 auto; display: flex}
 `;
 
 const Section3 = Styled.section`
-  width: 100vw;
+  width: 90vw;
+  margin: 0 auto;
   div{margin: 0 auto}
   h1{font-size: 2rem;}
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 function ReviewCard (props) {
-    const {image, username, stylist, review, date, salon} = props.review;
+    const {image, username, stylist, review, date, salon} = props.userReview;
 
 
     return (
@@ -11,7 +11,7 @@ function ReviewCard (props) {
                 <h4>{review}</h4>
                 <p>{date} {stylist}</p>
                 <p>by {username}</p>
-                <img src={image}/>
+                {/* <img src={image}/> */}
             </Card>
         </div>
     )
