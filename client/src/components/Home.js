@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-// import {  NavLink } from "react-router-dom";
+import {  NavLink, Route, Link } from "react-router-dom";
 import Styled from "styled-components";
 import Reviews from './reviews/Reviews';
 import ReviewCard from './reviews/ReviewCards';
@@ -17,9 +17,6 @@ export default function Home() {
     .then(res=> {
       console.log(res.data);
       setRecentReviews(res.data)
-      // console.log('recentReviews in HOME: ', res.data);
-      // var latestReviews = res.data.filter(review=> 
-      //   review.date.replace('-', '').sort(function(a, b){return a-b}));
     })
     .catch(err=> {console.log('Latest Review Error: ', err)})
   }, [])
@@ -36,7 +33,11 @@ export default function Home() {
     .catch(err=> {console.log('Latest Post Error: ', err)})
   }, [])
 
-  
+  const handleEnter = e => {
+    e.preventDefault();
+    return <Link to='/search'/>
+  }
+
   return (
     <div>
       <Body>
@@ -44,7 +45,7 @@ export default function Home() {
           <img src='https://images.unsplash.com/photo-1573641287741-f6e223d81a0f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80' alt='curly blonde hair and green leaves'/>
           <SearchBar>
             <h1>Find Stylists</h1>
-            <form >
+            <form onSubmit={handleEnter}>
                 <input
                 id='search_input'
                 type='text'
@@ -97,15 +98,16 @@ const Section1 = Styled.section`
 const Section2 = Styled.section`
   width: 90vw;
   margin: 0 auto;
-  h1{font-size: 2rem;}
-  div{margin: 0 auto; display: flex}
+  h1{font-size: 1.5rem;}
+  div{margin: 2.5px; display: flex; justify-content: center}
 `;
 
 const Section3 = Styled.section`
   width: 90vw;
-  margin: 0 auto;
+  margin: 20px auto;
+  background: #ebebeb;
   div{margin: 0 auto}
-  h1{font-size: 2rem;}
+  h1{font-size: 1.5rem; color: orange; margin: 0}
 `;
 
 const SearchBar = Styled.div`

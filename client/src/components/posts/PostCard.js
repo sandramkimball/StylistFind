@@ -9,8 +9,7 @@ function PostCard(props) {
             <Card>
                 <img src={image} alt='user post'/>
                 <h4>{comment}</h4>
-                <p>{date} {salon}</p>
-                <p>by {username}</p>
+                <p>{date} at ... by {username}</p>
            </Card>
         </div>
     )
@@ -20,13 +19,13 @@ export default PostCard;
 
 const Card = Styled.div`
     max-width: 310px;
-    max-height: 450px;
+    height: 350px;
+    background: #fff;
     display: flex;
     flex-direction: column;
     text-align: left;
     margin: 5px;
     padding: 0 0 4px 0;
-    box-shadow: 0px 1px 2px black;
     border-radius: 4px;
     box-sizing: border-box;
     img{

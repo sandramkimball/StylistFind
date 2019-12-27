@@ -9,8 +9,7 @@ function ReviewCard (props) {
         <div>
             <Card>
                 <h4>{review}</h4>
-                <p>{date} {stylist}</p>
-                <p>by {username}</p>
+                <p>{date} {salon} by {username}</p>
                 {/* <img src={image}/> */}
             </Card>
         </div>
@@ -19,14 +18,21 @@ function ReviewCard (props) {
 
 
 const Card = styled.div`
-    max-width: 360px;
+    width: 20vw;
     max-height: 425px;
-    border: 1px solid purple
+    border-top: .5px solid gray;
+    border-bottom: .5px solid gray;
     display: flex;
     flex-direction: column;
-    border-radius: 4px;
-    padding: 0 0 4px 0;
-    box-shadow: 0px 1px 2px black;
+    align-items: space-between;
+    border-radius: 2px;
+    padding: 0;
+    margin: 0;
+    h4, p{
+        text-align: left;
+        padding: 5px;
+        margin: 0
+    }
     img{
         object-fit: cover;
         width: 350px;

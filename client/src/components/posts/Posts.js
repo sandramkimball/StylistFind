@@ -38,6 +38,7 @@ export default Posts;
 
 const Card = Styled.div`
     margin: 10vh auto;
+    padding: 20px;
     text-align: left;
     display: flex;
     flex-wrap: wrap;
