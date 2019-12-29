@@ -66,7 +66,7 @@ export default function Home() {
         <Section3>
           <div>
             <h1>Latest Posts</h1>
-            <Posts key={3} id={3}/>
+            <Posts key={1} id={1}/>
           </div>
         </Section3>
      </Body>

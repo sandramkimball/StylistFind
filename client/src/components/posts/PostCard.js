@@ -11,7 +11,8 @@ function PostCard(props) {
                 <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
                     <img src={image} alt='user post'/>
                     <h4>{comment}</h4>
-                    <p>{date} at ... by {username}</p>
+                    <p>{date} at {salon}</p>
+                    <p>posted by {username}</p>
                 </Link>
            </Card>
         </div>
@@ -38,6 +39,6 @@ const Card = Styled.div`
         height: 300px;
         margin: 0 0;
     }
-    h4{font-size: 1.025rem; margin: 0 0; padding: 0 4px;}
-    p{font-size: 1rem; margin: 0 0;  padding: 0 5px;}
+    h4{font-size: 1rem; margin: 0; padding: 0 4px;}
+    p{font-size: .85rem; margin: 0;  padding: 0 5px;}
 `;

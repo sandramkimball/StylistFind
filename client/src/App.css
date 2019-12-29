@@ -17,3 +17,10 @@
   background: #bdbbbb;
   border: .5px solid #004196;
 }
+
+.return-to-search {
+  text-align: left;
+  text-decoration: none;
+  color: #636363e1;
+  margin: 0 25px;
+}
