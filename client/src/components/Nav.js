@@ -67,7 +67,6 @@ const Logo = styled.h1`
 `;
 
 const NavBar = styled.nav`
-    background: #f1effb; 
     display: flex;
     justify-content: center;
     align-items: center;

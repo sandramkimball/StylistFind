@@ -33,21 +33,21 @@ function SearchCard(props)  {
 
 const Card = styled.div`
     height: 220px;
-    width: 600px;
+    width: 90%;
     margin: 5px auto;
-    box-shadow: .5px 2px 3px #000;
+    padding: 5px;
+    border-right: 1px solid #80808095
     background: white;
     text-align: left;
     display: flex;
     flex-direction: row;
     overflow: hidden;
-    h3{border-bottom: 1px solid #80808095; padding-bottom: 5px;}
+    h3{text-decoration: underline; padding-bottom: 5px;}
     p{padding: 0; margin: 0; }
     img{
         height: 100%;
         width: 30%;
         object-fit: cover;
-        display: flex;
         margin-right: 20px;
     }
     a{

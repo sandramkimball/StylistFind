@@ -67,36 +67,35 @@ export default function FilterBar(){
     return (
         <div>
             <SIDEBAR>
-            <div className = 'Filters'>
-                <div className= 'menu-container'>
-                    <form>
-                    <select>
-                        <option>Stylists</option>
-                        <option>Salons</option>
-                    </select>
-                    <select >
-                        <option>Posts</option>
-                        <option>Reviews</option>
-                    </select>
-                    <select >
-                        <option>Ethnic</option>
-                        <option>Color</option>
-                        <option>Blowout</option>
-                        <option>Perm</option>
-                    </select>
-                    <select>
-                        <option>Nearest</option>
-                        <option>Price (Asc)</option>
-                        <option>Price (Desc)</option>
-                        <option>Alphabetical</option>
-                    </select>
-                    </form>
-                </div>
+            <div className='menu-container'>
+                <p>Search By</p>
+                <ul>
+                    <li>Stylists</li>
+                    <li>Salons</li>
+                </ul>
+
+                <p>Show me</p>
+                <ul>
+                    <li>Posts</li>
+                    <li>Reviews</li>
+                </ul>
+                <p>Specialty</p>
+                <ul >
+                    <li>Ethnic</li>
+                    <li>Color</li>
+                    <li>Blowout</li>
+                    <li>Perm</li>
+                </ul>
+                <p>Sort By</p>
+                <ul>
+                    <li>Nearest</li>
+                    <li>Price (Asc)</li>
+                    <li>Price (Desc)</li>
+                    <li>Alphabetical</li>
+                </ul>
 
                 {/* <i class="fas fa-chevron-down"></i> */}
                 {/* onClick={this.toggleMode} className={this.selected ? 'toggle toggled' : 'toggle'} */}
-
-                   
             </div>
             </SIDEBAR>
         </div>
@@ -106,22 +105,27 @@ export default function FilterBar(){
 let SIDEBAR = styled.div`
     display: flex;
     flex-direction: column;
-    width: 30%;
-    max-width: 330px;
-    height: 100vh;
-    position: fixed;
     justify-content: space-between;
-    content-align: center;
-    border-right: 2px solid gray;
-    form select{
-        width: 95%
-        height: 35px;
-        font-size: 1rem;
-        border:none;
-        border-bottom: 1px solid gray;
-        position: inherit;
+    text-align: center;
+    width: 95%;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    p{
+        text-align: left;
+        font-weight: 600;
+        margin: 0;
     }
-    
+    ul{
+        text-align: left;
+        list-style: none;
+        margin: 0;
+        padding-left: 0
+        li:hover{
+            cursor: pointer;
+            color: red;
+            text-decoration: underline;
+        }
+    }
 `;
 
 

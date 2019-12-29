@@ -31,28 +31,27 @@ function SearchPage() {
         <div>
             <div>
                 <SearchBar>
-                    <h1>Find Stylists</h1>
                     <form onSubmit={handleChange}>
                         <input
                         id='search_input'
                         type='text'
                         name='textfield'
-                        placeholder='Search'
+                        placeholder='Search stylist or salon'
                         value={searchTerm}
                         onChange={handleChange}/>
                     </form>
                 </SearchBar>
             </div>
             <BodyContainer>
-                <FilterBar/>
+                <SideBarContainer>
+                    <FilterBar/>
+                    <GoogleApiWrapper/>
+                </SideBarContainer>
                 <SearchContainer>
                     {searchResults.map(result=> (
                         <SearchCard key={result.id} result={result}/>
                     ))}
                 </SearchContainer>
-                <MapContainer>
-                    <GoogleApiWrapper/>
-                </MapContainer>
             </BodyContainer>
         </div>
     )
@@ -64,45 +63,36 @@ const BodyContainer = styled.div`
     display: flex
 `;
 
-const MapContainer = styled.div`
+const SideBarContainer = styled.div`
     position: fixed;
-    right: 0;
-    width: 30%;
-    max-width: 330px;
+    left: 0;
+    width: 20vw;
     height: 100vh;
-    border-left: 2px solid gray;
+    border-right: .5px solid gray;
 `;
 
 const SearchContainer = styled.div`
-    margin: 0 auto;
-    max-width:100%;
+    width: 65vw;
+    margin: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: auto;
     position: fixed;
-    left: 30%;
-    bottom: 0;
+    top: 20vh;
+    left: 25vw;
     padding-bottom: 10px;
-    ::-webkit-scrollbar{ width: 12px}
-    ::-webkit-scrollbar-thumb{
-        background: gray;
-        border-radius: 6px;
+    ::-webkit-scrollbar{ width: 0}
     }
 `;
 
 const SearchBar = styled.div`
-    width: 80%;
-    margin: 10px ;
+    margin: 10px 5px;
     display: flex;
-    align-items: center;
-    position: relative;
+    justify-content: flex-end;
     form{
         border: none;
-        margin-left: 20px;
         height: 40px;
-        width: 50%;
+        width: 25%;
         button{
             background: none;
             border: 1px solid black;
@@ -110,7 +100,7 @@ const SearchBar = styled.div`
         }
         input{
             border: 1px solid black;
-            border-radius: 4px;
+            border-radius: 2px;
             height: 100%;
             width: 100%;
             box-sizing: border-box;
