@@ -1,15 +1,18 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import Styled from 'styled-components';
 
 function PostCard(props) {
-    const {image, username, comment, date, salon} = props.post;
+    const {image, username, comment, date, id, salon} = props.post;
 
     return (
         <div>
             <Card>
-                <img src={image} alt='user post'/>
-                <h4>{comment}</h4>
-                <p>{date} at ... by {username}</p>
+                <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
+                    <img src={image} alt='user post'/>
+                    <h4>{comment}</h4>
+                    <p>{date} at ... by {username}</p>
+                </Link>
            </Card>
         </div>
     )
@@ -28,6 +31,7 @@ const Card = Styled.div`
     padding: 0 0 4px 0;
     border-radius: 4px;
     box-sizing: border-box;
+    a{text-decoration: none; color: #000}
     img{
         object-fit: cover;
         width: 300px;
