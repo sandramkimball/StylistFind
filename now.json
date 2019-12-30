@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "name": "StylistFind-FE",
+    "builds": [
+        { 
+            "src": "client/package.json", 
+            "use": "@now/static-build", 
+            "config": {"distDir": "build"} 
+        }
+    ],
+    "routes": [
+        { 
+            "src": "/(.*)", 
+            "dest": "client/$1" 
+        }
+    ]
+  }
