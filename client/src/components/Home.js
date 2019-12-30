@@ -26,9 +26,9 @@ export default function Home() {
     axiosWithAuth()
     .get('/search/posts')
     .then(res=> {
-      console.log('Latest Posts: ', res);
-      // var latest = res.data.filter(item=> item.date.replace('-', '').sort(function(a, b)return{a-b}));
-      // setRecentPosts(latest);
+      var latest = res.data.filter(item=> item.date.sort())
+      setRecentPosts(latest)
+      console.log('Latest Posts: ', latest)
     })
     .catch(err=> {console.log('Latest Post Error: ', err)})
   }, [])
@@ -44,7 +44,7 @@ export default function Home() {
         <Section1>
           <img src='https://images.unsplash.com/photo-1573641287741-f6e223d81a0f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80' alt='curly blonde hair and green leaves'/>
           <SearchBar>
-            <h1>Find Stylists</h1>
+            <h2>Start Your Search:</h2>
             <form onSubmit={handleEnter}>
                 <input
                 id='search_input'
