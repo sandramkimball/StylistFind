@@ -2,25 +2,55 @@ import React, { useState, useEffect } from 'react';
 import SearchCard from './SearchCard';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import FilterBar from './Filter-Bar';
+import FilterBar, {filterResults} from './Filter-Bar';
 import GoogleApiWrapper from './Map';
 
 function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
-    useEffect(()=> {
-        axiosWithAuth()
-        .get('/search') 
-        .then(res=> {
-            console.log('LIST OF STYLISTS:', res);
-            const results = res.data.filter(item=> item.salon.toLowerCase().includes(searchTerm.toLowerCase()));
-            setSearchResults(results);
-        })
-        .catch(err=> {
-            console.log('FACEPALM', err)
-        })
-    }, [searchTerm]);
+    if (filterResults === 'stylists' || 'salons'){
+        useEffect(()=> {
+            axiosWithAuth()
+            .get('/search') 
+            .then(res=> {
+                console.log('LIST OF STYLISTS:', res);
+                const results = res.data.filter(item=> 
+                    item.salon.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.last_name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                );
+                setSearchResults(results);
+            })
+            .catch(err=> {
+                console.log('FACEPALM in SearchPage', err)
+            })
+        }, [searchTerm]);
+    } 
+    else if(filterResults === 'posts'){
+        useEffect(()=>{
+            axiosWithAuth()
+            .get('/search/posts')
+            .then(res=> {
+                var latest = res.data.filter(item=> item.date.sort())
+                setSearchResults(latest);
+            })
+            .catch(err=> {console.log(err)})
+        }, [])
+
+    }
+    else if(filterResults === 'reviews'){
+        useEffect(()=>{
+            axiosWithAuth()
+            .get('/search/reviews')
+            .then(res=> {
+            setSearchResults(res.data)
+            })
+            .catch(err=> {console.log(err)})
+        }, [])
+    }
+    
 
     const handleChange = e => {
         e.preventDefault();
@@ -36,7 +66,7 @@ function SearchPage() {
                         id='search_input'
                         type='text'
                         name='textfield'
-                        placeholder='Search stylist or salon'
+                        placeholder='Search stylist, salon, city...'
                         value={searchTerm}
                         onChange={handleChange}/>
                     </form>
@@ -44,7 +74,7 @@ function SearchPage() {
             </div>
             <BodyContainer>
                 <SideBarContainer>
-                    <FilterBar/>
+                    <FilterBar props={searchResults}/>
                     <GoogleApiWrapper/>
                 </SideBarContainer>
                 <SearchContainer>
