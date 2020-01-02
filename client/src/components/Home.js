@@ -21,7 +21,6 @@ export default function Home() {
     .catch(err=> {console.log('Latest Review Error: ', err)})
   }, [])
 
-  
   useEffect(()=>{
     axiosWithAuth()
     .get('/search/posts')
@@ -36,7 +35,7 @@ export default function Home() {
   const handleEnter = e => {
     e.preventDefault();
     return <Link to='/search'/>
-  }
+  };
 
   return (
     <div>

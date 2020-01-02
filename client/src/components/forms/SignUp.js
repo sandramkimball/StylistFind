@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
+import {Link } from 'react-router-dom';
 //COMPONENTS
 // import { useUserContext } from '../contexts/UserContext';
 // import { useDataContext } from '../contexts/DataContext';
@@ -27,7 +28,7 @@ export default class SignUp extends React.Component {
       country: '',
       salon: '',
       email: '',
-      usertype: 'user' || 'stylist',
+      usertype: 'user',
       id: Date.now(),
       errors: {},
       isLoading: false,
@@ -145,19 +146,12 @@ export default class SignUp extends React.Component {
           onChange={this.handleChange}
         />
 
+        I'm a Stylist
         <input 
           type='radio'
           label='user'
           name='usertype'
           value={this.usertype === 'stylist'}
-          onChange={this.handleChange}
-        />
-
-        <input 
-          type='radio'
-          label='stylist'
-          name='usertype'
-          value={this.usertype === 'user'}
           onChange={this.handleChange}
         />
   
@@ -202,7 +196,7 @@ export default class SignUp extends React.Component {
         </div>
     )}
     <button>Register</button>
-
+    <Link to='/login'><p>Login</p></Link>
 
        </SignupForm> 
     </SignupPage>
@@ -210,40 +204,36 @@ export default class SignUp extends React.Component {
 }}
 
 const SignupPage = styled.div`
-    width: 60vw
-    margin: 0 auto;
-    
+    width: 35vw
+    margin: auto;
 `;
 
 const SignupForm = styled.form`
-    display:flex;
-    justify-content: center;
-    align-content: spece-evenly;
-    align-items: center;
-    margin: 0 auto;
-    padding: 20px;
-    flex-direction: column;
-    box-shadow: 1px 2px 4px #000;
-    background: white;
-    width: 350px;
-    h3{margin: 0}
-    input{
-        width: 300px;
-        height: 25px;
-        margin: 20px;
-    }
-    div{
-        justify-content: space-evenly;
-        flex-direction: row
-    }
-    button{
-      color: #000;
-        font-size: 1.25rem;
-        border: 1px solid black;
-        padding: 10px 20px;
-        background: none;
-        text-decoration: none;
-        color: black;
-        :hover{transform: scale(1.025); color: #80808095; cursor: pointer}
-    }
+display:flex;
+justify-content: center;
+align-content: spece-between;
+align-items: center;
+margin: 0 auto;
+padding: 20px;
+flex-direction: column;
+width: 50%;
+h3{margin: 0; font-size: 1rem}
+p{font-size: .8rem; text-align: right; }
+input, button{
+    height: 25px;
+    width: 80%
+    margin: 5px auto;
+    border: 1px solid #80808095;
+    font-size: 1rem;
+    padding: 2px;
+    border-radius: 2px;
+}
+button{
+    background: orange;
+    padding: 5px;
+    color: #fff;
+    border: none;
+    height: 30px;
+    :hover{transform: scale(1.025); cursor: pointer}
+}
 `;

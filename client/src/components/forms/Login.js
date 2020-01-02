@@ -1,15 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import {BrowserRouter as Router, NavLink, Redirect} from 'react-router-dom';
-
+import {Link, Redirect} from 'react-router-dom';
 
 //COMPONENTS
 // import { useUserContext } from '../contexts/UserContext';
 // import { useDataContext } from '../contexts/DataContext';
 // import PrivateRoute from '../PrivateRoute';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-
-
 
 class Login extends React.Component {
 
@@ -25,23 +22,28 @@ class Login extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     };
 
-
     // const { user, stylist, dispatch } = useUserContext();
     // const { dispatchData } = useDataContext();
 
     handleChange = e =>{
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({
+            credentials: {
+                ...this.state.credentials,
+                [e.target.name]: e.target.value 
+            }
+        }); 
     };
 
     handleSubmit = e => {
         e.preventDefault();
-            this.setState({isLoading: true});
-            axiosWithAuth()
+        axiosWithAuth()
             .post('/api/auth/login', this.state)
-            .then(
-                (res)=> console.log(res.data),
-                (res)=> this.context.router.push(`api/search`),
-                (err)=> this.setState({ isLoading: false})
+            .then(res=> {
+                console.log(res.data)
+                localStorage.setItem('token', res.data.payload);
+                this.props.history.push('/search')
+            })
+            .catch(err=> console.log('LOGIN ERROR', err.res))
             // const userId = (props.match.params.id);
             // const userData = props.data.users.find(el => el.id === userId);
             // const stylistData = props.data.stylists.find(el => el.id === userId);
@@ -52,20 +54,9 @@ class Login extends React.Component {
             //     dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
             //     dispatchData({ type: 'SET_STYLIST', payload: stylistData});
             // }    
-    )};
-
-    
-
-    logout = e => {
-        e.preventDefault();
-        axiosWithAuth()
-        .post('/api/login', !this.state)
-        .then(
-            (res)=> this.context.router.push('/'),
-            (err)=> this.setState({isLoading: false})
-        )
-        .catch(err=>console.log('You are logged out', err))
     };
+    
+   
 
     // let handleSubmit = e => {
     //     e.preventDefault();
@@ -123,7 +114,7 @@ class Login extends React.Component {
     return (
             <LoginPage>
                 <LoginForm onSubmit={this.handleSubmit}>
-                    <h3>Welcome Back</h3>
+                    <h3>Login</h3>
                     <input 
                         type='text' 
                         name='username' 
@@ -139,13 +130,12 @@ class Login extends React.Component {
                         placeholder="Password" 
                         onChange={this.handleChange}
                     />
-
-                    <div>
-                        <button type='submit' onClick={this.handleSubmit}>Login</button>
-                    </div>
+                    <button type='submit' onClick={this.handleSubmit}>Login</button>
+                    <Link to='/signup'><p>Sign Up</p></Link>
                 </LoginForm>
+                    <img src='https://images.unsplash.com/photo-1501699169021-3759ee435d66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=661&q=80' alt='salon chair and makeup light'/>
             </LoginPage>
-        )
+    )
 }};
 
 // LoginForm.propTypes = {
@@ -160,10 +150,16 @@ export default Login;
 
 
 const LoginPage = styled.div`
-    width: 40vh;
-    height: 40vh;
+    width: 90vh;
+    height: 80vh;
+    margin: auto;
+    display:flex;
+    justify-content: center;
     align-items: center;
-    margin: 0 auto;
+    align-content: center;
+    img{
+        height: 100%;
+    }
 `;
 
 const LoginForm = styled.form`
@@ -174,31 +170,24 @@ const LoginForm = styled.form`
     margin: 0 auto;
     padding: 20px;
     flex-direction: column;
-    box-shadow: 1px 2px 4px #80808095;
-    background: white;
-    width: 100%;
-    height: 80%;
-    h3{margin: 0; font-size: 2rem}
-    input{
-        width: 90%;
+    width: 50%;
+    h3{margin: 0; font-size: 1rem}
+    p{font-size: .8rem; text-align: right; }
+    input, button{
         height: 25px;
-        margin: 20px;
-        border:none;
-        border-bottom: 1px solid #80808095;
-        font-size: 1.25rem
-    }
-    div{
-        justify-content: space-between;
-        flex-direction: row
+        width: 80%
+        margin: 5px auto;
+        border: 1px solid #80808095;
+        font-size: 1rem;
+        padding: 2px;
+        border-radius: 2px;
     }
     button{
-        color: #000;
-        font-size: 1.25rem;
-        border: 1px solid black;
-        padding: 10px 20px;
-        background: none;
-        text-decoration: none;
-        color: black;
-        :hover{transform: scale(1.025); color: #80808095; cursor: pointer}
+        background: orange;
+        padding: 5px;
+        color: #fff;
+        border: none;
+        height: 30px;
+        :hover{transform: scale(1.025); cursor: pointer}
     }
 `;

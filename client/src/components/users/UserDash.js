@@ -1,35 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Redirect, NavLink} from 'react-router-dom';
 import styled from 'styled-components';
-
-//COMPONENTS
-import {useDataContext} from '../contexts/DataContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
 
 export default function UserDash(props) {
-    const { data, dispatchData } = useDataContext();
+    const [userData, setUserData] = useState({});
 
-    // useEffect(()=>{
-    //     axiosWithAuth()
-    //     .get(`/api/users/:id`)
-    //     .then(res=> { 
-    //         const userId = (props.match.params.id);
-    //         const userData = data.users.find(el => el.id === userId);
-    //         dispatchData({type: 'SET_USER', payload: userData})
-    //     })
-    //     .catch(err=>{console.log(err.response)});
-    // }, [])
-
-    useEffect(()=> {
-        const userId = (props.match.params.id);
-        const userData = data.users.find(el => el.id === userId);
-        dispatchData({type: 'SET_USER', payload: userData})
+    useEffect(()=>{
+        axiosWithAuth()
+        .get(`/users/3`)
+        .then(res=> { 
+            setUserData(res.data);
+        })
+        .catch(err=>{console.log(err.response)});
     }, [])
 
-    // if (customer.usertype !=== 'user' || 'stylist'){ 
-    //     return (<Redirect to='/'></Redirect> )
-    // }
+    console.log('USERDATA', userData);
 
     return (
         <div>
@@ -37,10 +24,11 @@ export default function UserDash(props) {
         <section className = 'about-me'>
             <InfoBox>
                 <div>
-                    <img alt='user profile' src={this.userData.profile_img}/>
+                    <img alt='user profile' src={userData.profile_img}/>
                 </div>
                 <div className='profile-text'>
-                    <h3>{this.userData.first_name}</h3>
+                    <h3>{userData.name}</h3>
+                    <h3>{userData.email}</h3>
                     <NavLink to='edit-profile' className='edit-btn'>Edit</NavLink>
                 </div>
             </InfoBox>                
@@ -55,7 +43,6 @@ export default function UserDash(props) {
             </div>
         </Saved>
         </div>
-
     )
 }
 

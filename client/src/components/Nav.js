@@ -6,6 +6,10 @@ import { useUserContext } from './contexts/UserContext';
 function Nav(props) {
     const {user, dispatch} = useUserContext();
 
+    const logout = e => {
+        localStorage.removeItem('token');
+        props.history.push('/')
+      };
     // useEffect(()=> {
     //     if(localStorage.getItem('token')){
     //         dispatch({type: 'LOGIN_TRUE'});
@@ -18,40 +22,14 @@ function Nav(props) {
                 <Logo>Stylist Find</Logo>
             </NavLink>
             <div>
-                {/* {props.location.pathname === '/signup' && (
-                    <NavLink to='/login'>Login</NavLink>
+                <NavLink to='/search'>Search</NavLink>
+                <NavLink to='/users/:id/dash'>User</NavLink>
+                <NavLink to='/stylists/:id/dash'>Stylist</NavLink> 
+                <NavLink to='/login'>Login</NavLink>
+                {user.isLoggedIn && (
+                    <NavLink to='/' onClick={logout}>Logout</NavLink>
                 )}
-
-                {props.location.pathname === '/login' && (
-                    <NavLink to='/signup'>Signup</NavLink>
-                )}
-
-                {localStorage.getItem('usertype') === 'stylist' && (
-                    <NavLink to='/stylists/:id/dash'>Dash</NavLink>
-                )}
-
-                {localStorage.getItem('usertype') === 'user' && (
-                    <NavLink to='/users/:id/dash'>Dash</NavLink>
-                )} */}
-
-            <NavLink to='/search'>Search</NavLink>
-            <NavLink to='/users/:id/dash'>User</NavLink>
-            <NavLink to='/stylists/:id/dash'>Stylist</NavLink> 
-            <NavLink to='/login'>Login</NavLink>
-
-            
-            {user.isLoggedIn && (
-            <LogOutBtn
-                onClick={() => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('usertype');
-                dispatch({ type: 'LOGOUT' });
-                props.history.push('/login');
-                }}>
-                Logout
-            </LogOutBtn>
-            )}
-        </div>
+            </div>
         </NavBar>
     )
 }
