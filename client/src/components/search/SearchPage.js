@@ -2,19 +2,39 @@ import React, { useState, useEffect } from 'react';
 import SearchCard from './SearchCard';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import FilterBar, {filterResults} from './Filter-Bar';
+import FilterBar from './Filter-Bar';
 import GoogleApiWrapper from './Map';
+import CsvDownloader from 'react-csv-downloader';
+
+
 
 function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [filterOpt, setFilterOpt] = useState({});
+    const [sortOpt, setSortOpt] = useState({});
 
-    if (filterResults === 'stylists' || 'salons'){
-        useEffect(()=> {
+    const handleChange = e => {
+        e.preventDefault();
+        setSearchTerm(e.target.value)
+    };
+
+    const changeFilter = e => {
+        e.preventDefault();
+        setFilterOpt(e.target.value);
+    };
+
+    const changeSort = e => {
+        e.preventDefault();
+        setSortOpt(e.target.value);
+    };
+    
+
+    useEffect(()=> {
+        if (filterOpt === 'stylists' || 'salons'){
             axiosWithAuth()
             .get('/search') 
             .then(res=> {
-                console.log('LIST OF STYLISTS:', res);
                 const results = res.data.filter(item=> 
                     item.salon.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     item.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -22,64 +42,64 @@ function SearchPage() {
                     item.last_name.toLowerCase().includes(searchTerm.toLowerCase()) 
                 );
                 setSearchResults(results);
-            })
-            .catch(err=> {
-                console.log('FACEPALM in SearchPage', err)
-            })
-        }, [searchTerm]);
-    } 
-    else if(filterResults === 'posts'){
-        useEffect(()=>{
+            })   
+        } else if(filterOpt === 'posts'){
             axiosWithAuth()
             .get('/search/posts')
             .then(res=> {
                 var latest = res.data.filter(item=> item.date.sort())
                 setSearchResults(latest);
             })
-            .catch(err=> {console.log(err)})
-        }, [])
-
-    }
-    else if(filterResults === 'reviews'){
-        useEffect(()=>{
+        } else if(filterOpt === 'reviews'){
             axiosWithAuth()
             .get('/search/reviews')
-            .then(res=> {
-            setSearchResults(res.data)
-            })
-            .catch(err=> {console.log(err)})
-        }, [])
+            .then(res=> {setSearchResults(res.data)})
+        }
+     }, [searchTerm])
+
+
+    const getHeaders = async (data) => {
+        if(data !== null) {
+            let headers = await Object.keys(data[0]);       
+            console.log('Headers', headers)
+        }   
     }
     
-
-    const handleChange = e => {
-        e.preventDefault();
-        setSearchTerm(e.target.value)
-    };
 
     return(
         <div>
             <div>
-                <SearchBar>
-                    <form onSubmit={handleChange}>
-                        <input
-                        id='search_input'
-                        type='text'
-                        name='textfield'
-                        placeholder='Search stylist, salon, city...'
-                        value={searchTerm}
-                        onChange={handleChange}/>
-                    </form>
-                </SearchBar>
+            <SearchBar>
+                <form onSubmit={handleChange}>
+                    <input
+                    id='search_input'
+                    type='text'
+                    name='textfield'
+                    placeholder='Search stylist, salon, city...'
+                    value={searchTerm}
+                    onChange={handleChange}/>
+                </form>
+            </SearchBar>
             </div>
+
             <BodyContainer>
                 <SideBarContainer>
-                    <FilterBar props={searchResults}/>
+                    <FilterBar 
+                        props={searchResults}
+                        onChange={handleChange}
+                        setFilterOpt={setFilterOpt}
+                        setSortOpt={setSortOpt}
+                    />
+                    <CsvDownloader data={searchResults} columns={getHeaders(searchResults)} filename={'TestCSV'} seperator={';'}/>
                     <GoogleApiWrapper/>
+
                 </SideBarContainer>
                 <SearchContainer>
                     {searchResults.map(result=> (
-                        <SearchCard key={result.id} result={result}/>
+                        <SearchCard 
+                        key={result.id} 
+                        result={result}
+                        props={filterOpt}/>
                     ))}
                 </SearchContainer>
             </BodyContainer>

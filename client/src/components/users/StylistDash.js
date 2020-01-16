@@ -34,6 +34,7 @@ export default function StylistDash(props) {
                     <div className='profile-pic-box'>
                         <img src={`${stylist.profile_img}`} alt='profile of stylist, salon'/>
                         <h1>{stylist.first_name} {stylist.last_name}</h1>
+                        <i class="fas fa-star"></i>
                     </div>
                     <div className='profile-text'>
                         <h3>{stylist.salon}</h3>

@@ -2,6 +2,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "next": "^9.1.4",
+    "react-csv-downloader": "^1.5.0",
     "validator": "^12.1.0"
   },
   "devDependencies": {

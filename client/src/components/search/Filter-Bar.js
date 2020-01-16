@@ -1,16 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 export default function FilterBar(props){
-    const [filterResults, setFilterResults] = useState('stylists');
+    const [filterOpt, setFilterOpt] = useState('stylists');
+    const [sortOpt, setSortOpt] = useState('stylists');
 
-    const handleChange = e => {
+    const changeFilter = e => {
         e.preventDefault();
-        setFilterResults(e.target.value)
+        setFilterOpt(e.target.value);
+    };
+
+    const changeSort = e => {
+        e.preventDefault();
+        setSortOpt(e.target.value);
     };
 
     const sortByAlph = props => {
-        return props.sort()
+        return props.salon.sort() || props.first_name.sort()
     }
 
     return (
@@ -19,19 +25,18 @@ export default function FilterBar(props){
             <div className='menu-container'>
 
                 <p>Show me</p>
-                <select name='show-me-opt' onChange={handleChange}>
-                    <option value={stylists}>Stylists</option>
-                    <option value={salons}>Salons</option>
-                    <option value={posts}>Posts</option>
-                    <option value={reviews}>Reviews</option>
+                <select name='show-me-opt' onChange={changeFilter}>
+                    <option value={'stylists'}>Stylists</option>
+                    <option value={'salons'}>Salons</option>
+                    <option value={'posts'}>Posts</option>
+                    <option value={'reviews'}>Reviews</option>
                 </select>
 
                 <p>Sort By</p>
-                <select name='sort-by-opt'>
-                    <option value={}>Nearest</option>
-                    <option value={}>Price (Asc)</option>
-                    <option value={}>Price (Desc)</option>
-                    <option value={} onSelect={sortByAlph}>Alphabetical</option>
+                <select name='sort-by-opt' onChange={changeSort}>
+                    <option onSelect={sortByAlph}>Alphabetical</option>
+                    <option>Nearest</option>
+                    <option>Rating</option>
                 </select>
 
             </div>
@@ -40,7 +45,6 @@ export default function FilterBar(props){
     )
 }
 
-module.export = {filterResults};
 
 let SIDEBAR = styled.div`
     display: flex;

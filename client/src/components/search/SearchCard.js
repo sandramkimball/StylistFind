@@ -36,7 +36,7 @@ const Card = styled.div`
     width: 90%;
     margin: 5px auto;
     padding: 5px;
-    border-right: 1px solid #80808095
+    border: .5px solid #e6e6e6
     background: white;
     text-align: left;
     display: flex;
