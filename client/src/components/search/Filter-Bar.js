@@ -54,6 +54,13 @@ let SIDEBAR = styled.div`
     width: 95%;
     margin: 0 auto;
     padding-bottom: 10px;
+    select{
+        width: 100%;
+        border-radius: 2px;
+        padding: 3px 5px;
+        font-size: 1rem;
+        color: gray;
+    }
     p{
         text-align: left;
         font-weight: 600;

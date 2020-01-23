@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link, Redirect} from 'react-router-dom';
-
-//COMPONENTS
-// import { useUserContext } from '../contexts/UserContext';
-// import { useDataContext } from '../contexts/DataContext';
 // import PrivateRoute from '../PrivateRoute';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
@@ -12,18 +8,16 @@ class Login extends React.Component {
 
     constructor(props){
         super(props);
-        this.state={
-            username: '',
-            password: '',
-            isLoading: false
-        };
-
+        this.state= {
+            credentials: {
+                username: '',
+                password: '',
+                isLoading: false
+            }
+        }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     };
-
-    // const { user, stylist, dispatch } = useUserContext();
-    // const { dispatchData } = useDataContext();
 
     handleChange = e =>{
         this.setState({
@@ -37,81 +31,18 @@ class Login extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         axiosWithAuth()
-            .post('/api/auth/login', this.state)
+            .post('/api/auth/login', this.state.credentials)
             .then(res=> {
-                console.log(res.data)
                 localStorage.setItem('token', res.data.payload);
                 this.props.history.push('/search')
             })
-            .catch(err=> console.log('LOGIN ERROR', err.res))
-            // const userId = (props.match.params.id);
-            // const userData = props.data.users.find(el => el.id === userId);
-            // const stylistData = props.data.stylists.find(el => el.id === userId);
-            // if(userId.ussertype === 'user'){
-            //     dispatchData({ type: 'IMPORT_USER_DATA', payload: userData});
-            //     dispatchData({ type: 'SET_USER', payload: userData});
-            // } else {
-            //     dispatchData({ type: 'IMPORT_STYLIST_DATA', payload: stylistData});
-            //     dispatchData({ type: 'SET_STYLIST', payload: stylistData});
-            // }    
+            .catch(err=> console.log('LOGIN ERROR', err.res)) 
     };
-    
-   
-
-    // let handleSubmit = e => {
-    //     e.preventDefault();
-
-    //         axiosWithAuth()
-    //         .post('/api/auth/login', this.state.credentials)
-    //         .then(res=> {
-    //             storage.setItem('token', res.data.payload);
-    //             if(res.data.usertype === 'stylists'){
-    //                 setStylist(res.data)
-    //             } else if (res.data.usertype === 'user'){
-    //                 setUser(res.data)
-    //             } 
-    //         })
-    //         .catch(err=>console.log('Username or password incorrect.', err))
-    // };
-
-    //     if(users.find(
-    //         obj=>
-    //             obj.username === credentials.username &&
-    //             obj.password === credentials.password
-    //         )
-    //     ){
-    //         storage.setItem('token', 'user' + credentials.username);
-    //         storage.setItem('usertype', 'user');
-    //         dispatch({
-    //             type: 'LOGIN_SUCCESS',
-    //             usertype: 'user',
-    //             username: credentials.username,
-    //         });
-    //         dispatch({type: 'LOGIN_USER'});
-    //         props.history.push(`/user-dash/${props.user.id}`);
-    //     } else if (
-    //         this.stylists.find(
-    //         obj =>
-    //             obj.username === credentials.username &&
-    //             obj.password === credentials.password,
-    //         )
-    //     ){
-    //         localStorage.setItem('token', 'stylist' + credentials.username);
-    //         localStorage.setItem('usertype', 'stylist');
-    //         dispatch({
-    //             type: 'LOGIN_SUCCESS',
-    //             usertype: 'stylist',
-    //             username: credentials.username,
-    //         });
-    //         dispatch({type: 'LOGIN_STYLIST'});
-    //         props.history.push(`/stylist-dash/${props.stylist.id}`);
-    //     } else {
-    //         dispatch({type: 'LOGIN_FAILURE'})}
-    // };
      
     render(){
-        const {username, password, isLoading} = this.state;
-    return (
+        if(localStorage.getItem('token')) return <Redirect to='/'/>
+        // const {username, password, isLoading} = this.state;
+        return (
             <LoginPage>
                 <LoginForm onSubmit={this.handleSubmit}>
                     <h3>Login</h3>
@@ -122,7 +53,6 @@ class Login extends React.Component {
                         placeholder="Username" 
                         onChange={this.handleChange}
                     />
-
                     <input 
                         type='password' 
                         name='password' 
@@ -138,14 +68,6 @@ class Login extends React.Component {
     )
 }};
 
-// LoginForm.propTypes = {
-//     login: React.PropTypes.func.isRequired
-// }
-
-// LoginForm.contextTypes = {
-//     router: React.PropTypes.object.isRequired
-// }
-
 export default Login;
 
 
@@ -157,8 +79,13 @@ const LoginPage = styled.div`
     justify-content: center;
     align-items: center;
     align-content: center;
-    img{
-        height: 100%;
+    img{height: 100%}
+    a{
+        font-size: .8rem; 
+        text-align: right; 
+        text-decoration: none; 
+        color: black; 
+        :hover{color: gray}
     }
 `;
 
@@ -172,7 +99,6 @@ const LoginForm = styled.form`
     flex-direction: column;
     width: 50%;
     h3{margin: 0; font-size: 1rem}
-    p{font-size: .8rem; text-align: right; }
     input, button{
         height: 25px;
         width: 80%

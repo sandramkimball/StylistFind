@@ -4,9 +4,6 @@ import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import FilterBar from './Filter-Bar';
 import GoogleApiWrapper from './Map';
-import CsvDownloader from 'react-csv-downloader';
-
-
 
 function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -56,14 +53,6 @@ function SearchPage() {
             .then(res=> {setSearchResults(res.data)})
         }
      }, [searchTerm])
-
-
-    const getHeaders = async (data) => {
-        if(data !== null) {
-            let headers = await Object.keys(data[0]);       
-            console.log('Headers', headers)
-        }   
-    }
     
 
     return(
@@ -90,9 +79,7 @@ function SearchPage() {
                         setFilterOpt={setFilterOpt}
                         setSortOpt={setSortOpt}
                     />
-                    <CsvDownloader data={searchResults} columns={getHeaders(searchResults)} filename={'TestCSV'} seperator={';'}/>
                     <GoogleApiWrapper/>
-
                 </SideBarContainer>
                 <SearchContainer>
                     {searchResults.map(result=> (
@@ -118,15 +105,12 @@ const SideBarContainer = styled.div`
     left: 0;
     width: 20vw;
     height: 100vh;
-    border-right: .5px solid gray;
 `;
 
 const SearchContainer = styled.div`
     width: 65vw;
     margin: auto;
     display: flex;
-    flex-direction: column;
-    overflow: auto;
     position: fixed;
     top: 20vh;
     left: 25vw;

@@ -35,23 +35,22 @@ export default function Home() {
   const handleEnter = e => {
     e.preventDefault();
     return <Link to='/search'/>
+    // props.history.push('/search')
   };
 
   return (
     <div>
       <Body>
         <Section1>
-          <img src='https://images.unsplash.com/photo-1573641287741-f6e223d81a0f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80' alt='curly blonde hair and green leaves'/>
-          <SearchBar>
-            <h2>Start Your Search:</h2>
-            <form onSubmit={handleEnter}>
-                <input
+          <h1>Search</h1>
+          <form onSubmit={handleEnter}>
+              <input
                 id='search_input'
                 type='text'
                 name='textfield'
-                placeholder='Enter location, salon or stylist name...'/>
-            </form>
-          </SearchBar>
+                placeholder='Enter location, salon or stylist name...'
+              />
+          </form>
         </Section1>
         <Section2>
           <h1>Latest Reviews </h1>
@@ -80,65 +79,48 @@ const Body = Styled.section`
   margin: 0 auto;
   dislay: flex;
   flex-direction: column;
-  align-content: space-between;
-`;
-
-const Section1 = Styled.section`
-  height: 60vh;
-  width: 100vw;
-  img{
-    object-fit: cover;
-    position: relative;
-    height: 100%;
-    width: 100vw
-  }
 `;
 
 const Section2 = Styled.section`
   width: 90vw;
   margin: 0 auto;
-  h1{font-size: 1.5rem;}
-  div{margin: 2.5px; display: flex; justify-content: center}
+  h1{font-size: 1.5rem; color: orange; margin:  20px 0 0 0 }
+  div{margin: 0 auto; display: flex; justify-content: center}
 `;
 
 const Section3 = Styled.section`
   width: 90vw;
-  margin: 20px auto;
-  background: #ebebeb;
+  margin: 0 auto;
   div{margin: 0 auto}
-  h1{font-size: 1.5rem; color: orange; margin: 0}
+  h1{font-size: 1.5rem; color: orange; margin: 20px 0 0 0 }
 `;
 
-const SearchBar = Styled.div`
-  width: 60%;
-  margin: 10px auto;
-  background: #fff;
+const Section1 = Styled.div`
+  height: 90vh;
+  width: 100vw;
+  margin: auto;
   padding: 10px;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
   align-items: center;
-  z-index: 5;
-  position: absolute;
-  top: 30vh;
-  left: 20vw;
+  justify-content: center;
   border-radius: 5px 3px;
-  h1{font-size: 2.75rem; padding: 0; margin: 0 }
+  background-color: #fff3df;
+  h1{font-size: 2.75rem; padding: 0; margin: 10px 0; font-family: 'Dancing Script', cursive;  }
   form{
     border: none;
-    height: 30px;
-    margin-left: 20px;
-    width: 60%
     button{
-        background: none;
-        border: 1px solid black;
-        padding: 7px;
+      background: red;
+      border: 1px solid black;
+      padding: 7px;
     }
     input{
-        border: none;
-        height: 40px;
-        width: 100%;
-        text-align: left;
-        border-bottom: 1.5px solid gray;
+      height: 40px;
+      width: 40vw;
+      text-align: left;
+      padding: 5px;
+      border: none;
+      border-bottom: 1.5px solid #eeeeef;
     }
   }
 `;

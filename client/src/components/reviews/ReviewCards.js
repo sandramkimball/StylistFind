@@ -26,7 +26,6 @@ function ReviewCard (props) {
                 </div>
                 <div className='review-text'>
                     <h4>{review}</h4>
-                    <p>{date} </p>
                 </div>
             </Card>
         </div>
@@ -35,30 +34,29 @@ function ReviewCard (props) {
 
 
 const Card = styled.div`
-    width: 30vw;
-    padding: 2px;
+    width: 310px;
     border: .5px solid #e6e6e6;
     border-radius: 2px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    a{color: black; text-decoration: none}
     h4, p{
         text-align: left;
-        padding: 5px;
-        margin: 0
-        text-decoration: none;
+        padding: 0;
+        margin: 0;
         font-size: 1rem;
     }
     .reviewer-info{
         height: 70px;
+        width: 100%;
         display: flex;
-        justify-content: flex-start;
-        div{flex-direction: column; }
+        div{flex-direction: column;}
         img{
             width: 60px;
             height: 60px;
             object-fit: cover;
-            margin: 0 ;
+            margin: 0;
         }
     }
     .review-text{
@@ -67,8 +65,8 @@ const Card = styled.div`
     }
 
     .review-img img{
-        width: 30vw;
-        height: 110px;
+        width: 100%;
+        height: 120px;
         object-fit: cover;
     }
 `;

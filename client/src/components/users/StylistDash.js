@@ -1,12 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import { BrowserRouter as Router, Link} from 'react-router-dom';
 import styled from 'styled-components';
-// import {useDataContext} from '../contexts/DataContext';
-// import {useUserContext} from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import Posts from '../posts/Posts';
-
-
 
 export default function StylistDash(props) {
     const [stylist, setStylist] = useState([]);

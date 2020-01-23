@@ -11,7 +11,6 @@ function PostCard(props) {
                 <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
                     <img src={image} alt='user post'/>
                     <h4>{comment}</h4>
-                    <p>{date} at {salon}</p>
                     <p>posted by {username}</p>
                 </Link>
            </Card>
@@ -22,13 +21,12 @@ function PostCard(props) {
 export default PostCard;
 
 const Card = Styled.div`
-    max-width: 310px;
+    width: 310px;
     height: 350px;
     background: #fff;
     display: flex;
     flex-direction: column;
     text-align: left;
-    margin: 5px;
     padding: 0 0 4px 0;
     border-radius: 4px;
     box-sizing: border-box;
