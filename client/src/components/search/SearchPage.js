@@ -79,7 +79,7 @@ function SearchPage() {
                         setFilterOpt={setFilterOpt}
                         setSortOpt={setSortOpt}
                     />
-                    <GoogleApiWrapper/>
+                    {/* <GoogleApiWrapper/> */}
                 </SideBarContainer>
                 <SearchContainer>
                     {searchResults.map(result=> (
@@ -97,23 +97,23 @@ function SearchPage() {
 export default SearchPage;
 
 const BodyContainer = styled.div`
-    display: flex
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 100%;
 `;
 
 const SideBarContainer = styled.div`
-    position: fixed;
-    left: 0;
-    width: 20vw;
+   margin: 0 auto;
+    width: 20%;
     height: 100vh;
 `;
 
 const SearchContainer = styled.div`
-    width: 65vw;
-    margin: auto;
+    width: 75%;
+    margin: 0 auto;
     display: flex;
-    position: fixed;
-    top: 20vh;
-    left: 25vw;
+    justify-content: space-between;
     padding-bottom: 10px;
     ::-webkit-scrollbar{ width: 0}
     }

@@ -45,7 +45,7 @@ class Login extends React.Component {
         return (
             <LoginPage>
                 <LoginForm onSubmit={this.handleSubmit}>
-                    <h3>Login</h3>
+                    <h3>Welcome Back</h3>
                     <input 
                         type='text' 
                         name='username' 
@@ -61,9 +61,7 @@ class Login extends React.Component {
                         onChange={this.handleChange}
                     />
                     <button type='submit' onClick={this.handleSubmit}>Login</button>
-                    <Link to='/signup'><p>Sign Up</p></Link>
                 </LoginForm>
-                    <img src='https://images.unsplash.com/photo-1501699169021-3759ee435d66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=661&q=80' alt='salon chair and makeup light'/>
             </LoginPage>
     )
 }};
@@ -72,8 +70,8 @@ export default Login;
 
 
 const LoginPage = styled.div`
-    width: 90vh;
-    height: 80vh;
+    width: 50vw;
+    height: 50vh;
     margin: auto;
     display:flex;
     justify-content: center;
@@ -97,11 +95,10 @@ const LoginForm = styled.form`
     margin: 0 auto;
     padding: 20px;
     flex-direction: column;
-    width: 50%;
-    h3{margin: 0; font-size: 1rem}
+    h3{margin: 0; font-size: 2rem; font-family: 'Dancing Script', cursive}
     input, button{
         height: 25px;
-        width: 80%
+        width: 100%
         margin: 5px auto;
         border: 1px solid #80808095;
         font-size: 1rem;
@@ -110,10 +107,11 @@ const LoginForm = styled.form`
     }
     button{
         background: orange;
-        padding: 5px;
+        max-width: 30%;
+        padding: 2px 5px;
         color: #fff;
         border: none;
         height: 30px;
-        :hover{transform: scale(1.025); cursor: pointer}
+        cursor: pointer
     }
 `;

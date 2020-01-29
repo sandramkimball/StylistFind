@@ -33,7 +33,6 @@ function SearchCard(props)  {
 const Card = styled.div`
     height: 300px;
     width: 300px
-    margin: 10px;
     border: .5px solid #e6e6e6
     background: #fff;
     text-align: left;
@@ -50,7 +49,7 @@ const Card = styled.div`
     div{
         padding: 5px;
         h3{text-decoration: underline; padding: 0}
-        p{padding: 0; margin: 0 auto; }
+        p{padding: 0; margin: 0; }
     }    
     a{
         display: flex;

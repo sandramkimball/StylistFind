@@ -2,17 +2,11 @@ import React from "react";
 import styled from 'styled-components';
 import {Link } from 'react-router-dom';
 //COMPONENTS
-// import { useUserContext } from '../contexts/UserContext';
-// import { useDataContext } from '../contexts/DataContext';
 import axiosWithAuth from "../utilis/axiosWithAuth";
 
 
 
 export default class SignUp extends React.Component {
-  // const { user, stylist, dispatch } = useUserContext();
-  // const { dispatchData } = useDataContext();
-  // const {user, setUser} = useState();
-  // const {stylist, setStylist} = useState();
 
   constructor(props){
     super(props);
@@ -195,17 +189,28 @@ export default class SignUp extends React.Component {
           />
         </div>
     )}
-    <button>Register</button>
-    <Link to='/login'><p>Login</p></Link>
-
+      <button type='submit' onClick={this.handleSubmit}>Sign Up</button>
        </SignupForm> 
     </SignupPage>
   );
 }}
 
 const SignupPage = styled.div`
-    width: 35vw
-    margin: auto;
+  width: 50vw;
+  height: 50vh;
+  margin: auto;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    img{height: 100%}
+    a{
+        font-size: .8rem; 
+        text-align: right; 
+        text-decoration: none; 
+        color: black; 
+        :hover{color: gray}
+    }
 `;
 
 const SignupForm = styled.form`
@@ -217,7 +222,7 @@ margin: 0 auto;
 padding: 20px;
 flex-direction: column;
 width: 50%;
-h3{margin: 0; font-size: 1rem}
+h3{margin: 0; font-size: 1rem; font-family: 'Dancing Script', cursive}
 p{font-size: .8rem; text-align: right; }
 input, button{
     height: 25px;
@@ -230,10 +235,11 @@ input, button{
 }
 button{
     background: orange;
-    padding: 5px;
+    max-width: 30%;
+    padding: 2px 5px;
     color: #fff;
     border: none;
     height: 30px;
-    :hover{transform: scale(1.025); cursor: pointer}
+    cursor: pointer
 }
 `;

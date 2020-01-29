@@ -45,22 +45,21 @@ const Logo = styled.h1`
 `;
 
 const NavBar = styled.nav`
+    width: 90%;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 70px;
     justify-content: space-between;
-    padding: 0 10px;
     a{
         text-decoration: none;
         color: #faa41a;
         font-weight: 600;
-    }
-    img{
-        height: 100px;
+        margin: 0 5px;
     }
     div{
-        width: 25%;
+        // width: 25%;
         justify-content: space-between;
         display: flex;
         font-size: 1.2rem
