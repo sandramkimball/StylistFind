@@ -12,15 +12,16 @@ class LoginPage extends React.Component {
         this.state = {
             alreadyUser: true
         }
+        this.handleUser = this.handleUser.bind(this);
+
     }
 
     handleUser(){
-        this.setState({alreadyUser: true ? false : true})
+        this.setState({alreadyUser: true ? true : false})
     }
     
     render(){
         const isAlreadyUser = this.state.alreadyUser;
-
         let form;
         let loginOrSignup;
 
