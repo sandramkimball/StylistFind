@@ -50,7 +50,7 @@ const NavBar = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70px;
+    height: 8vh;
     justify-content: space-between;
     a{
         text-decoration: none;
@@ -59,7 +59,6 @@ const NavBar = styled.nav`
         margin: 0 5px;
     }
     div{
-        // width: 25%;
         justify-content: space-between;
         display: flex;
         font-size: 1.2rem

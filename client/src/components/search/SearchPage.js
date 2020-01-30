@@ -15,7 +15,7 @@ class SearchPage extends React.Component {
             sortOpt: ''
 
         }
-        this.handleSubmit = this.handleSubmit.bind(this);
+        // this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     };
 

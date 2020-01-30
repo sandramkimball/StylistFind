@@ -1,12 +1,18 @@
 import React, {useState, useEffect} from "react";
-import {  Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Styled from "styled-components";
-import axiosWithAuth from "./utilis/axiosWithAuth";
-import SearchPage from './search/SearchPage';
+import Background from '../images/person-cutting-hair.jpg';
 
 
-export default function Home() {
-  const [homeSearch, setHomeSearch] = useState('');
+class Home extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+        homeSearch: ''
+      }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
   // useEffect(()=>{
   //   axiosWithAuth()
@@ -29,58 +35,50 @@ export default function Home() {
   //   .catch(err=> {console.log('Latest Post Error: ', err)})
   // }, [])
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    return (<Link to="/search" searchTerm={homeSearch}/>)
+  handleSubmit = e => {
+    return <NavLink to="/search" searchTerm={this.state.homeSearch}/>
   };
 
-  const handleChange = e => {
+  handleChange = e => {
     e.preventDefault();
-    setHomeSearch(e.target.value)
-};
+    this.setState({setHomeSearch: e.target.value})
+  };
 
-  return (
-    <div>
-      <Body>
-        <Section1>
+  render(){
+    return (
+      <div>
+        <Landing>
           <h1>Search</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={this.handleSubmit}>
               <input
                 id='search_input'
                 type='text'
                 name='textfield'
                 placeholder='Enter location, salon or stylist name...'
-                value={homeSearch}
-                onChange={handleChange}
+                value={this.state.homeSearch}
+                onChange={this.handleChange}
               />
           </form>
-        </Section1>
-     </Body>
-    </div>
-  );
+        </Landing>
+      </div>
+    )
+  }
 }
 
+export default Home;
 
-const Body = Styled.section`
-  height: 100%;
-  width: 100%;
-  margin: 0 auto;
-  dislay: flex;
-  flex-direction: column;
-`;
-
-const Section1 = Styled.div`
-  height: 90vh;
+const Landing = Styled.div`
+  height: 92vh;
   width: 100vw;
   margin: auto;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px 3px;
-  background-color: #fff3df;
-  h1{font-size: 2.75rem; padding: 0; margin: 10px 0; font-family: 'Dancing Script', cursive;  }
+  // background: url('https://images.pexels.com/photos/4614/woman-morning-bathrobe-bathroom.jpg?cs=srgb&dl=woman-morning-bathrobe-bathroom-4614.jpg&fm=jpg')
+  background: lavender;
+  h1{
+    font-size: 2.75rem; 
+    margin: 0 0 10px 0; 
+    padding: 15% 0 0 0; 
+    font-family: 'Dancing Script', cursive;  
+  }
   form{
     border: none;
     button{
@@ -95,21 +93,6 @@ const Section1 = Styled.div`
       padding: 5px;
       border: none;
       border-bottom: 1.5px solid #eeeeef;
-    }
-  }
-`;
-
-const RegisterBtn = Styled.div`
-  width: 40vw;
-  align-items: center;
-  a{text-decoration: none;}
-  h3{
-    font-size: 3rem;
-    color: purple;
-    :hover{
-      transform: scale(1.1);
-      color: #80808095; 
-      cursor: pointer;
     }
   }
 `;

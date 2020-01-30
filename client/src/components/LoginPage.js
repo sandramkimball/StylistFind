@@ -10,10 +10,9 @@ class LoginPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            alreadyUser: true
+            alreadyUser: false
         }
         this.handleUser = this.handleUser.bind(this);
-
     }
 
     handleUser(){

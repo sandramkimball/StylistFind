@@ -11,13 +11,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    max-width: 100%;
+    width: 100vw;
     font-family: 'Source Sans Pro', sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     position: relative;
-    padding-bottom: 210px;
   }
 
   h1, h2, h3, h4 {
