@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {  Route } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import Styled from "styled-components";
 import axiosWithAuth from "./utilis/axiosWithAuth";
 import SearchPage from './search/SearchPage';
@@ -31,9 +31,7 @@ export default function Home() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setHomeSearch(e.target.value)
-    return <Route path="/search" component={SearchPage} searchTerm={homeSearch}/>
-    // props.history.push('/search')
+    return (<Link to="/search" searchTerm={homeSearch}/>)
   };
 
   const handleChange = e => {

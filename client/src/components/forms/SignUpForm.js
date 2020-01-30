@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import {Link } from 'react-router-dom';
+import {NavLink } from 'react-router-dom';
 //COMPONENTS
 import axiosWithAuth from "../utilis/axiosWithAuth";
 
@@ -22,178 +22,144 @@ export default class SignUp extends React.Component {
       country: '',
       salon: '',
       email: '',
-      usertype: 'user',
+      isStylist: false,
       id: Date.now(),
       errors: {},
-      isLoading: false,
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   };
 
 
-  handleChange = e =>{
+  handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   handleSubmit = e => {
       e.preventDefault();
-      if(this.state.usertype ==='user'){
+      console.log('Take me to Search!')
+      if(this.state.isStylist === false){
         axiosWithAuth()
         .post('/api/register', this.state)
         .then(
-          (res)=> this.context.router.push(`api/user-dashboard/:id`),
           (err)=> this.setState({errors: err.data.errors, isLoading: false})
         )
         .catch(err=>{console.log(err.response)})
       }
 
-      if(this.state.usertype === 'stylist'){
+      if(this.state.isStylist === true){
         axiosWithAuth()
         .post('/api/register', this.state)
         .then(
-          (res)=> this.context.router.push(`api/search`),
           (err)=> this.setState({errors: err.data.errors, isLoading: false})
         )
         .catch(err=>{console.log(err.response)})
       }
+      return(
+        <NavLink to='/search'/>
+      )
   };
 
-    //USER
-    // useEffect(()=> {
-    //   const userId = (props.match.params.id);
-    //   const userData = props.data.users.find(el => el.id === userId);
-    //   dispatchData({type: 'SET_USER', payload: userData})
-
-    // //STYLIST
-    //   const stylistId = (props.match.params.id);
-    //   const stylistData = props.data.stylists.find(el => el.id === stylistId);
-    //   dispatchData({type: 'SET_STYLIST', payload: stylistData})
-
-    //   const users = [...users];
-    //   const stylists = [ ...stylists];
-    //   const storage = props.match.headers.authorization;
-
-    //   if (users.map(obj => obj.username).includes(registrationInfo.username)) {
-    //     dispatch({ type: 'REGISTRATION_FAILURE' });
-    //   } else {
-    //     storage.setItem('token', 'register' + registrationInfo.username);
-    //     storage.setItem('usertype' + registrationInfo.usertype);
-    //         dispatch({
-    //           type: 'REGISTRATION_SUCCESS',
-    //           username: registrationInfo.username,
-    //           city: registrationInfo.city,
-    //         });
-    //   };    
-    // };
-
-  // if ('token') {
-  //   if (user.usertype === 'stylist') {
-  //     return <Redirect to={`/stylist-dash/:${stylist.id}`} />;
-  //   } else {
-  //     return <Redirect to={`/user-dash/:${user.id}`} />;
-  //   }
-  // };
-
   render(){
-  return (
-    <SignupPage>
-      <SignupForm onSubmit = {this.handleSubmit}>
-        <h3>Sign Up</h3>
-
-        <input
-          type='text'
-          name='first_name'
-          value={this.first_name} 
-          placeholder="first name" 
-          onChange={this.handleChange}
-        />
-        <input
-          type='text'
-          name='last_name'
-          value={this.last_name} 
-          placeholder="last name" 
-          onChange={this.handleChange}
-        />
-
-        <input
-          type='text'
-          name='username'
-          value={this.username} 
-          placeholder="username" 
-          onChange={this.handleChange}
-        />
-
-        <input
-          type='text'
-          name='password'
-          value={this.password} 
-          placeholder="password" 
-          onChange={this.handleChange}
-        />
-
-        <input
-          type='text'
-          name='email'
-          value={this.email} 
-          placeholder="email" 
-          onChange={this.handleChange}
-        />
-
-        I'm a Stylist
-        <input 
-          type='radio'
-          label='user'
-          name='usertype'
-          value={this.usertype === 'stylist'}
-          onChange={this.handleChange}
-        />
-  
-  {this.usertype === 'stylist' && (
-      <div>
+    return (
+      <SignupPage>
+        <SignupForm onSubmit={this.handleSubmit}>
+          <h3>Glad You're Here!</h3>
           <input
             type='text'
-            name='street_address'
-            value={this.street_address} 
-            placeholder="street address" 
+            name='first_name'
+            value={this.state.first_name} 
+            placeholder="first name" 
             onChange={this.handleChange}
           />
           <input
             type='text'
-            name='city'
-            value={this.city} 
-            placeholder="city" 
-            onChange={this.handleChange}
-          />
-          <input
-            type='text'
-            name='country'
-            value={this.country} 
-            placeholder="country" 
-            onChange={this.handleChange}
-          />
-          <input
-            type='text'
-            name='zipcode'
-            value={this.zipcode} 
-            placeholder="zipcode" 
+            name='last_name'
+            value={this.state.last_name} 
+            placeholder="last name" 
             onChange={this.handleChange}
           />
 
           <input
             type='text'
-            name='salon'
-            value={this.salon} 
-            placeholder="salon_name" 
+            name='username'
+            value={this.state.username} 
+            placeholder="username" 
             onChange={this.handleChange}
           />
-        </div>
-    )}
-      <button type='submit' onClick={this.handleSubmit}>Sign Up</button>
-       </SignupForm> 
-    </SignupPage>
-  );
-}}
+
+          <input
+            type='password'
+            name='password'
+            value={this.state.password} 
+            placeholder="password" 
+            onChange={this.handleChange}
+          />
+
+          <input
+            type='text'
+            name='email'
+            value={this.state.email} 
+            placeholder="email" 
+            onChange={this.handleChange}
+          />
+          <div className='check-stylist'>
+            I'm a Stylist
+            <input 
+              type='radio'
+              label='user'
+              name='isStylist'
+              value={true}
+              onClick={this.handleChange}
+            />
+          </div>
+    
+    {this.state.isStylist.value === true && (
+        <div>
+            <input
+              type='text'
+              name='street_address'
+              value={this.state.street_address} 
+              placeholder="street address" 
+              onChange={this.handleChange}
+            />
+            <input
+              type='text'
+              name='city'
+              value={this.state.city} 
+              placeholder="city" 
+              onChange={this.handleChange}
+            />
+            <input
+              type='text'
+              name='country'
+              value={this.state.country} 
+              placeholder="country" 
+              onChange={this.handleChange}
+            />
+            <input
+              type='text'
+              name='zipcode'
+              value={this.state.zipcode} 
+              placeholder="zipcode" 
+              onChange={this.handleChange}
+            />
+
+            <input
+              type='text'
+              name='salon'
+              value={this.state.salon} 
+              placeholder="salon_name" 
+              onChange={this.handleStylistCheck}
+            />
+          </div>
+      )}
+        <button type='submit' onClick={this.handleSubmit}>sign up</button>
+        </SignupForm> 
+      </SignupPage>
+    );
+  }
+}
 
 const SignupPage = styled.div`
   width: 50vw;
@@ -211,6 +177,13 @@ const SignupPage = styled.div`
         color: black; 
         :hover{color: gray}
     }
+  .check-stylist{
+    display: flex;
+    width: 80%;
+    align-items: center;
+    justify-content: space-between;
+    input{width: 30%; margin-left: 0}
+  }
 `;
 
 const SignupForm = styled.form`
@@ -222,7 +195,7 @@ margin: 0 auto;
 padding: 20px;
 flex-direction: column;
 width: 50%;
-h3{margin: 0; font-size: 1rem; font-family: 'Dancing Script', cursive}
+h3{margin: 0; font-size: 2rem; font-family: 'Dancing Script', cursive}
 p{font-size: .8rem; text-align: right; }
 input, button{
     height: 25px;

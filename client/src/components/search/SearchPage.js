@@ -5,93 +5,89 @@ import axiosWithAuth from '../utilis/axiosWithAuth';
 import FilterBar from './Filter-Bar';
 import GoogleApiWrapper from './Map';
 
-function SearchPage() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
-    const [filterOpt, setFilterOpt] = useState({});
-    const [sortOpt, setSortOpt] = useState({});
+class SearchPage extends React.Component {
+    constructor(props){
+        super(props);
+        this.state= {
+            searchTerm: '',
+            searchResults: [],
+            filterOpt: '',
+            sortOpt: ''
 
-    const handleChange = e => {
-        e.preventDefault();
-        setSearchTerm(e.target.value)
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     };
 
-    const changeFilter = e => {
+    handleChange = e => {
         e.preventDefault();
-        setFilterOpt(e.target.value);
+        this.setState({searchTerm: e.target.value})
     };
 
-    const changeSort = e => {
-        e.preventDefault();
-        setSortOpt(e.target.value);
-    };
-    
-
-    useEffect(()=> {
-        if (filterOpt === 'stylists' || 'salons'){
+    componentWillMount(){
+        if (this.state.filterOpt === 'stylists' || 'salons'){
             axiosWithAuth()
             .get('/search') 
             .then(res=> {
                 const results = res.data.filter(item=> 
-                    item.salon.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    item.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    item.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    item.last_name.toLowerCase().includes(searchTerm.toLowerCase()) 
+                    item.salon.toLowerCase().includes(this.state.searchTerm.toLowerCase()) ||
+                    item.city.toLowerCase().includes(this.state.searchTerm.toLowerCase()) ||
+                    item.first_name.toLowerCase().includes(this.state.searchTerm.toLowerCase()) ||
+                    item.last_name.toLowerCase().includes(this.state.searchTerm.toLowerCase()) 
                 );
-                setSearchResults(results);
+                this.setState({searchResults: results});
             })   
-        } else if(filterOpt === 'posts'){
+        } else if(this.state.filterOpt === 'posts'){
             axiosWithAuth()
             .get('/search/posts')
             .then(res=> {
                 var latest = res.data.filter(item=> item.date.sort())
-                setSearchResults(latest);
+                this.setState({searchResults: latest});
             })
-        } else if(filterOpt === 'reviews'){
+        } else if(this.state.filterOpt === 'reviews'){
             axiosWithAuth()
             .get('/search/reviews')
-            .then(res=> {setSearchResults(res.data)})
+            .then(res=>{ this.setState({searchResults: res.data}) })
         }
-     }, [searchTerm])
+     };
     
-
-    return(
-        <div>
+    render(){
+        return(
             <div>
-            <SearchBar>
-                <form onSubmit={handleChange}>
-                    <input
-                    id='search_input'
-                    type='text'
-                    name='textfield'
-                    placeholder='Search stylist, salon, city...'
-                    value={searchTerm}
-                    onChange={handleChange}/>
-                </form>
-            </SearchBar>
-            </div>
+                <div>
+                <SearchBar>
+                    <form onSubmit={this.handleChange}>
+                        <input
+                        id='search_input'
+                        type='text'
+                        name='textfield'
+                        placeholder='Search stylist, salon, city...'
+                        value={this.state.searchTerm}
+                        onChange={this.handleChange}/>
+                    </form>
+                </SearchBar>
+                </div>
 
-            <BodyContainer>
-                <SideBarContainer>
-                    <FilterBar 
-                        props={searchResults}
-                        onChange={handleChange}
-                        setFilterOpt={setFilterOpt}
-                        setSortOpt={setSortOpt}
-                    />
-                    {/* <GoogleApiWrapper/> */}
-                </SideBarContainer>
-                <SearchContainer>
-                    {searchResults.map(result=> (
-                        <SearchCard 
-                        key={result.id} 
-                        result={result}
-                        props={filterOpt}/>
-                    ))}
-                </SearchContainer>
-            </BodyContainer>
-        </div>
-    )
+                <BodyContainer>
+                    <SideBarContainer>
+                        <FilterBar 
+                            props={this.state.searchResults}
+                            onChange={this.handleChange}
+                        />
+                        {/* <GoogleApiWrapper/> */}
+                    </SideBarContainer>
+                    <SearchContainer>
+                        {this.state.searchResults.map(result=> (
+                            <SearchCard 
+                            key={result.id} 
+                            result={result}
+                            props={this.state.filterOpt}/>
+                        ))}
+                    </SearchContainer>
+                </BodyContainer>
+            </div>
+        )
+    }
 }
 
 export default SearchPage;
