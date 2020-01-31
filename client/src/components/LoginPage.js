@@ -16,7 +16,7 @@ class LoginPage extends React.Component {
     }
 
     handleUser(){
-        this.setState({alreadyUser: true ? true : false})
+        this.setState({alreadyUser: false ? false : true})
     }
     
     render(){
@@ -32,13 +32,11 @@ class LoginPage extends React.Component {
             loginOrSignup = <p onClick={this.handleUser}>login</p>
         }
 
-
         return(
             <Page>
                 <div>
                    {form}
                    {loginOrSignup }              
-
                 </div>
                 <img src='https://images.unsplash.com/photo-1501699169021-3759ee435d66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=661&q=80' alt='salon chair and makeup light'/>
             </Page>

@@ -37,6 +37,8 @@ class Login extends React.Component {
                 this.props.history.push('/search')
             })
             .catch(err=> console.log('LOGIN ERROR', err.res)) 
+
+        return <Redirect to="/users/:id/dash" />
     };
      
     render(){

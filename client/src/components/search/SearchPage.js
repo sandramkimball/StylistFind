@@ -49,12 +49,28 @@ class SearchPage extends React.Component {
             .get('/search/reviews')
             .then(res=>{ this.setState({searchResults: res.data}) })
         }
-     };
+    };
+
+    filterData = (data, filterOpt) => {
+        data.filter( obj => {
+            if( obj.includes(filterOpt) ){
+                return obj
+            }
+        })
+        return data;
+    };
+
+    sortData = (data, sortOpt) => {
+        if(sortOpt = 'alphabetical'){
+            return data.salon.sort() || data.first_name.sort()
+        } else { 
+            return data
+        }
+    };
     
     render(){
         return(
             <div>
-                <div>
                 <SearchBar>
                     <form onSubmit={this.handleChange}>
                         <input
@@ -66,8 +82,6 @@ class SearchPage extends React.Component {
                         onChange={this.handleChange}/>
                     </form>
                 </SearchBar>
-                </div>
-
                 <BodyContainer>
                     <SideBarContainer>
                         <FilterBar 
@@ -79,9 +93,10 @@ class SearchPage extends React.Component {
                     <SearchContainer>
                         {this.state.searchResults.map(result=> (
                             <SearchCard 
-                            key={result.id} 
-                            result={result}
-                            props={this.state.filterOpt}/>
+                                key={result.id} 
+                                id={result.id} 
+                                result={result}
+                            />
                         ))}
                     </SearchContainer>
                 </BodyContainer>
@@ -100,7 +115,7 @@ const BodyContainer = styled.div`
 `;
 
 const SideBarContainer = styled.div`
-   margin: 0 auto;
+    margin: 0 auto;
     width: 20%;
     height: 100vh;
 `;

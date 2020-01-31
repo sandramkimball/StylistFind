@@ -13,7 +13,8 @@ function ReviewCard (props) {
                         <Link to={`/users/${user_id}/dash`} key={user_id} id={user_id} props={props}>
                             <h4>{username}</h4>
                         </Link>
-                        <p>wrote a review for 
+                        <p>wrote a review for</p> 
+                        <p>
                             <Link to={`/stylists/${stylist_id}/dash`} key={stylist_id} id={stylist_id} props={props}>
                                {first_name}
                             </Link>    
@@ -24,7 +25,7 @@ function ReviewCard (props) {
                     <img src={image} alt='review'/>
                 </div>
                 <div className='review-text'>
-                    <h4>{review}</h4>
+                    <p>{review}</p>
                 </div>
             </Card>
         </div>
@@ -36,21 +37,18 @@ const Card = styled.div`
     width: 310px;
     border: .5px solid #e6e6e6;
     border-radius: 2px;
+    font-size: 1rem;
+    text-align: left; 
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    font-size: 1rem;
-    a{color: black; text-decoration: none}
-    h4, p{
-        text-align: left;
-        padding: 0;
-        margin: 0;
-    }
+    h4, p{ padding: 0; margin: 0}
+    a{ color: black; text-decoration: underline, font-weight: 400}
     .reviewer-info{
         height: 70px;
         width: 100%;
         display: flex;
-        div{flex-direction: column;}
+        flex-direction: flex-start;
+        div{flex-direction: column; margin: 5px 0 0 5px}
         img{
             width: 60px;
             height: 60px;
@@ -59,10 +57,13 @@ const Card = styled.div`
         }
     }
     .review-text{
-        flex-direction: column;
-        justify-content: flex-start;
+        min-height: 70px;
+        h4{
+            font-weight: 200;
+            font-size: .75rem;
+            padding-top: 5px
+        }
     }
-
     .review-img img{
         width: 100%;
         height: 120px;

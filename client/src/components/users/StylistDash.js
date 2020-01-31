@@ -2,13 +2,14 @@ import React, { useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import Posts from '../posts/Posts';
+import PostCard from '../posts/PostCard';
 
 class StylistDash extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            stylist: []
+            stylist: [],
+            posts: []
         }
         this.openAddPost = this.openAddPost.bind(this);
     }
@@ -19,17 +20,25 @@ class StylistDash extends React.Component {
     }
     
     componentDidMount(props){
-            // const id = props.match.params.id;
-            axiosWithAuth()
-            .get(`/stylists/profile/${1}`)
-            .then(res=> { 
-                console.log('Stylist Data: ', res.data);
-                this.setState({ stylist:(res.data['0']) });
-            })
-            .catch(err=>{console.log('SKSKRR ERROR: ', err)});
+        const { match: { params } } = this.props;
+        axiosWithAuth()
+        .get(`/stylists/${params.id}`)
+        .then(res=> { 
+            this.setState({ stylist:(res.data) });
+        })
+
+        return axiosWithAuth()
+        .get(`/stylists/${params.id}/posts`)
+        .then(res=> { 
+            this.setState({ posts:(res.data) });
+        })
+
+        .catch(err=>{console.log('SKSKRR ERROR: ', err)});
     }
 
     render(){
+        console.log('Stylist Data', this.state.stylist)
+        console.log('Posts Data', this.state.posts)
         return (
             <Dash>
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
@@ -53,7 +62,12 @@ class StylistDash extends React.Component {
                     <Gallery>
                         <p className='open-btn' onClick={this.openAddPost}>+</p>
                         <div>
-                            <Posts key={this.state.stylist.id} id={this.state.stylist.id} stylist={this.state.stylist}/>
+                            {this.state.posts.map(post=> (
+                                <PostCard 
+                                    id={post.id} 
+                                    post={post}
+                                />
+                            ))}
                         </div>
                     </Gallery>
                 </section>

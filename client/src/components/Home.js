@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { NavLink } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Styled from "styled-components";
 import Background from '../images/person-cutting-hair.jpg';
 
@@ -8,7 +8,8 @@ class Home extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-        homeSearch: ''
+        homeSearch: '',
+        redirect: false,
       }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -36,15 +37,20 @@ class Home extends React.Component {
   // }, [])
 
   handleSubmit = e => {
-    return <NavLink to="/search" searchTerm={this.state.homeSearch}/>
+    e.preventDefault();
+    this.setState({redirect: true})
   };
 
   handleChange = e => {
-    e.preventDefault();
+    // e.preventDefault();
     this.setState({setHomeSearch: e.target.value})
   };
 
   render(){
+    if(this.state.redirect === true){
+      return <Redirect to="/search" searchTerm={this.state.homeSearch}/>
+    }
+    
     return (
       <div>
         <Landing>

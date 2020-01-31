@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import {NavLink } from 'react-router-dom';
+import {Redirect } from 'react-router-dom';
 //COMPONENTS
 import axiosWithAuth from "../utilis/axiosWithAuth";
 
@@ -55,9 +55,8 @@ export default class SignUp extends React.Component {
         )
         .catch(err=>{console.log(err.response)})
       }
-      return(
-        <NavLink to='/search'/>
-      )
+
+      return <Redirect to="/users/:id/dash" />
   };
 
   render(){

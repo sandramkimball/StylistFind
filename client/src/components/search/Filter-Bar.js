@@ -14,10 +14,7 @@ export default function FilterBar(props){
         e.preventDefault();
         setSortOpt(e.target.value);
     };
-
-    const sortByAlph = props => {
-        return props.salon.sort() || props.first_name.sort()
-    }
+    
 
     return (
         <div>
@@ -34,9 +31,9 @@ export default function FilterBar(props){
 
                 <p>Sort By</p>
                 <select name='sort-by-opt' onChange={changeSort}>
-                    <option onSelect={sortByAlph}>Alphabetical</option>
-                    <option>Nearest</option>
-                    <option>Rating</option>
+                    <option value={'alphabetical'}>Alphabetical</option>
+                    <option value={'nearest'}>Nearest</option>
+                    <option value={'rating'}>Rating</option>
                 </select>
 
             </div>

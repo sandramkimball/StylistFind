@@ -20,7 +20,7 @@ class UserDash extends React.Component {
     }
     
     componentDidMount(props){
-        let id = 2;
+        let id = 1;
         axiosWithAuth()
         .get(`/users/${id}`)
         .then(res=> { 
@@ -32,7 +32,7 @@ class UserDash extends React.Component {
         .then(res=> {
             this.setState({reviews: res.data})
         })
-        .catch(err=>{console.log('Error', err.response)});
+        .catch(err=>{console.log('Error fetching Reviews', err.response)});
     }
 
 
