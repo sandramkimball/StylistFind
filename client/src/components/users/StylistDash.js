@@ -18,8 +18,7 @@ class StylistDash extends React.Component {
         console.log('Will open add post form.')
     }
     
-    componentWillMount(props){
-        // useEffect((props)=>{
+    componentDidMount(props){
             // const id = props.match.params.id;
             axiosWithAuth()
             .get(`/stylists/profile/${1}`)
@@ -28,7 +27,6 @@ class StylistDash extends React.Component {
                 this.setState({ stylist:(res.data['0']) });
             })
             .catch(err=>{console.log('SKSKRR ERROR: ', err)});
-        // }, []);
     }
 
     render(){
@@ -77,12 +75,13 @@ const InfoBox = styled.div`
     border: 1px solid #80808075;
     width: 20vw;
     height: 60vh;
-    padding: 5px;
+    padding: 10px 5px;
     margin: 5% auto;
     text-align: left;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
+    p{padding: 0; margin: 0}
     .profile-pic-box{
         height: 200px;
         width: 200px;

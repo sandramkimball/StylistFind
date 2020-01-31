@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
 function ReviewCard (props) {
-    const {image, username, first_name, review, date, salon, profile_img, stylist_id, user_id} = props.userReview;
-
+    const {image, username, review, date, id, salon, profile_img, stylist_id, user_id, first_name} = props.review;
     return (
         <div>
             <Card>
@@ -14,7 +13,7 @@ function ReviewCard (props) {
                         <Link to={`/users/${user_id}/dash`} key={user_id} id={user_id} props={props}>
                             <h4>{username}</h4>
                         </Link>
-                        <p>Wrote a review for 
+                        <p>wrote a review for 
                             <Link to={`/stylists/${stylist_id}/dash`} key={stylist_id} id={stylist_id} props={props}>
                                {first_name}
                             </Link>    
@@ -40,12 +39,12 @@ const Card = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    font-size: 1rem;
     a{color: black; text-decoration: none}
     h4, p{
         text-align: left;
         padding: 0;
         margin: 0;
-        font-size: 1rem;
     }
     .reviewer-info{
         height: 70px;

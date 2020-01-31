@@ -109,7 +109,7 @@ const SearchContainer = styled.div`
     width: 75%;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding-bottom: 10px;
     ::-webkit-scrollbar{ width: 0}
     }

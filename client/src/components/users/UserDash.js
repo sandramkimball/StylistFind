@@ -1,97 +1,135 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Redirect, NavLink} from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
+import ReviewCards from '../reviews/ReviewCards';
 
-
-export default function UserDash(props) {
-    const [userData, setUserData] = useState({});
-
-    useEffect(()=>{
+class UserDash extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            user: [],
+            reviews: [],
+        }
+        this.openAddPost = this.openAddPost.bind(this);
+    }
+    
+    openAddPost = e => {
+        e.preventDefault();
+        console.log('Will open add post form.')
+    }
+    
+    componentDidMount(props){
+        let id = 2;
         axiosWithAuth()
-        .get(`/users/3`)
+        .get(`/users/${id}`)
         .then(res=> { 
-            setUserData(res.data);
+            this.setState({user: res.data})
         })
-        .catch(err=>{console.log(err.response)});
-    }, [])
 
-    console.log('USERDATA', userData);
+        return axiosWithAuth()
+        .get(`users/${id}/reviews`)
+        .then(res=> {
+            this.setState({reviews: res.data})
+        })
+        .catch(err=>{console.log('Error', err.response)});
+    }
 
-    return (
-        <div>
-        <h1>Your Profile</h1>
-        <section className = 'about-me'>
-            <InfoBox>
-                <div>
-                    <img alt='user profile' src={userData.profile_img}/>
-                </div>
-                <div className='profile-text'>
-                    <h3>{userData.name}</h3>
-                    <h3>{userData.email}</h3>
-                    <NavLink to='edit-profile' className='edit-btn'>Edit</NavLink>
-                </div>
-            </InfoBox>                
-        </section>
 
-        <Saved>
-            <h3>Bookmarked</h3>
-            <div>
-                {/* {customer.saved_stylists.map(stylist=> (
-                <SavedCard key={stylist.id} stylist={stylist}/>
-                ))} */}
-            </div>
-        </Saved>
-        </div>
-    )
+    render(){
+        console.log('User Data', this.state.user)
+        console.log('User Reviews', this.state.reviews)
+        return (
+            <Dash>
+                <InfoBox>
+                    <div className='profile-pic-box'>
+                        <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
+                    </div>
+                    <div className='profile-text'>
+                        <h1>{this.state.user.username}</h1> 
+                        <p>{this.state.user.email}</p> 
+                    </div>
+                </InfoBox>    
+                <section className = 'gallery'>
+                    <Gallery>
+                        <p className='open-btn' onClick={this.openAddPost}>+</p>
+                        <div>
+                            {this.state.reviews.map(review => (
+                                <ReviewCards  
+                                    id={review.id} 
+                                    review={review}/>
+                            ))}
+                            
+                        </div>
+                    </Gallery>
+                </section>
+            </Dash>
+        )
+    }
 }
+
+export default UserDash;
+
+const Dash = styled.div`
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    a{text-decoration: none}
+`;
 
 const InfoBox = styled.div`
     border: 1px solid #80808075;
-    border-radius: 4px;
+    width: 20vw;
+    height: 60vh;
+    padding: 10px 5px;
+    margin: 5% auto;
     text-align: left;
-    padding: 20px;
-    width: 85%;
-    // height: 400px;
-    margin: 20px auto;
+    font-size: 1rem;
     display: flex;
-    align-items: center;
-    align-content: center;
-    img{
-        height: 250px;
-        width: 250px;
-        object-fit: cover;
-        border-radius: 50%   
-    }
-    div:nth-child(1){
-        width: 40%;
-    }
+    flex-direction: column;
+    p{padding: 0; margin: 0}
+    .profile-pic-box{
+        height: 200px;
+        width: 200px;
+        margin: auto;
+        border-radius: 50%;
+        border: 1px solid purple
+        img{
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }    
     .profile-text{
-        margin-top: 20px;
+        margin: 2px auto;
     }
-    p{ font-size: 1.2rem}
     .edit-btn{
         color: #80808075;
-        :hover{transform: scale(1.025)}
+        :hover{color: #000}
     }
 `;
 
-const Saved = styled.div`
-    width: 85%;
-    padding: 10px;
+const Gallery = styled.div`
+    width: 75vw;
     margin: 0 auto;
     div{
         display: flex;
-        justify-content: center;
-    }    
+        flex-wrap: wrap; 
+        margin: 0 auto;
+    }
+    .open-btn{
+        color: gray;
+        font-size: 3.25rem;
+        position: fixed;
+        bottom: 0px;
+        right: 10%;
+        z-index: 10;
+        cursor: pointer;
+        :hover{
+            color: #80808075;
+            .add-p{display: inherit}
+    }
 `;
 
 
-
-// const handleDelete = (id) => {
-    //     axiosWithAuth()
-    //     .delete(`/api/${stylist.id}`).then(res=> {
-    //       this.props.updateStylist(res.data);
-    //       this.props.history.push('/customer-dash');
-    //     }) .catch(err=> console.log('Not deleted:', err.response))
-    //   };
