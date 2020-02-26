@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Route, NavLink} from 'react-router-dom';
-// import PrivateRoute from '../PrivateRoute';
-// import axiosWithAuth from '../utilis/axiosWithAuth';
 import LoginForm from './forms/LoginForm';
 import SignUpForm from './forms/SignUpForm';
 
@@ -10,13 +8,13 @@ class LoginPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            alreadyUser: false
+            alreadyUser: true
         }
         this.handleUser = this.handleUser.bind(this);
     }
 
     handleUser(){
-        this.setState({alreadyUser: false ? false : true})
+        this.setState({alreadyUser: true ? false : true})
     }
     
     render(){
@@ -26,10 +24,10 @@ class LoginPage extends React.Component {
 
         if (isAlreadyUser === true){
             form = <LoginForm/>;
-            loginOrSignup = <p>sign up</p>
+            loginOrSignup = <p>Signup</p>
         } else {
             form = <SignUpForm/>;
-            loginOrSignup = <p onClick={this.handleUser}>login</p>
+            loginOrSignup = <p onClick={this.handleUser}>I'm Already a Member</p>
         }
 
         return(

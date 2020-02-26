@@ -42,7 +42,7 @@ class Home extends React.Component {
   };
 
   handleChange = e => {
-    // e.preventDefault();
+    e.preventDefault();
     this.setState({setHomeSearch: e.target.value})
   };
 
@@ -78,7 +78,7 @@ const Landing = Styled.div`
   width: 100vw;
   margin: auto;
   // background: url('https://images.pexels.com/photos/4614/woman-morning-bathrobe-bathroom.jpg?cs=srgb&dl=woman-morning-bathrobe-bathroom-4614.jpg&fm=jpg')
-  background: lavender;
+  background: linear-gradient(lavender, #6d5a73);
   h1{
     font-size: 2.75rem; 
     margin: 0 0 10px 0; 

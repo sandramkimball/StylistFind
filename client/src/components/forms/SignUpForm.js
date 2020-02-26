@@ -24,7 +24,6 @@ export default class SignUp extends React.Component {
       email: '',
       isStylist: false,
       id: Date.now(),
-      errors: {},
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -40,23 +39,22 @@ export default class SignUp extends React.Component {
       console.log('Take me to Search!')
       if(this.state.isStylist === false){
         axiosWithAuth()
-        .post('/api/register', this.state)
-        .then(
-          (err)=> this.setState({errors: err.data.errors, isLoading: false})
+        .post('/auth/register/user', this.state)
+        .then( res=> {
+          localStorage.setItem('token', res.data.payload)
+          this.props.history.push('/search')}
         )
-        .catch(err=>{console.log(err.response)})
+        .catch(err=>{console.log('Error', err)})
       }
 
       if(this.state.isStylist === true){
         axiosWithAuth()
-        .post('/api/register', this.state)
+        .post('/auth/register/stylist', this.state)
         .then(
-          (err)=> this.setState({errors: err.data.errors, isLoading: false})
+          (err)=> this.setState({errors: err.data.errors})
         )
         .catch(err=>{console.log(err.response)})
       }
-
-      return <Redirect to="/users/:id/dash" />
   };
 
   render(){
@@ -153,7 +151,7 @@ export default class SignUp extends React.Component {
             />
           </div>
       )}
-        <button type='submit' onClick={this.handleSubmit}>sign up</button>
+        <button type='submit' onClick={this.handleSubmit}>signup</button>
         </SignupForm> 
       </SignupPage>
     );

@@ -5,15 +5,16 @@ import {Link, Redirect} from 'react-router-dom';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
 class Login extends React.Component {
-
     constructor(props){
         super(props);
-        this.state= {
-            credentials: {
+        this.state = {
+            isStylist: false,
+            isLoggedIn: false,
+            loginFail: false,
+            // credentials: {
                 username: '',
                 password: '',
-                isLoading: false
-            }
+            // }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -31,19 +32,32 @@ class Login extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         axiosWithAuth()
-            .post('/api/auth/login', this.state.credentials)
-            .then(res=> {
-                localStorage.setItem('token', res.data.payload);
-                this.props.history.push('/search')
-            })
-            .catch(err=> console.log('LOGIN ERROR', err.res)) 
-
-        return <Redirect to="/users/:id/dash" />
+        .post('/auth/login', {
+            username: this.state.username,
+            password: this.state.password
+        })
+        .then(res=> {
+            localStorage.setItem('token', res.data.payload);
+            this.props.history.push('/search')
+            this.setState({isLoggedIn: true})
+        })
+        .catch(err=> {
+            this.setState({loginFail: true})
+            console.log('LOGIN ERROR', err)
+        }) 
     };
      
     render(){
-        if(localStorage.getItem('token')) return <Redirect to='/'/>
-        // const {username, password, isLoading} = this.state;
+        // if(localStorage.getItem('token')) {return <Redirect to='/users/:id/dash'/>}
+        if(this.state.isLoggedIn === true) {
+            console.log('Login successful.')
+            return <Redirect to='/search'/>
+        }
+        let loginError;
+        if (this.state.loginFail === true){
+            loginError =  <p className='login-fail' >Username or Password Incorrect</p>
+        }
+
         return (
             <LoginPage>
                 <LoginForm onSubmit={this.handleSubmit}>
@@ -63,6 +77,7 @@ class Login extends React.Component {
                         onChange={this.handleChange}
                     />
                     <button type='submit' onClick={this.handleSubmit}>Login</button>
+                    {loginError}
                 </LoginForm>
             </LoginPage>
     )
@@ -87,6 +102,10 @@ const LoginPage = styled.div`
         color: black; 
         :hover{color: gray}
     }
+    .login-fail p{
+        color: red,
+        font-size: .5rem;
+    }
 `;
 
 const LoginForm = styled.form`
@@ -97,7 +116,12 @@ const LoginForm = styled.form`
     margin: 0 auto;
     padding: 20px;
     flex-direction: column;
-    h3{margin: 0; font-size: 2rem; font-family: 'Dancing Script', cursive}
+    h3{
+        margin: 0; 
+        font-size: 2rem; 
+        font-family: 'Dancing Script', cursive
+    }
+    
     input, button{
         height: 25px;
         width: 100%
@@ -115,5 +139,5 @@ const LoginForm = styled.form`
         border: none;
         height: 30px;
         cursor: pointer
-    }
+    }    
 `;

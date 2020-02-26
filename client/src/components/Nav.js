@@ -9,12 +9,7 @@ function Nav(props) {
     const logout = e => {
         localStorage.removeItem('token');
         props.history.push('/')
-      };
-    // useEffect(()=> {
-    //     if(localStorage.getItem('token')){
-    //         dispatch({type: 'LOGIN_TRUE'});
-    //     }
-    // }, []);
+    };
 
     return(
         <NavBar>
@@ -26,8 +21,12 @@ function Nav(props) {
                 <NavLink to='/users/:id/dash'>User</NavLink>
                 <NavLink to='/stylists/:id/dash'>Stylist</NavLink> 
                 <NavLink to='/login'>Login</NavLink>
+                <NavLink to='/signup'>Signup</NavLink>
                 {user.isLoggedIn && (
                     <NavLink to='/' onClick={logout}>Logout</NavLink>
+                )}
+                {!user.isLoggedIn && (
+                    <NavLink to='signup/'>Signup</NavLink>
                 )}
             </div>
         </NavBar>
