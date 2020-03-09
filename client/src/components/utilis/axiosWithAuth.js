@@ -8,7 +8,8 @@ export default function axiosWithAuth() {
     baseURL: 'https://stylistfind-db.herokuapp.com/api', 
     headers: {
       Authorization: token,
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
     },
   });
 };

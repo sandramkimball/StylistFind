@@ -19,8 +19,7 @@ export default function FilterBar(props){
     return (
         <div>
             <SIDEBAR>
-            <div className='menu-container'>
-
+            <div>
                 <p>Show me</p>
                 <select name='show-me-opt' onChange={changeFilter}>
                     <option value={'stylists'}>Stylists</option>
@@ -28,14 +27,14 @@ export default function FilterBar(props){
                     <option value={'posts'}>Posts</option>
                     <option value={'reviews'}>Reviews</option>
                 </select>
-
+            </div>
+            <div>
                 <p>Sort By</p>
                 <select name='sort-by-opt' onChange={changeSort}>
                     <option value={'alphabetical'}>Alphabetical</option>
                     <option value={'nearest'}>Nearest</option>
                     <option value={'rating'}>Rating</option>
                 </select>
-
             </div>
             </SIDEBAR>
         </div>
@@ -45,14 +44,12 @@ export default function FilterBar(props){
 
 let SIDEBAR = styled.div`
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     text-align: center;
-    width: 95%;
     margin: 0 auto;
     padding-bottom: 10px;
+    div{width: 49%;}
     select{
-        width: 100%;
         border-radius: 2px;
         padding: 3px 5px;
         font-size: 1rem;

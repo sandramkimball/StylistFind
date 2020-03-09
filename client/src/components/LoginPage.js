@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Route, NavLink} from 'react-router-dom';
 import LoginForm from './forms/LoginForm';
 import SignUpForm from './forms/SignUpForm';
 
@@ -24,7 +23,7 @@ class LoginPage extends React.Component {
 
         if (isAlreadyUser === true){
             form = <LoginForm/>;
-            loginOrSignup = <p>Signup</p>
+            loginOrSignup = <p onClick={this.handleUser}>Signup</p>
         } else {
             form = <SignUpForm/>;
             loginOrSignup = <p onClick={this.handleUser}>I'm Already a Member</p>
@@ -34,7 +33,7 @@ class LoginPage extends React.Component {
             <Page>
                 <div>
                    {form}
-                   {loginOrSignup }              
+                   {loginOrSignup}              
                 </div>
                 <img src='https://images.unsplash.com/photo-1501699169021-3759ee435d66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=661&q=80' alt='salon chair and makeup light'/>
             </Page>

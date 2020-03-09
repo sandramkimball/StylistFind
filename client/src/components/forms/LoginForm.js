@@ -38,8 +38,8 @@ class Login extends React.Component {
         })
         .then(res=> {
             localStorage.setItem('token', res.data.payload);
-            this.props.history.push('/search')
             this.setState({isLoggedIn: true})
+            this.props.history.push('/search')
         })
         .catch(err=> {
             this.setState({loginFail: true})

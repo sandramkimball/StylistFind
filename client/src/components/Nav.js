@@ -18,16 +18,19 @@ function Nav(props) {
             </NavLink>
             <div>
                 <NavLink to='/search'>Search</NavLink>
-                <NavLink to='/users/:id/dash'>User</NavLink>
-                <NavLink to='/stylists/:id/dash'>Stylist</NavLink> 
+                <NavLink to='/users/:id/dash'>Account</NavLink>
+                <NavLink to='/stylists/:id/dash'>Profile</NavLink> 
                 <NavLink to='/login'>Login</NavLink>
-                <NavLink to='/signup'>Signup</NavLink>
-                {user.isLoggedIn && (
+
+                {/* {user.isLoggedIn && (
                     <NavLink to='/' onClick={logout}>Logout</NavLink>
                 )}
+
                 {!user.isLoggedIn && (
-                    <NavLink to='signup/'>Signup</NavLink>
-                )}
+                    <NavLink to='login' props={props.alreadyUser === false}>Signup</NavLink>
+                )} */}
+
+                
             </div>
         </NavBar>
     )

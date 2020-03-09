@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import Styled from "styled-components";
-import Background from '../images/person-cutting-hair.jpg';
 
 
 class Home extends React.Component {
@@ -14,27 +13,6 @@ class Home extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
-  // useEffect(()=>{
-  //   axiosWithAuth()
-  //   .get('/search/reviews')
-  //   .then(res=> {
-  //     console.log(res.data);
-  //     setRecentReviews(res.data)
-  //   })
-  //   .catch(err=> {console.log('Latest Review Error: ', err)})
-  // }, [])
-
-  // useEffect(()=>{
-  //   axiosWithAuth()
-  //   .get('/search/posts')
-  //   .then(res=> {
-  //     var latest = res.data.filter(item=> item.date.sort())
-  //     setRecentPosts(latest)
-  //     console.log('Latest Posts: ', latest)
-  //   })
-  //   .catch(err=> {console.log('Latest Post Error: ', err)})
-  // }, [])
 
   handleSubmit = e => {
     e.preventDefault();
@@ -65,6 +43,7 @@ class Home extends React.Component {
                 onChange={this.handleChange}
               />
           </form>
+          <img src='https://image.flaticon.com/icons/png/512/41/41463.png'/>
         </Landing>
       </div>
     )
@@ -101,6 +80,7 @@ const Landing = Styled.div`
       border-bottom: 1.5px solid #eeeeef;
     }
   }
+  img{ height: 270px; margin-top: 50px}
 `;
 
 

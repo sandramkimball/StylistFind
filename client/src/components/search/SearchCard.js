@@ -41,14 +41,14 @@ const Card = styled.div`
     overflow: hidden;
     cursor: pointer;
     font-size: .75rem
+    margin: 2px;
     img{
         height: 175px;
         width: 100%;
         object-fit: cover;
     }
     div{
-        padding: 5px;
-        h3{text-decoration: underline; padding: 0}
+        h3{text-decoration: underline; padding: 0; margin: 0}
         p{padding: 0; margin: 0; }
     }    
     a{

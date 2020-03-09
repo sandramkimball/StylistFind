@@ -36,13 +36,19 @@ export default class SignUp extends React.Component {
 
   handleSubmit = e => {
       e.preventDefault();
-      console.log('Take me to Search!')
       if(this.state.isStylist === false){
         axiosWithAuth()
-        .post('/auth/register/user', this.state)
+        .post('/auth/register/user', {
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          username: this.state.username,
+          password: this.state.password,
+          email: this.state.email
+      })
         .then( res=> {
           localStorage.setItem('token', res.data.payload)
-          this.props.history.push('/search')}
+          console.log('Signup Successful')
+          this.props.history.push('/login')}
         )
         .catch(err=>{console.log('Error', err)})
       }
@@ -50,10 +56,11 @@ export default class SignUp extends React.Component {
       if(this.state.isStylist === true){
         axiosWithAuth()
         .post('/auth/register/stylist', this.state)
-        .then(
-          (err)=> this.setState({errors: err.data.errors})
+        .then( res=> {
+          localStorage.setItem('token', res.data.payload)
+          this.props.history.push('/login')}
         )
-        .catch(err=>{console.log(err.response)})
+        .catch(err=>{console.log('Error', err)})
       }
   };
 
@@ -111,7 +118,7 @@ export default class SignUp extends React.Component {
             />
           </div>
     
-    {this.state.isStylist.value === true && (
+    {this.state.isStylist.value && (
         <div>
             <input
               type='text'

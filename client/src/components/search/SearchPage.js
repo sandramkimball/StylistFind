@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SearchCard from './SearchCard';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import FilterBar from './Filter-Bar';
-import GoogleApiWrapper from './Map';
 
 class SearchPage extends React.Component {
     constructor(props){
@@ -11,11 +10,10 @@ class SearchPage extends React.Component {
         this.state= {
             searchTerm: '',
             searchResults: [],
-            filterOpt: '',
+            filterOpt: 'stylists',
             sortOpt: ''
 
         }
-        // this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     };
 
@@ -24,7 +22,8 @@ class SearchPage extends React.Component {
         this.setState({searchTerm: e.target.value})
     };
 
-    componentWillMount(){
+    
+    componentDidMount(){
         if (this.state.filterOpt === 'stylists' || 'salons'){
             axiosWithAuth()
             .get('/search') 
@@ -36,7 +35,11 @@ class SearchPage extends React.Component {
                     item.last_name.toLowerCase().includes(this.state.searchTerm.toLowerCase()) 
                 );
                 this.setState({searchResults: results});
-            })   
+            }) 
+            .catch(err=>{
+                console.log(err)
+            })  
+            
         } else if(this.state.filterOpt === 'posts'){
             axiosWithAuth()
             .get('/search/posts')
@@ -44,10 +47,15 @@ class SearchPage extends React.Component {
                 var latest = res.data.filter(item=> item.date.sort())
                 this.setState({searchResults: latest});
             })
+            .catch(err=>{
+                console.log(err)
+            })  
+
         } else if(this.state.filterOpt === 'reviews'){
             axiosWithAuth()
             .get('/search/reviews')
             .then(res=>{ this.setState({searchResults: res.data}) })
+            .catch(err=> {console.log(err)})
         }
     };
 
@@ -71,85 +79,73 @@ class SearchPage extends React.Component {
     render(){
         return(
             <div>
-                <SearchBar>
-                    <form onSubmit={this.handleChange}>
-                        <input
-                        id='search_input'
-                        type='text'
-                        name='textfield'
-                        placeholder='Search stylist, salon, city...'
-                        value={this.state.searchTerm}
-                        onChange={this.handleChange}/>
-                    </form>
-                </SearchBar>
-                <BodyContainer>
-                    <SideBarContainer>
-                        <FilterBar 
-                            props={this.state.searchResults}
-                            onChange={this.handleChange}
-                        />
-                        {/* <GoogleApiWrapper/> */}
-                    </SideBarContainer>
-                    <SearchContainer>
-                        {this.state.searchResults.map(result=> (
-                            <SearchCard 
-                                key={result.id} 
-                                id={result.id} 
-                                result={result}
-                            />
-                        ))}
-                    </SearchContainer>
-                </BodyContainer>
-            </div>
+            <SearchBar>
+                <FilterBar 
+                    props={this.state.searchResults}
+                    onChange={this.handleChange}
+                />
+                <form onSubmit={this.handleChange}>
+                    <input
+                    id='search_input'
+                    type='text'
+                    name='textfield'
+                    placeholder='Search stylist, salon, city...'
+                    value={this.state.searchTerm}
+                    onChange={this.handleChange}/>
+                </form>
+            </SearchBar>
+            <SearchResultsContainer>
+                {this.state.searchResults === [] && (
+                    <p>Results</p>
+                )}
+                
+                {this.state.searchResults.map(result=> (
+                    <SearchCard 
+                        key={result.id} 
+                        id={result.id} 
+                        result={result}
+                    />
+                ))}
+            </SearchResultsContainer>
+        </div>
         )
     }
 }
 
 export default SearchPage;
 
-const BodyContainer = styled.div`
+const SearchResultsContainer = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin: 0 auto;
-    width: 100%;
-`;
-
-const SideBarContainer = styled.div`
-    margin: 0 auto;
-    width: 20%;
-    height: 100vh;
-`;
-
-const SearchContainer = styled.div`
     width: 75%;
-    margin: 0 auto;
+    margin: 5vh auto;
     display: flex;
-    justify-content: space-evenly;
-    padding-bottom: 10px;
     ::-webkit-scrollbar{ width: 0}
     }
 `;
 
 const SearchBar = styled.div`
-    margin: 10px 5px;
+    margin: 10px auto;
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 70%;
     form{
         border: none;
         height: 40px;
-        width: 25%;
+        width: 45%;
         button{
             background: none;
             border: 1px solid black;
             padding: 7px;
         }
         input{
-            border: 1px solid black;
+            border: 1px solid gray;
             border-radius: 2px;
             height: 100%;
             width: 100%;
             box-sizing: border-box;
-            padding-left: 5px;
             font-size: 1rem;
         }
         input:focus{border: 1px solid gray}
