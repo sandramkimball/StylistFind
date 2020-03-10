@@ -22,10 +22,10 @@ class LoginPage extends React.Component {
         let loginOrSignup;
 
         if (isAlreadyUser === true){
-            form = <LoginForm/>;
+            form = <LoginForm history={this.props.history}/>;
             loginOrSignup = <p onClick={this.handleUser}>Signup</p>
         } else {
-            form = <SignUpForm/>;
+            form = <SignUpForm history={this.props.history}/>;
             loginOrSignup = <p onClick={this.handleUser}>I'm Already a Member</p>
         }
 

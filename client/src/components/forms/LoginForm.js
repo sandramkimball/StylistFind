@@ -10,50 +10,46 @@ class Login extends React.Component {
             isStylist: false,
             isLoggedIn: false,
             loginFail: false,
-            // credentials: {
-                username: '',
-                password: '',
-            // }
+            email: '',
+            password: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     };
 
-    handleChange = e =>{
+    handleChange = e => {
         this.setState({
-            credentials: {
-                ...this.state.credentials,
-                [e.target.name]: e.target.value 
-            }
-        }); 
+            ...this.state,
+            [e.target.name]: e.target.value 
+        })
     };
 
     handleSubmit = e => {
         e.preventDefault();
         axiosWithAuth()
         .post('/auth/login', {
-            username: this.state.username,
+            email: this.state.email,
             password: this.state.password
         })
         .then(res=> {
+            // localStorage.setItem('token', res.data.token);
             localStorage.setItem('token', res.data.payload);
             this.setState({isLoggedIn: true})
             this.props.history.push('/search')
         })
         .catch(err=> {
             this.setState({loginFail: true})
-            console.log('LOGIN ERROR', err)
+            console.log('FE LOGIN ERROR', err)
         }) 
     };
      
     render(){
-        // if(localStorage.getItem('token')) {return <Redirect to='/users/:id/dash'/>}
         if(this.state.isLoggedIn === true) {
             console.log('Login successful.')
         }
         let loginError;
         if (this.state.loginFail === true){
-            loginError =  <p className='login-fail' >Username or Password Incorrect</p>
+            loginError =  <p className='login-fail'>Email or Password Incorrect</p>
         }
 
         return (
@@ -62,9 +58,9 @@ class Login extends React.Component {
                     <h3>Welcome Back</h3>
                     <input 
                         type='text' 
-                        name='username' 
-                        value={this.username} 
-                        placeholder="Username" 
+                        name='email' 
+                        value={this.email} 
+                        placeholder="Email" 
                         onChange={this.handleChange}
                     />
                     <input 

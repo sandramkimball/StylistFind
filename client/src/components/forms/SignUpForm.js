@@ -7,11 +7,9 @@ export default class SignUp extends React.Component {
   constructor(props){
     super(props);
     this.state = { 
-      username: '',
       password: '',
-      name: '',
-      // first_name: '',
-      // last_name: '',
+      first_name: '',
+      last_name: '',
       street_address: '',
       city: '',
       zipcode: '',
@@ -19,7 +17,7 @@ export default class SignUp extends React.Component {
       country: '',
       salon: '',
       email: '',
-      isStylist: false,
+      usertype: 'user',
       id: Date.now(),
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,37 +26,48 @@ export default class SignUp extends React.Component {
 
 
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
 
   handleSubmit = e => {
       e.preventDefault();
-      if(this.state.isStylist === false){
+      if(this.state.usertype === 'user'){
         axiosWithAuth()
         .post('/auth/register/user', {
-          // first_name: this.state.first_name,
-          // last_name: this.state.last_name,
-          name: this.state.name,
-          username: this.state.username,
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
           password: this.state.password,
-          email: this.state.email
+          email: this.state.email,
+          usertype: 'user',
       })
         .then( res=> {
           localStorage.setItem('token', res.data.payload)
           console.log('Signup Successful')
-          this.props.history.push('/login')}
-        )
-        .catch(err=>{console.log('Error', err)})
+          this.props.history.push('/login')
+        })
+        .catch(err=>{console.log('FE Error', err)})
       }
 
-      if(this.state.isStylist === true){
+      if(this.state.usertype === 'stylist'){
         axiosWithAuth()
-        .post('/auth/register/stylist', this.state)
+        .post('/auth/register/stylist', {
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          password: this.state.password,
+          email: this.state.email,
+          usertype: 'stylist',
+          street_address: this.state.street_address,
+          city: this.state.city,
+          zipcode: this.state.zipcode,
+          state: this.state.state,
+          country: this.state.country,
+          salon: this.state.salon,
+      })
         .then( res=> {
           localStorage.setItem('token', res.data.payload)
           this.props.history.push('/login')}
         )
-        .catch(err=>{console.log('Error', err)})
+        .catch(err=>{console.log('FE Error', err)})
       }
   };
 
@@ -69,24 +78,16 @@ export default class SignUp extends React.Component {
           <h3>Glad You're Here!</h3>
           <input
             type='text'
-            name='name'
-            value={this.state.name} 
+            name='first_name'
+            value={this.state.first_name} 
             placeholder="first name" 
             onChange={this.handleChange}
           />
-          {/* <input
+          <input
             type='text'
             name='last_name'
             value={this.state.last_name} 
             placeholder="last name" 
-            onChange={this.handleChange}
-          /> */}
-
-          <input
-            type='text'
-            name='username'
-            value={this.state.username} 
-            placeholder="username" 
             onChange={this.handleChange}
           />
 
@@ -110,13 +111,13 @@ export default class SignUp extends React.Component {
             <input 
               type='radio'
               label='user'
-              name='isStylist'
-              value={true}
+              name='usertype'
+              value={'stylist'}
               onClick={this.handleChange}
             />
           </div>
     
-    {this.state.isStylist.value && (
+    {this.state.usertype === 'stylist' && (
         <div>
             <input
               type='text'
@@ -151,7 +152,7 @@ export default class SignUp extends React.Component {
               type='text'
               name='salon'
               value={this.state.salon} 
-              placeholder="salon_name" 
+              placeholder="salon name" 
               onChange={this.handleStylistCheck}
             />
           </div>

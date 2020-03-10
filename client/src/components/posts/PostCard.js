@@ -10,8 +10,9 @@ function PostCard(props) {
             <Card>
                 <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
                     <img src={image} alt='user post'/>
-                    <p>posted by {username}</p>
+                    <p>posted by {username} {salon}</p>
                     <h4>{comment}</h4>
+                    <p>{date}</p>
                 </Link>
            </Card>
         </div>

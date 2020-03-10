@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import { useUserContext } from './contexts/UserContext';
+// import { useUserContext } from './contexts/UserContext';
 
 function Nav(props) {
-    const {user, dispatch} = useUserContext();
+    // const {user, dispatch} = useUserContext();
 
     const logout = e => {
         localStorage.removeItem('token');
@@ -22,13 +22,9 @@ function Nav(props) {
                 <NavLink to='/stylists/:id/dash'>Profile</NavLink> 
                 <NavLink to='/login'>Login</NavLink>
 
-                {/* {user.isLoggedIn && (
+                {localStorage.isLoggedIn && (
                     <NavLink to='/' onClick={logout}>Logout</NavLink>
                 )}
-
-                {!user.isLoggedIn && (
-                    <NavLink to='login' props={props.alreadyUser === false}>Signup</NavLink>
-                )} */}
 
                 
             </div>
@@ -65,12 +61,4 @@ const NavBar = styled.nav`
         display: flex;
         font-size: 1.2rem
     }
-`;
-
-const LogOutBtn = styled.p`
-  cursor: pointer;
-  margin-left: 30px;
-  :hover {
-    color: #83c441;
-  }
 `;
