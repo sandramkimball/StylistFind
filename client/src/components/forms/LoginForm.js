@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Link, Redirect} from 'react-router-dom';
 // import PrivateRoute from '../PrivateRoute';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
@@ -51,7 +50,6 @@ class Login extends React.Component {
         // if(localStorage.getItem('token')) {return <Redirect to='/users/:id/dash'/>}
         if(this.state.isLoggedIn === true) {
             console.log('Login successful.')
-            return <Redirect to='/search'/>
         }
         let loginError;
         if (this.state.loginFail === true){

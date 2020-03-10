@@ -17,13 +17,22 @@ class SearchPage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     };
 
+    componentDidMount(){
+        axiosWithAuth()
+            .get('/search') 
+            .then(res=> {
+                const results = res.data
+                this.setState({searchResults: results});
+            }) 
+            .catch(err=>{
+                console.log(err)
+            }) 
+    }
+
     handleChange = e => {
         e.preventDefault();
         this.setState({searchTerm: e.target.value})
-    };
-
-    
-    componentDidMount(){
+   
         if (this.state.filterOpt === 'stylists' || 'salons'){
             axiosWithAuth()
             .get('/search') 
@@ -38,8 +47,8 @@ class SearchPage extends React.Component {
             }) 
             .catch(err=>{
                 console.log(err)
-            })  
-            
+            }) 
+                        
         } else if(this.state.filterOpt === 'posts'){
             axiosWithAuth()
             .get('/search/posts')
@@ -57,24 +66,24 @@ class SearchPage extends React.Component {
             .then(res=>{ this.setState({searchResults: res.data}) })
             .catch(err=> {console.log(err)})
         }
-    };
+     };
 
-    filterData = (data, filterOpt) => {
-        data.filter( obj => {
-            if( obj.includes(filterOpt) ){
-                return obj
-            }
-        })
-        return data;
-    };
+    // filterData = (data, filterOpt) => {
+    //     data.filter( obj => {
+    //         if( obj.includes(filterOpt) ){
+    //             return obj
+    //         }
+    //     })
+    //     return data;
+    // };
 
-    sortData = (data, sortOpt) => {
-        if(sortOpt = 'alphabetical'){
-            return data.salon.sort() || data.first_name.sort()
-        } else { 
-            return data
-        }
-    };
+    // sortData = (data, sortOpt) => {
+    //     if(sortOpt === 'alphabetical'){
+    //         return data.salon.sort() || data.first_name.sort()
+    //     } else { 
+    //         return data
+    //     }
+    // };
     
     render(){
         return(

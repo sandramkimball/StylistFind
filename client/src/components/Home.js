@@ -13,15 +13,14 @@ class Home extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.setState({redirect: true})
-  };
-
+  
   handleChange = e => {
     e.preventDefault();
-    this.setState({setHomeSearch: e.target.value})
+    this.setState({homeSearch: e.target.value})
+  };
+
+  handleSubmit = e => {
+    this.setState({redirect: true})
   };
 
   render(){
@@ -38,12 +37,12 @@ class Home extends React.Component {
                 id='search_input'
                 type='text'
                 name='textfield'
-                placeholder='Enter location, salon or stylist name...'
+                placeholder='Enter city, salon or stylist name...'
                 value={this.state.homeSearch}
                 onChange={this.handleChange}
               />
           </form>
-          <img src='https://image.flaticon.com/icons/png/512/41/41463.png'/>
+          <img src='https://image.flaticon.com/icons/png/512/41/41463.png' alt='clipart of scissors and a comb'/>
         </Landing>
       </div>
     )

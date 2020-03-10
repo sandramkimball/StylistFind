@@ -1,10 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import {Redirect } from 'react-router-dom';
-//COMPONENTS
 import axiosWithAuth from "../utilis/axiosWithAuth";
-
-
 
 export default class SignUp extends React.Component {
 
@@ -13,8 +9,9 @@ export default class SignUp extends React.Component {
     this.state = { 
       username: '',
       password: '',
-      first_name: '',
-      last_name: '',
+      name: '',
+      // first_name: '',
+      // last_name: '',
       street_address: '',
       city: '',
       zipcode: '',
@@ -39,8 +36,9 @@ export default class SignUp extends React.Component {
       if(this.state.isStylist === false){
         axiosWithAuth()
         .post('/auth/register/user', {
-          first_name: this.state.first_name,
-          last_name: this.state.last_name,
+          // first_name: this.state.first_name,
+          // last_name: this.state.last_name,
+          name: this.state.name,
           username: this.state.username,
           password: this.state.password,
           email: this.state.email
@@ -71,18 +69,18 @@ export default class SignUp extends React.Component {
           <h3>Glad You're Here!</h3>
           <input
             type='text'
-            name='first_name'
-            value={this.state.first_name} 
+            name='name'
+            value={this.state.name} 
             placeholder="first name" 
             onChange={this.handleChange}
           />
-          <input
+          {/* <input
             type='text'
             name='last_name'
             value={this.state.last_name} 
             placeholder="last name" 
             onChange={this.handleChange}
-          />
+          /> */}
 
           <input
             type='text'
