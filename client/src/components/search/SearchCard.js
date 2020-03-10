@@ -8,7 +8,7 @@ function SearchCard(props)  {
         profile_img, 
         first_name, 
         last_name, 
-        email, salon, bio, id, 
+        email, salon, id, 
         street_address, city, state, zipcode 
     } = props.result;
 
@@ -17,12 +17,11 @@ function SearchCard(props)  {
             <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
                 <img src={profile_img} alt='stylist profile'/>
                 <div>
-                    <h3>{salon}</h3>
-                    <h4>{first_name} {last_name}</h4> 
+                    <h3>{first_name} {last_name}</h3>
+                    <h4>{salon}</h4> 
                     <p>{street_address},</p>
                     <p>{city}, {state} {zipcode}</p>
                     <p>{email}</p>
-                    <p>{bio}</p>
                 </div>
             </Link>
         </Card>
@@ -35,12 +34,11 @@ const Card = styled.div`
     width: 300px
     border: .5px solid #e6e6e6
     background: #fff;
-    text-align: left;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     cursor: pointer;
-    font-size: .75rem
+    font-size: 1rem
     margin: 2px;
     img{
         height: 175px;
@@ -48,8 +46,10 @@ const Card = styled.div`
         object-fit: cover;
     }
     div{
+        margin: auto;
         h3{text-decoration: underline; padding: 0; margin: 0}
-        p{padding: 0; margin: 0; }
+        h4{font-size: .95rem; margin: 0}
+        p{padding: 0; margin: 0; font-size: .85rem }
     }    
     a{
         display: flex;

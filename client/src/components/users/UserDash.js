@@ -15,18 +15,18 @@ class UserDash extends React.Component {
     
     openAddPost = e => {
         e.preventDefault();
-        console.log('Will open add post form.')
+        console.log('Will open add-post form.')
     }
     
-    componentDidMount(props){
-        let id = 1;
+    componentDidMount(){
+        const id = this.props.match.params.id 
         axiosWithAuth()
         .get(`/users/${id}`)
         .then(res=> { 
-            this.setState({user: res.data})
+            this.setState({user: res})
         })
 
-        return axiosWithAuth()
+        axiosWithAuth()
         .get(`users/${id}/reviews`)
         .then(res=> {
             this.setState({reviews: res.data})
@@ -36,13 +36,25 @@ class UserDash extends React.Component {
 
 
     render(){
+        const hasProfileImage = this.state.user.profile_image;
+        let profile_image
+        let default_image;
+        if(!hasProfileImage === null){
+            profile_image = <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
+        }
+        else{
+            default_image = <div className='default-img'><p>U</p></div>
+            // default_image = <p className='default-img'>{this.state.user.username.slice(0)}</p>
+        }
+
         console.log('User Data', this.state.user)
         console.log('User Reviews', this.state.reviews)
         return (
             <Dash>
                 <InfoBox>
                     <div className='profile-pic-box'>
-                        <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
+                        {profile_image}
+                        {default_image}
                     </div>
                     <div className='profile-text'>
                         <h1>{this.state.user.username}</h1> 
@@ -78,6 +90,7 @@ const Dash = styled.div`
 
 const InfoBox = styled.div`
     border: 1px solid #80808075;
+    border-radius: 4px;
     width: 20vw;
     height: 60vh;
     padding: 10px 5px;
@@ -90,9 +103,9 @@ const InfoBox = styled.div`
     .profile-pic-box{
         height: 200px;
         width: 200px;
-        margin: auto;
+        margin: 0 auto;
         border-radius: 50%;
-        border: 1px solid purple
+        background: gray;
         img{
             height: 200px;
             width: 200px;
@@ -106,6 +119,16 @@ const InfoBox = styled.div`
     .edit-btn{
         color: #80808075;
         :hover{color: #000}
+    }
+    .default-img{
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        background-color: gold;
+        font-size: 4rem;
+        margin: 0 auto;
+        text-align: center;
+        p{padding-top: 25%;}
     }
 `;
 

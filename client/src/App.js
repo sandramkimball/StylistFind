@@ -5,7 +5,6 @@ import './App.css';
 // STYLING
 import GlobalStyle from './components/styled-components/GlobalStyle';
 
-
 // CONTEXTS MANAGE STATE
 import UserProvider from './components/contexts/UserContext';
 import DataProvider from './components/contexts/DataContext';

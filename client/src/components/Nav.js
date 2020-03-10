@@ -20,7 +20,10 @@ function Nav(props) {
                 <NavLink to='/search'>Search</NavLink>
                 <NavLink to='/users/:id/dash'>Account</NavLink>
                 <NavLink to='/stylists/:id/dash'>Profile</NavLink> 
-                <NavLink to='/login'>Login</NavLink>
+
+                {!localStorage.isLoggedIn && (
+                    <NavLink to='/login'>Login</NavLink>
+                )}
 
                 {localStorage.isLoggedIn && (
                     <NavLink to='/' onClick={logout}>Logout</NavLink>

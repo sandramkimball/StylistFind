@@ -27,7 +27,7 @@ class StylistDash extends React.Component {
             this.setState({ stylist:(res.data) });
         })
 
-        return axiosWithAuth()
+        axiosWithAuth()
         .get(`/stylists/${params.id}/posts`)
         .then(res=> { 
             this.setState({ posts:(res.data) });
@@ -39,12 +39,23 @@ class StylistDash extends React.Component {
     render(){
         console.log('Stylist Data', this.state.stylist)
         console.log('Posts Data', this.state.posts)
+        const hasProfileImage = this.state.stylist.profile_image;
+        let profile_image
+        let default_image;
+        if(!hasProfileImage === null){
+            profile_image = <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
+        }
+        else{
+            default_image = <div className='default-img'><p>S</p></div>
+            // default_image = <p className='default-img'>{this.state.stylist.username.slice(0)}</p>
+        }
         return (
             <Dash>
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
                 <InfoBox>
                     <div className='profile-pic-box'>
-                        <img src={`${this.state.stylist.profile_img}`} alt='profile of stylist, salon'/>
+                        {profile_image}
+                        {default_image}
                     </div>
                     <div className='profile-text'>
                         <h1>{this.state.stylist.first_name} {this.state.stylist.last_name}</h1> 
@@ -54,7 +65,7 @@ class StylistDash extends React.Component {
                             <p>{this.state.stylist.email}</p>
                             <p>{this.state.stylist.salon}</p>
                             <p>{this.state.stylist.street_address}</p>
-                            <p>{this.state.stylist.city}, {this.state.stylist.state} {this.state.stylist.zipcode}</p>
+                            <p>{this.state.stylist.city} {this.state.stylist.state} {this.state.stylist.zipcode}</p>
                         </div>
                     </div>
                 </InfoBox>    
@@ -99,9 +110,9 @@ const InfoBox = styled.div`
     .profile-pic-box{
         height: 200px;
         width: 200px;
-        margin: auto;
+        margin: 0 auto;
         border-radius: 50%;
-        border: 1px solid purple
+        background: gray;
         img{
             height: 200px;
             width: 200px;
@@ -116,15 +127,25 @@ const InfoBox = styled.div`
         color: #80808075;
         :hover{color: #000}
     }
+    .default-img{
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        background-color: gold;
+        font-size: 4rem;
+        margin: 0 auto;
+        text-align: center;
+        p{padding-top: 25%;}
+    }
 `;
 
 const Gallery = styled.div`
     width: 75vw;
-    margin: 0 auto;
+    margin: auto;
     div{
         display: flex;
         flex-wrap: wrap; 
-        margin: 0 auto;
+        margin: 2px;
     }
     .open-btn{
         color: gray;

@@ -10,7 +10,7 @@ class SearchPage extends React.Component {
         this.state= {
             searchTerm: '',
             searchResults: [],
-            filterOpt: 'stylists',
+            filterOpt: 'posts',
             sortOpt: ''
 
         }
