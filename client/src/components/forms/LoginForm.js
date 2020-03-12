@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import PrivateRoute from '../PrivateRoute';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
 class Login extends React.Component {
@@ -32,8 +31,10 @@ class Login extends React.Component {
             password: this.state.password
         })
         .then(res=> {
-            // localStorage.setItem('token', res.data.token);
-            localStorage.setItem('token', res.data.payload);
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('id', res.data.user.id);
+            localStorage.setItem('usertype', res.data.user.usertype);
+            console.log('LOGIN RESPONSE', res)
             this.setState({isLoggedIn: true})
             this.props.history.push('/search')
         })

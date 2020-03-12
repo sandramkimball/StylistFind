@@ -47,8 +47,7 @@ class UserDash extends React.Component {
             // default_image = <p className='default-img'>{this.state.user.username.slice(0)}</p>
         }
 
-        console.log('User Data', this.state.user)
-        console.log('User Reviews', this.state.reviews)
+        console.log('LocalStorage:', localStorage)
         return (
             <Dash>
                 <InfoBox>

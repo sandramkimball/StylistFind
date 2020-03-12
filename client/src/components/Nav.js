@@ -1,10 +1,8 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-// import { useUserContext } from './contexts/UserContext';
 
 function Nav(props) {
-    // const {user, dispatch} = useUserContext();
 
     const logout = e => {
         localStorage.removeItem('token');
@@ -18,18 +16,28 @@ function Nav(props) {
             </NavLink>
             <div>
                 <NavLink to='/search'>Search</NavLink>
-                <NavLink to='/users/:id/dash'>Account</NavLink>
-                <NavLink to='/stylists/:id/dash'>Profile</NavLink> 
+                <NavLink to={`/users/${localStorage.getItem('id')}/dash`}>TEST DASH</NavLink>
+                
 
-                {!localStorage.isLoggedIn && (
+                {localStorage.getItem('user.usertype') === 'user' && (
+                    <NavLink to={`/users/${localStorage.getItem('id')}/dash`}>User</NavLink>
+                )}
+
+                {localStorage.getItem('usertype') === 'stylist' && (
+                    <NavLink to={`/stylists/${localStorage.getItem('id')}/dash`}>Stylist</NavLink>
+                )}
+
+                {!props.isLoggedIn && (
                     <NavLink to='/login'>Login</NavLink>
                 )}
 
-                {localStorage.isLoggedIn && (
-                    <NavLink to='/' onClick={logout}>Logout</NavLink>
+                {!props.isLoggedIn && (
+                    <NavLink to='/signup'>Signup</NavLink>
                 )}
 
-                
+                {props.isLoggedIn && (
+                    <NavLink to='/' onClick={logout}>Logout</NavLink>
+                )}                
             </div>
         </NavBar>
     )
