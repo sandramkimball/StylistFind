@@ -5,7 +5,7 @@ import styled from 'styled-components';
 function Nav(props) {
 
     const logout = e => {
-        localStorage.removeItem('token');
+        localStorage.clear();
         props.history.push('/')
     };
 
@@ -15,11 +15,9 @@ function Nav(props) {
                 <Logo>Stylist Find</Logo>
             </NavLink>
             <div>
-                <NavLink to='/search'>Search</NavLink>
-                <NavLink to={`/users/${localStorage.getItem('id')}/dash`}>TEST DASH</NavLink>
-                
+                <NavLink to='/search'>Search</NavLink>                
 
-                {localStorage.getItem('user.usertype') === 'user' && (
+                {localStorage.getItem('usertype') === 'user' && (
                     <NavLink to={`/users/${localStorage.getItem('id')}/dash`}>User</NavLink>
                 )}
 
@@ -27,15 +25,15 @@ function Nav(props) {
                     <NavLink to={`/stylists/${localStorage.getItem('id')}/dash`}>Stylist</NavLink>
                 )}
 
-                {!props.isLoggedIn && (
+                {!localStorage.getItem('usertype') && (
                     <NavLink to='/login'>Login</NavLink>
                 )}
 
-                {!props.isLoggedIn && (
+                {!localStorage.getItem('usertype') && (
                     <NavLink to='/signup'>Signup</NavLink>
                 )}
 
-                {props.isLoggedIn && (
+                {localStorage.getItem('usertype') && (
                     <NavLink to='/' onClick={logout}>Logout</NavLink>
                 )}                
             </div>
