@@ -10,12 +10,12 @@ class UserDash extends React.Component {
             user: [],
             reviews: [],
         }
-        this.openAddPost = this.openAddPost.bind(this);
+        this.openEdit = this.openEdit.bind(this);
     }
     
-    openAddPost = e => {
+    openEdit = e => {
         e.preventDefault();
-        console.log('Will open add-post form.')
+        this.props.history.push('/edit/user')
     }
     
     componentDidMount(){
@@ -23,10 +23,10 @@ class UserDash extends React.Component {
         axiosWithAuth()
         .get(`/users/${id}`)
         .then(res=> { 
-            this.setState({user: res})
+            this.setState({user: res.data})
         })
 
-        axiosWithAuth()
+        return axiosWithAuth()
         .get(`users/${id}/reviews`)
         .then(res=> {
             this.setState({reviews: res.data})
@@ -42,12 +42,11 @@ class UserDash extends React.Component {
         if(!hasProfileImage === null){
             profile_image = <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
         }
-        else{
-            default_image = <div className='default-img'><p>U</p></div>
-            // default_image = <p className='default-img'>{this.state.user.username.slice(0)}</p>
-        }
+        else{default_image = <p className='default-img'>{this.state.user.first_name}</p>}
 
         console.log('LocalStorage:', localStorage)
+        console.log('User Data:', this.state.user)
+        console.log('User Reviews:', this.state.reviews)
         return (
             <Dash>
                 <InfoBox>
@@ -59,10 +58,11 @@ class UserDash extends React.Component {
                         <h1>{this.state.user.username}</h1> 
                         <p>{this.state.user.email}</p> 
                     </div>
+                    <p className='edit-btn' onClick={this.openEdit}>Edit</p>
                 </InfoBox>    
                 <section className = 'gallery'>
                     <Gallery>
-                        <p className='open-btn' onClick={this.openAddPost}>+</p>
+                        <p>Your Reviews</p>
                         <div>
                             {this.state.reviews.map(review => (
                                 <ReviewCards  
@@ -117,6 +117,8 @@ const InfoBox = styled.div`
     }
     .edit-btn{
         color: #80808075;
+        text-align: center;
+        cursor: pointer;
         :hover{color: #000}
     }
     .default-img{
@@ -139,18 +141,7 @@ const Gallery = styled.div`
         flex-wrap: wrap; 
         margin: 0 auto;
     }
-    .open-btn{
-        color: gray;
-        font-size: 3.25rem;
-        position: fixed;
-        bottom: 0px;
-        right: 10%;
-        z-index: 10;
-        cursor: pointer;
-        :hover{
-            color: #80808075;
-            .add-p{display: inherit}
-    }
+    p{font-family: "Source Sans Pro", sans-serif}
 `;
 
 

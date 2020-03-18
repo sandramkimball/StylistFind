@@ -11,10 +11,12 @@ import DataProvider from './components/contexts/DataContext';
 
 //COMPONENTS
 import Nav from './components/Nav';
+import Footer from './components/Footer';
 import Home from './components/Home';
 import LoginPage from './components/LoginPage';
 import LoginForm from './components/forms/LoginForm';
 import SignUpForm from './components/forms/SignUpForm';
+import EditUser from './components/forms/EditUser';
 import SearchPage from './components/search/SearchPage';
 import UserDash from './components/users/UserDash';
 import StylistDash from './components/users/StylistDash';
@@ -37,7 +39,9 @@ function App() {
             <Route path='/search' component={SearchPage}/>
             <Route path='/users/:id/dash' component={UserDash}  />
             <Route path='/stylists/:id/dash' component={StylistDash}/>
+            <Route path='/edit/user' component={EditUser}/>
         </Switch>
+        <Footer/>
         </Router>
       </DataProvider>
       </UserProvider>

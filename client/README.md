@@ -1,9 +1,3 @@
-# ToDo:
-- pass props from home pg search to search pg
-- add func to srot, filter by
-- figure out why not getting both user data and user post data (flatten two axios arrays?)
-- figure out why not recieving back token data/user login and register doesn't create user? or doesn't save it to db? or just doesn't send the data back?(there's no error messages returning from server).
-- reinstate profile edit, add-image, post, review forms
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

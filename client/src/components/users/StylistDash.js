@@ -21,19 +21,19 @@ class StylistDash extends React.Component {
     
     componentDidMount(props){
         const { match: { params } } = this.props;
+
         axiosWithAuth()
         .get(`/stylists/${params.id}`)
         .then(res=> { 
             this.setState({ stylist:(res.data) });
         })
 
-        axiosWithAuth()
+        return axiosWithAuth()
         .get(`/stylists/${params.id}/posts`)
         .then(res=> { 
             this.setState({ posts:(res.data) });
         })
-
-        .catch(err=>{console.log('SKSKRR ERROR: ', err)});
+        .catch(err=>{console.log('STYLIST DASH API ERROR: ', err)});
     }
 
     render(){
@@ -45,10 +45,7 @@ class StylistDash extends React.Component {
         if(!hasProfileImage === null){
             profile_image = <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
         }
-        else{
-            default_image = <div className='default-img'><p>S</p></div>
-            // default_image = <p className='default-img'>{this.state.stylist.username.slice(0)}</p>
-        }
+        else{default_image = <p className='default-img'>{this.state.stylist.first_name}</p>}
         return (
             <Dash>
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
@@ -97,11 +94,11 @@ const Dash = styled.div`
 `;
 
 const InfoBox = styled.div`
-    border: 1px solid #80808075;
+    background: #f1f1f1;
     width: 20vw;
-    height: 60vh;
+    height: 805px;
     padding: 10px 5px;
-    margin: 5% auto;
+    margin: 0 auto;
     text-align: left;
     font-size: 1rem;
     display: flex;
@@ -141,11 +138,11 @@ const InfoBox = styled.div`
 
 const Gallery = styled.div`
     width: 75vw;
-    margin: auto;
+    margin: 0 auto;
     div{
         display: flex;
         flex-wrap: wrap; 
-        margin: 2px;
+        margin: 0 1px 2px 1px;
     }
     .open-btn{
         color: gray;

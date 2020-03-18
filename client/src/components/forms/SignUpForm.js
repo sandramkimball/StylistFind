@@ -55,18 +55,30 @@ export default class SignUp extends React.Component {
           last_name: this.state.last_name,
           password: this.state.password,
           email: this.state.email,
-          usertype: 'stylist',
+          usertype: 'stylist'
+        })
+        .then(res=> {
+          localStorage.setItem('token', res.data.payload)
+          localStorage.setItem('stylist_id', res.data.stylist.id)
+          console.log('Signup Server Response:', res)
+          this.props.history.push('/login')}
+        )   
+
+        axiosWithAuth()
+        .post('auth/register/salon', {
           street_address: this.state.street_address,
           city: this.state.city,
-          zipcode: this.state.zipcode,
           state: this.state.state,
+          zipcode: this.state.zipcode,
           country: this.state.country,
-          salon: this.state.salon,
-      })
-        .then( res=> {
-          localStorage.setItem('token', res.data.payload)
-          this.props.history.push('/login')}
-        )
+        })
+        .then(res=> {
+          axiosWithAuth()
+          .put(
+            `/auth/stylists/${localStorage.getItem('stylist_id', res.data.stylist.id)}`, {
+            salon_id: res.data.salon.id
+          })
+        })   
         .catch(err=>{console.log('FE Error', err)})
       }
   };
@@ -135,6 +147,13 @@ export default class SignUp extends React.Component {
             />
             <input
               type='text'
+              name='state'
+              value={this.state.state} 
+              placeholder="state" 
+              onChange={this.handleChange}
+            />
+            <input
+              type='text'
               name='country'
               value={this.state.country} 
               placeholder="country" 
@@ -153,7 +172,7 @@ export default class SignUp extends React.Component {
               name='salon'
               value={this.state.salon} 
               placeholder="salon name" 
-              onChange={this.handleStylistCheck}
+              onChange={this.handleChange}
             />
           </div>
       )}

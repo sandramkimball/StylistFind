@@ -1,59 +1,56 @@
 import React, {useState, useEffect} from 'react';
-import {axiosWithAuth} from '../utilis/axiosWithAuth';
+import axiosWithAuth from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
 import {Link, NavLink} from 'react-router-dom';
 
-const initialBio = {
-    name: '',
-    imageUrl: '',
-    address: '',
-    email: ''
-}
 
-const EditBio = props => {
-    const [editing, setEditing] = useState(false);
+
+const EditUser = props => {
+    const initialBio = {
+        name: '',
+        image_url: '',
+        address: '',
+        email: ''
+    }
     const [profile, setProfile] = useState(initialBio);
-    
+
     const handleChange = ev => {
-    ev.persist();
-    let value = ev.target.value;
-    setProfile({
-        ...profile,
-        [ev.target.name]: value
+        ev.persist();
+        let value = ev.target.value;
+        setProfile({
+            ...profile,
+            [ev.target.name]: value
         })
     }
-
-    useEffect(()=> {
-    const profileToEdit = props.profile;
-    if (profileToEdit) setProfile(profileToEdit);
-    }, [props.profile, props.match.params.id]);
 
 
     const handleSubmit = e => {
         e.preventDefault()
         axiosWithAuth()
-        .put(`${props.customer}`, profile)
-        .then(res=> {
-            props.updateProfile(res.data);
-            props.history.push('/customer-dash');
-
+        .put(`/user/${localStorage.getItem('id')}`, profile)
+        .then( ()=> {
+            console.log('Successfully updated');
+            props.history.push(`/user/${localStorage.getItem('id')}/dash`);
         })
-        setEditing(false);
+        .catch(err=> console.log('Error updating', err))
     };
 
-// const editingBio = bioToEdit  => {
-//     setEditing(true);
-//     setBio(bioToEdit)
-// }
 
 return (
     <div>
         <h3>Edit Profile</h3>
         <ProfileImg>
             <img src={props.imageUrl}/>
-            
         </ProfileImg>
-        <NavLink to='add-image'><p>change image</p></NavLink>
+        <form action='/action_page.html'>
+            update image: 
+            <input 
+                type="file" 
+                id="img" 
+                name="img" 
+                accept="image/*"
+            />
+        </form>
    
         <EditForm onSubmit={handleSubmit}>
             <input 
@@ -82,7 +79,7 @@ return (
 
             <div>
                 <p className='edit-btn-aft' onClick={handleSubmit}>
-                    <Link to='/customer-dash'>Save</Link>
+                    <button>Save</button>
                 </p>
             </div>
         </EditForm>
@@ -93,7 +90,7 @@ return (
 
 
 
-export default EditBio;
+export default EditUser;
 
 const ProfileImg = styled.div`
     height: 200px;
@@ -104,15 +101,18 @@ const ProfileImg = styled.div`
 `;
 
 const EditForm = styled.form`
-    margin: 10px auto;
-    display: flex;
-    flex-direction: column;
+    display:flex;
+    width: 40vw;
     justify-content: center;
-    box-shadow: .5px 1px 2px #000;
-    width: 30%;
-    input{
-        margin: 20px;
-        justify-content: center;
+    align-content: spece-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
+    flex-direction: column;
+    h3{
+        margin: 0; 
+        font-size: 2rem; 
+        font-family: 'Dancing Script', cursive
     }
     div{
         display: flex;
@@ -130,4 +130,21 @@ const EditForm = styled.form`
         color: black;
         :hover{transform: scale(1.025); color: #80808095; cursor: pointer}
     }
+    input, button{
+        height: 25px;
+        width: 100%
+        margin: 5px auto;
+        border: 1px solid #80808095;
+        font-size: 1rem;
+        padding: 2px;
+        border-radius: 2px;
+    }
+    button{
+        background: orange;
+        padding: 2px 5px;
+        color: #fff;
+        border: none;
+        height: 30px;
+        cursor: pointer
+    }    
 `;
