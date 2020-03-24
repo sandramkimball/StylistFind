@@ -24,7 +24,7 @@ export default withRouter(Footer);
 const FooterBar = styled.nav`
     width: 98%;
     margin: auto;
-    padding: 10px;
+    padding: 10px 0;
     align-self: center
     img{height: 40px}
     p{margin: 0 0; font-size: .75rem}

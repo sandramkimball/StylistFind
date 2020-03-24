@@ -21,11 +21,13 @@ import SearchPage from './components/search/SearchPage';
 import UserDash from './components/users/UserDash';
 import StylistDash from './components/users/StylistDash';
 // import PrivateRoute from './components/PrivateRoute';
+import bckgImg from './images/Wave-PNG-Clipart.png'
 
 function App() {
 
   return (
     <div className="App">
+      <img src={bckgImg} alt='wave' className='bckgImg'/>
       <GlobalStyle/>
       <UserProvider>
         <DataProvider>

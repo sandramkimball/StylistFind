@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+.bckgImg{
+  opacity: .07;
+  position: fixed;
+  z-index: -2;
+  width: 100vw;
+  height: 120vh;
+  bottom: 0;
+  left: 0;
+  transform: skewX(120deg);
+  transform: skewY(140deg);
+}
+
 
 .open-mode__toggle {
   background: #bdbbbb;

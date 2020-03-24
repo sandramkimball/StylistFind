@@ -2,8 +2,8 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import Styled from "styled-components";
 import axiosWithAuth from './utilis/axiosWithAuth';
-import PostCard from './posts/PostCard';
-
+import hairImg from '../images/pink.jpg'
+import hair2 from '../images/person-cutting-hair.jpg'
 
 class Home extends React.Component {
   constructor(props){
@@ -43,9 +43,9 @@ class Home extends React.Component {
     return (
       <div>
         <Landing>
-          <img src='https://image.flaticon.com/icons/png/512/41/41463.png' alt='clipart of scissors and a comb'/>
           <div>
-            <h1>Search</h1>
+            <h1>Stylist Find</h1>
+            <p>Welcome! Start your search for the perfect stylists here.</p>
             <form onSubmit={this.handleSubmit}>
                 <input
                   id='search_input'
@@ -58,17 +58,15 @@ class Home extends React.Component {
             </form>
           </div>
         </Landing>
-        <Recent>
-          <h1>Checkout the Most Recent Posts</h1>
+        <Info>
           <div>
-            {this.state.posts.map(post=> (
-                <PostCard 
-                    id={post.id} 
-                    post={post}
-                />
-            ))}
+            <h2>One Community for Stylists and Clients</h2>
+            <p>Discover and be discovered. Display, post and update your artist portfolio. Share your talents. Review experiences. Save your favorites. Connect with someone who totally feels your vide. Try something new and feel beautiful.</p>
           </div>
-        </Recent>
+          <div>
+            <img src={hair2} alt='person cutting hiar'/>
+          </div>
+        </Info>
       </div>
     )
   }
@@ -77,19 +75,26 @@ class Home extends React.Component {
 export default Home;
 
 const Landing = Styled.div`
-  height: 45vh;
-  width: 100%;
+  height: 90vh;
+  width: 70vw;
   margin: auto;
-  background: linear-gradient(lavender, #6d5a73);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  background-image: url(${hairImg});
+  background-size: cover;
+  border-radius: 2px;  
+  box-shadow: 0px 4px 10px #d7d7d7;
   h1{
-    font-size: 2.75rem; 
+    font-size: 4rem; 
     margin: 0 0 10px 0; 
     padding-top: 10%;
     font-family: 'Dancing Script', cursive;  
     text-align: left;
+  }
+  p{
+    text-align: left;
+    font-size: 2rem
   }
   form{
     border: none;
@@ -107,23 +112,35 @@ const Landing = Styled.div`
       border-bottom: 1.5px solid #eeeeef;
     }
   }
-  img{ height: 80%; margin-top: 5px}
 `;
 
-const Recent = Styled.div`
-  height: 45vh;
-  width: 90vw;
-  margin: 5% auto;
-  h1{
-    font-size: 1.5rem; 
-    margin-bottom: 10px;  
-    text-align: left;
-    font-family: "Source Sans Pro", sans-serif;
-  }
+const Info = Styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin 15vh auto;
+  width: 70vw;
+  height: 40vh;
   div{
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap; 
-    margin: 0 1px 2px 1px;
+    width: 48%;
+    height: 40vh;
+    border-radius: 2px;
+    box-shadow: 0px 4px 10px #d7d7d7;
   }
-`;
+  div:nth-child(1){
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    justify-content: center;
+    h2, p{ 
+      margin: 2px auto;
+      width: 90%;
+      font-family: 'Source Sans Pro',sans-serif;
+    }
+    p{text-align: left;  font-size: 1.25rem;}
+  }
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`
