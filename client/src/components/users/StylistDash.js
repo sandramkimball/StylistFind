@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import PostCard from '../posts/PostCard';
+import defaultImg from '../../images/default-profile.jpg'
 
 class StylistDash extends React.Component {
     constructor(props){
@@ -12,11 +13,17 @@ class StylistDash extends React.Component {
             posts: []
         }
         this.openAddPost = this.openAddPost.bind(this);
+        this.handleReview = this.handleReview.bind(this);
     }
     
     openAddPost = e => {
         e.preventDefault();
         console.log('Will open add post form.')
+    }
+
+    handleReview = e => {
+        e.preventDefault();
+        console.log('Will add a review.')
     }
     
     componentDidMount(props){
@@ -44,7 +51,7 @@ class StylistDash extends React.Component {
         if(!hasProfileImage === null){
             profile_image = <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
         }
-        else{default_image = <p className='default-img'>{this.state.stylist.first_name}</p>}
+        else{default_image = <img src={defaultImg} alt='profile of user'/>}
         return (
             <Dash>
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
@@ -67,7 +74,6 @@ class StylistDash extends React.Component {
                 </InfoBox>    
                 <section className = 'gallery'>
                     <Gallery>
-                        <p className='open-btn' onClick={this.openAddPost}>+</p>
                         <div>
                             {this.state.posts.map(post=> (
                                 <PostCard 
@@ -77,6 +83,15 @@ class StylistDash extends React.Component {
                                 />
                             ))}
                         </div>
+                        {localStorage.getItem('usertype') === 'stylist' && (
+                            <p className='open-btn' onClick={this.openAddPost}>+</p>
+                        )}
+                        {localStorage.getItem('usertype') === 'user' && (
+                            <form onSubmit={this.handleReview} className='add-review'>
+                                <textarea rows='6' cols='40' placeholder='Write a review.'></textarea>
+                                <p onClick={this.handleReview}>Submit</p>
+                            </form>
+                        )}
                     </Gallery>
                 </section>
             </Dash>
@@ -91,6 +106,29 @@ const Dash = styled.div`
     margin: auto;
     justify-content: space-between;
     a{text-decoration: none}
+    .add-review{
+        position: fixed;
+        bottom: 10px;
+        right: 5vw;
+        z-index: 10;
+        background: orange;
+        border-radius: 2px;
+        padding: 10px 20px;
+        textarea{
+            border: none; 
+            padding: 2px;
+            font-size: 1rem;
+            font-family: 'Source Sans Pro',sans-serif;
+        }
+        p{ 
+            background: white;
+            max-width: 45%;
+            padding: 5px 10px;
+            margin: 2px auto;
+            font-size: 1rem;
+            :hover{cursor: pointer; color: gray}
+        }
+    }
 `;
 
 const InfoBox = styled.div`
@@ -110,10 +148,9 @@ const InfoBox = styled.div`
         width: 200px;
         margin: 0 auto;
         border-radius: 50%;
-        background: gray;
         img{
-            height: 200px;
-            width: 200px;
+            height: 100%;
+            width: 100%;
             border-radius: 50%;
             object-fit: cover;
         }

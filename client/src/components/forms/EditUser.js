@@ -13,7 +13,7 @@ class EditUser extends React.Component {
             email: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleImageChange = this.handleSubmit.bind(this);
+        this.handleImageChange = this.handleImageChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
