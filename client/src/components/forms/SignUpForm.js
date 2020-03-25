@@ -1,6 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 import axiosWithAuth from "../utilis/axiosWithAuth";
+import defaultImg from '../../images/default-profile.jpg'
 
 export default class SignUp extends React.Component {
 
@@ -10,6 +11,7 @@ export default class SignUp extends React.Component {
       password: '',
       first_name: '',
       last_name: '',
+      profile_img: {defaultImg},
       street_address: '',
       city: '',
       zipcode: '',
@@ -38,6 +40,7 @@ export default class SignUp extends React.Component {
           last_name: this.state.last_name,
           password: this.state.password,
           email: this.state.email,
+          profile_img: this.state.profile_img,
           usertype: 'user',
       })
         .then( res=> {
@@ -54,7 +57,8 @@ export default class SignUp extends React.Component {
           first_name: this.state.first_name,
           last_name: this.state.last_name,
           password: this.state.password,
-          email: this.state.email,
+          email: this.state.email,          
+          profile_img: this.state.profile_img,
           usertype: 'stylist'
         })
         .then(res=> {

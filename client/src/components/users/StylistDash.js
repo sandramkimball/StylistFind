@@ -21,20 +21,19 @@ class StylistDash extends React.Component {
     
     componentDidMount(props){
         const { match: { params } } = this.props;
-
         axiosWithAuth()
-        .get(`/stylists/${params.id}`)
+        .get(`/stylists/profile/${params.id}`)
         .then(res=> { 
             this.setState({ stylist:(res.data) });
-        })
-
-        return axiosWithAuth()
-        .get(`/stylists/${params.id}/posts`)
-        .then(res=> { 
-            this.setState({ posts:(res.data) });
+            return axiosWithAuth()
+            .get(`/stylists/${params.id}/posts`)
+            .then(res=> { 
+                this.setState({ posts:(res.data) });
+            })
         })
         .catch(err=>{console.log('STYLIST DASH API ERROR: ', err)});
     }
+
 
     render(){
         console.log('Stylist Data', this.state.stylist)
@@ -74,6 +73,7 @@ class StylistDash extends React.Component {
                                 <PostCard 
                                     id={post.id} 
                                     post={post}
+                                    stylist={this.state.stylist}
                                 />
                             ))}
                         </div>
@@ -94,12 +94,13 @@ const Dash = styled.div`
 `;
 
 const InfoBox = styled.div`
-    background: #f1f1f1;
+    background: white;
+    box-shadow: 0px 3px 8px gray;
+    border-radius: 4px;
     width: 20vw;
-    height: 805px;
+    height: 60vh;
     padding: 10px 5px;
-    margin: 0 auto;
-    text-align: left;
+    margin: 5% auto;
     font-size: 1rem;
     display: flex;
     flex-direction: column;

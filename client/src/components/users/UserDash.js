@@ -91,7 +91,8 @@ const Dash = styled.div`
 `;
 
 const InfoBox = styled.div`
-    border: 1px solid #80808075;
+    background: white;
+    box-shadow: 0px 3px 8px gray;
     border-radius: 4px;
     width: 20vw;
     height: 60vh;

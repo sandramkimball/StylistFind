@@ -3,7 +3,8 @@ import {Link} from 'react-router-dom';
 import Styled from 'styled-components';
 
 function PostCard(props) {
-    const {image, username, comment, date, id, salon} = props.post;
+    const {image, comment, date, id} = props.post;
+    const {username, salon} = props.stylist;
 
     return (
         <div>
@@ -31,7 +32,7 @@ const Card = Styled.div`
     padding: 0 0 4px 0;
     border-radius: 4px;
     box-sizing: border-box;
-    background: #f1f1f1;
+    background: #fff;
     a{text-decoration: none; color: #000}
     img{
         object-fit: cover;
