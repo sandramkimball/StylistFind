@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import ReviewCards from '../reviews/ReviewCards';
+import defaultImg from '../../images/default-profile.jpg';
+// import {NavLink} from 'react-router-dom';
 
 class UserDash extends React.Component {
     constructor(props){
@@ -13,13 +15,14 @@ class UserDash extends React.Component {
         this.openEdit = this.openEdit.bind(this);
     }
     
-    openEdit = e => {
-        e.preventDefault();
-        this.props.history.push('/edit/user')
+    openEdit = e => { 
+        // <NavLink to='/edit/user' props={this.state.user}/>
+        this.props.history.push('/edit/user') 
     }
     
     componentDidMount(){
-        const id = this.props.match.params.id 
+        // const id = this.props.match.params.id 
+        const id = localStorage.getItem('id')
         axiosWithAuth()
         .get(`/users/${id}`)
         .then(res=> { 
@@ -31,7 +34,7 @@ class UserDash extends React.Component {
         .then(res=> {
             this.setState({reviews: res.data})
         })
-        .catch(err=>{console.log('Error fetching Reviews', err.response)});
+        .catch(err=>{console.log('Error fetching user data', err.response)});
     }
 
 
@@ -42,11 +45,11 @@ class UserDash extends React.Component {
         if(!hasProfileImage === null){
             profile_image = <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
         }
-        else{default_image = <p className='default-img'>{this.state.user.first_name}</p>}
+        else{default_image = <img src={defaultImg} alt='default avatar'/>}
 
         console.log('LocalStorage:', localStorage)
         console.log('User Data:', this.state.user)
-        console.log('User Reviews:', this.state.reviews)
+        // console.log('User Reviews:', this.state.reviews)
         return (
             <Dash>
                 <InfoBox>
@@ -55,7 +58,7 @@ class UserDash extends React.Component {
                         {default_image}
                     </div>
                     <div className='profile-text'>
-                        <h1>{this.state.user.username}</h1> 
+                        <h1>{this.state.user.first_name}</h1> 
                         <p>{this.state.user.email}</p> 
                     </div>
                     <p className='edit-btn' onClick={this.openEdit}>Edit</p>
@@ -94,7 +97,6 @@ const InfoBox = styled.div`
     height: 60vh;
     padding: 10px 5px;
     margin: 5% auto;
-    text-align: left;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -106,8 +108,8 @@ const InfoBox = styled.div`
         border-radius: 50%;
         background: gray;
         img{
-            height: 200px;
-            width: 200px;
+            height: 100%;
+            width: 100%;
             border-radius: 50%;
             object-fit: cover;
         }

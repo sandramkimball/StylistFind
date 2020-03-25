@@ -4,11 +4,6 @@ import styled from 'styled-components';
 
 function Footer(props) {
 
-    const logout = e => {
-        localStorage.clear();
-        props.history.push('/')
-    };
-
     return(
         <FooterBar>
             <NavLink to='/'>
