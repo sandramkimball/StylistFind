@@ -103,6 +103,7 @@ export default StylistDash;
 
 const Dash = styled.div`
     display: flex;
+    flex-direction: column;
     margin: auto;
     justify-content: space-between;
     a{text-decoration: none}
@@ -135,10 +136,10 @@ const InfoBox = styled.div`
     background: white;
     box-shadow: 0px 3px 8px gray;
     border-radius: 4px;
-    width: 20vw;
+    width: 70vw;
     height: 60vh;
     padding: 10px 5px;
-    margin: 5% auto;
+    margin: 0 auto;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -175,8 +176,8 @@ const InfoBox = styled.div`
 `;
 
 const Gallery = styled.div`
-    width: 75vw;
-    margin: 0 auto;
+    width: 70vw;
+    margin: 5vh auto;
     div{
         display: flex;
         flex-wrap: wrap; 

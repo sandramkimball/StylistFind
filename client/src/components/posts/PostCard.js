@@ -23,8 +23,8 @@ function PostCard(props) {
 export default PostCard;
 
 const Card = Styled.div`
-    width: 310px;
-    height: 400px;
+    width: 17vw;
+    height: 20vw;
     background: #fff;
     display: flex;
     flex-direction: column;
@@ -36,8 +36,8 @@ const Card = Styled.div`
     a{text-decoration: none; color: #000}
     img{
         object-fit: cover;
-        width: 310px;
-        height: 310px;
+        width: 100%;
+        height: 15vw;
         margin: 0 auto;
         padding: none;
     }
