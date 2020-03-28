@@ -1,22 +1,17 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import styled from 'styled-components';
-import {useDataContext} from '../contexts/DataContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
 const ReviewForm = (props) => {
-    const {data, dispatchData} = useDataContext();
-
+    var userId = localStorage.getItem('id');
+    var stylistId = props.match.params.id;
     const [newReview, setNewReview] = useState({
-        id: Date.now(),
-        text: '',
+        review: '',
         image: '',
-        customer: data.customer,
+        stylist_id: stylistId,
+        user_id: userId,
     })
     
-    useEffect(()=> setNewReview({
-        ...newReview, 
-    }, []))
-
     const handleChange = e => {
         e.preventDefault();
         setNewReview({
@@ -25,34 +20,27 @@ const ReviewForm = (props) => {
         });
     };
 
-    // const handleSubmit = e => {
-    //     e.preventDefault();
-    //     dispatchData({
-    //         type:'ADD_REVIEW',
-    //         payload: newReview
-    //     })
-    // }
-
-    const handleSubmit = newReview => {
+    const handleSubmit = e => {
         axiosWithAuth()
-        .post('/reviews', newReview)
-        .then(res => {
-            localStorage.setItem('token', res.data.payload)
-        })
+        .post(`users/${userId}/reviews`, newReview)
+        .then(res => console.log(res))
         .catch(err=> console.log(err.message))
     }
 
     return(
         <div>
-            <p>Add Review</p>
+            {/* <p>You're reviewing {props.stylist.first_name}</p> */}
             <AddReviewBox onSubmit={handleSubmit}>
-                <input 
-                    type='text'
+                <textarea 
+                    rows='12' 
+                    cols='20' 
+                    placeholder='How was your experience...' 
+                    value={newReview.review}
                     name='review'
-                    placeholder='Add Comment'
                     onChange={handleChange}
-                />
-
+                >
+                </textarea>
+                <h4>Got pics? Add them!</h4>
                 <input 
                     type='file'
                     accept='image/*'
@@ -61,7 +49,7 @@ const ReviewForm = (props) => {
                     value={props.image}
                 />
 
-                {/* <button type='submit'>+Add</button> */}
+                <p onClick={handleSubmit}>Submit</p>
             </AddReviewBox>
         </div>
     )
@@ -73,20 +61,35 @@ export default ReviewForm;
 const AddReviewBox = styled.form`
     display: flex;
     flex-direction: column;
-    height: 100px,
-    width: 300px,
-    background: black,
-    color: white
+    width: 45vw;
+    margin: auto;
+    padding: 20px;
+    background: orange;
+    border-radius: 2px;
     input{
         height: 50px;
-        width: 35%;
+        padding: 10px 0;
+        font-size: 1.25rem;
     }
-    button{
-        border: none;
-        background: none;
-        font-size: 30px
-        :hover{
-            transform: scale(1.1)
-        }
+    textarea{
+        border: none; 
+        padding: 4px;
+        font-size: 1.25rem;
+        font-family: 'Source Sans Pro',sans-serif;
     }
+    p{ 
+        background: white;
+        max-width: 45%;
+        padding: 5px 10px;
+        margin: 2px auto;
+        font-size: 1.25rem;
+        :hover{cursor: pointer; color: gray}
+    }
+    h4{
+        font-family: 'Dancing Script', sans-serif;
+        text-align: left;
+        font-size: 2.25rem;
+        margin: 10px 0 0 0;
+    }
+    
 `;

@@ -11,3 +11,4 @@ Practice building react-app, ReactJs, google-map library.
 - reinstate profile edit, add-image, post, review forms
 - stylist signup: be sure address is posted to salon, not stylist
 - add restrictions back to api paths
+- change add post/review from route to a whole new page to a popup on current page

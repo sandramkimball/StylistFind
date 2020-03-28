@@ -19,30 +19,9 @@ class StylistDash extends React.Component {
                 stylist_id: ''
             }
         }
-        this.openAddPost = this.openAddPost.bind(this);
-        this.handleReview = this.handleReview.bind(this);
-        this.handleReviewChange = this.handleReviewChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
     }
     
-    openAddPost = e => {
-        e.preventDefault();
-        console.log('Will open add post form.')
-    }
-
-    handleReviewChange = e => {
-        e.preventDefault()
-        this.setState({ user_review: {[e.target.name]: e.target.value} });
-    }
-
-    handleReview = e => {
-        e.preventDefault()
-        this.setState({ user_review: {stylist_id: this.state.stylist.id} })
-        axiosWithAuth()
-        .post(`users/${localStorage.getItem('id')}/reviews`, this.state.user_review)
-        .then(res=> console.log(res))
-        .catch(err=> console.log(err))
-    }
 
     handleSave = e => {
         e.preventDefault();
@@ -82,7 +61,10 @@ class StylistDash extends React.Component {
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
                 <InfoBox>
                     {localStorage.getItem('usertype') === 'user' && (
-                        <p className={`add-stylist ${this.state.added ? "not-saved" : "saved"}`} onClick={this.state.handleSave}>❤</p>
+                        <div className='toolbar'>
+                            <p className={`add-stylist ${this.state.added ? "not-saved" : "saved"}`} onClick={this.state.handleSave}>❤</p>
+                            <Link to={`/stylist/${this.state.stylist.id}/add-review`}><p>+</p></Link>
+                        </div>
                     )}
                     <div className='profile-pic-box'>
                         {profile_image}
@@ -115,19 +97,7 @@ class StylistDash extends React.Component {
                         {localStorage.getItem('usertype') === 'stylist' && (
                             <p className='open-btn' onClick={this.openAddPost}>+</p>
                         )}
-                        {localStorage.getItem('usertype') === 'user' && (
-                            <form onSubmit={this.handleReview} className='add-review'>
-                                <textarea 
-                                    rows='6' 
-                                    cols='40' 
-                                    placeholder='Write a review.' 
-                                    value={this.state.user_review.review}
-                                    name='review'
-                                    onChange={this.handleReviewChange}
-                                ></textarea>
-                                <p onClick={this.handleReview}>Submit</p>
-                            </form>
-                        )}
+                        
                     </Gallery>
                 </section>
             </Dash>
@@ -143,29 +113,6 @@ const Dash = styled.div`
     margin: auto;
     justify-content: space-between;
     a{text-decoration: none}
-    .add-review{
-        position: fixed;
-        bottom: 10px;
-        right: 5vw;
-        z-index: 10;
-        background: orange;
-        border-radius: 2px;
-        padding: 10px 20px;
-        textarea{
-            border: none; 
-            padding: 2px;
-            font-size: 1rem;
-            font-family: 'Source Sans Pro',sans-serif;
-        }
-        p{ 
-            background: white;
-            max-width: 45%;
-            padding: 5px 10px;
-            margin: 2px auto;
-            font-size: 1rem;
-            :hover{cursor: pointer; color: gray}
-        }
-    }
 `;
 
 const InfoBox = styled.div`
@@ -210,27 +157,27 @@ const InfoBox = styled.div`
         text-align: center;
         p{padding-top: 25%;}
     }
-    .add-stylist{
-        text-align: right;
-        padding: 0 15px;
-        font-size: 2rem;
-        color: gray;
-        cursor: pointer;
-        :hover{
-            // transform: scale(1.1);
+    .toolbar{
+        display: flex;
+        p{
+            text-align: right;
+            padding: 0 15px;
+            font-size: 2rem;
+            color: gray;
+            cursor: pointer;
+            :hover{color: #f74d86}
+        }
+        .saved{
             color: #f74d86;
         }
-    }
-    .saved{
-        color: #f74d86;
-    }
-    .read-reviews{
-        font-size: 1.25rem;
-        padding: 0 15px;
-        margin-top: 5%;
-        text-align: right;
-        cursor: pointer;
-        :hover{color: orange}
+        .read-reviews{
+            font-size: 1.25rem;
+            padding: 0 15px;
+            margin-top: 5%;
+            text-align: left;
+            cursor: pointer;
+            :hover{color: orange}
+        }
     }
 `;
 
