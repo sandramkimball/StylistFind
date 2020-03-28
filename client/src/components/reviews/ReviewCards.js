@@ -11,19 +11,20 @@ function ReviewCard (props) {
                     <img src={profile_img} alt='user profile'/>
                     <div>
                         <Link to={`/users/${user_id}/dash`} key={user_id} id={user_id} props={props}>
-                            <h4>{username}</h4>
+                            <h4>{first_name} </h4>
                         </Link>
-                        <p>wrote a review for</p> 
                         <p>
                             <Link to={`/stylists/${stylist_id}/dash`} key={stylist_id} id={stylist_id} props={props}>
-                               {first_name} {salon}
+                                @{stylist_id}
                             </Link>    
                         </p>
                     </div>
                 </div>
-                <div className='review-img' >
-                    <img src={image} alt='review'/>
-                </div>
+                {image && (
+                    <div className='review-img' >
+                        <img src={image} alt='review'/>
+                    </div>
+                )}
                 <div className='review-text'>
                     <p>{review}</p>
                     <p>{date}</p>
@@ -33,19 +34,26 @@ function ReviewCard (props) {
     )
 }
 
+export default ReviewCard;
 
 const Card = styled.div`
-    width: 310px;
-    border: .5px solid #e6e6e6;
+    width: 30vw;
+    box-shadow: 0px 3px 8px gray;
     border-radius: 2px;
     font-size: 1rem;
     text-align: left; 
     display: flex;
     flex-direction: column;
-    h4, p{ padding: 0; margin: 0}
-    a{ color: black; text-decoration: underline, font-weight: 400}
+    background: #fff;
+    margin: 10px auto;
+    h4{ padding: 0; margin: 0}
+    a{ 
+        color: black; 
+        text-decoration: underline, 
+        font-weight: 400
+    }
     .reviewer-info{
-        height: 70px;
+        height: 100%;
         width: 100%;
         display: flex;
         flex-direction: flex-start;
@@ -58,7 +66,9 @@ const Card = styled.div`
         }
     }
     .review-text{
-        min-height: 70px;
+        margin: 0 auto;
+        height: 100%;
+        padding: 2px;
         h4{
             font-weight: 200;
             font-size: .75rem;
@@ -69,7 +79,6 @@ const Card = styled.div`
         width: 100%;
         height: 120px;
         object-fit: cover;
+        margin: 0
     }
 `;
-
-export default ReviewCard;

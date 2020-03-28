@@ -1,4 +1,5 @@
 import React from 'react';
+// import { useLocation } from "react-router-dom";
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
 
@@ -7,20 +8,33 @@ class EditUser extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            first_name: '',
-            last_name: '',
-            profile_img: '',
-            email: ''
+            user: {
+                id: '',
+                first_name: '',
+                last_name: '',
+                profile_img: '',
+                email: ''
+            }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleImageChange = this.handleImageChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
+    componentDidMount(){
+        const id = localStorage.getItem('id')
+        axiosWithAuth()
+        .get(`/users/${id}`)
+        .then(res=> { 
+            this.setState({user: res.data})
+        })
+
+        .catch(err=>{console.log('Error fetching user data', err.response)});
+    }
 
     handleChange = e => {
         e.preventDefault()
-        this.setState({ ...this.state, [e.target.name]: e.target.value });
+        this.setState({ ...this.state, user: {...this.state.user, [e.target.name]: e.target.value} });
     }
 
     handleImageChange = e => {
@@ -28,34 +42,29 @@ class EditUser extends React.Component {
         this.setState({profile_img: e.target.files[0]});
     }
 
-    handleSubmit = e => {
-        e.preventDefault()
+    handleSubmit = e => {        
         const id = localStorage.getItem('id')
+        e.preventDefault()
         axiosWithAuth()
-        .put(`/users/${id}`, {
-            first_name: this.state.first_name,
-            last_name: this.state.last_name,
-            profile_img: this.state.profile_img,
-            email: this.state.email,
-        })
-        .then( ()=> {
+        .put(`/users/${this.state.user.id}`, this.state.user)
+        .then(()=> {
             console.log('Successfully updated');
-            this.props.history.push(`/user/${localStorage.getItem('id')}/dash`);
+            this.props.history.push(`/user/${this.state.user.id}/dash`);
         })
         .catch(err=> console.log('Unable to make updates.', err))
     };
 
     render(){
-    return (
-        <EditForm>
+        return (
+            <EditForm>
             <h3>Edit Profile</h3>
             <img src={this.state.profile_img} alt='user profile'/>
-            <form action='/action_page.html' onSubmit={this.state.handleSubmit}>
+            <form onSubmit={this.state.handleSubmit}>
                 <input 
                     type="file" 
                     className="img-input" 
                     name="profile_img" 
-                    value={this.state.profile_img}
+                    value={this.state.user.profile_img}
                     accept="image/*"
                     onChange={this.handleImageChange}
                 />
@@ -64,7 +73,7 @@ class EditUser extends React.Component {
                     name='first_name'
                     type='text'
                     onChange={this.handleChange}
-                    value={this.state.first_name}
+                    value={this.state.user.first_name}
                     placeholder='First Name'
                 />
 
@@ -72,7 +81,7 @@ class EditUser extends React.Component {
                     name='last_name'
                     type='text'
                     onChange={this.handleChange}
-                    value={this.state.last_name}
+                    value={this.state.user.last_name}
                     placeholder='Last Name'
                 />
 
@@ -80,7 +89,7 @@ class EditUser extends React.Component {
                     name='email'
                     type='text'
                     onChange={this.handleChange}
-                    value={this.state.email}
+                    value={this.state.user.email}
                     placeholder='Email'
                 />
                 <div>

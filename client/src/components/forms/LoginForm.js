@@ -36,7 +36,7 @@ class Login extends React.Component {
             localStorage.setItem('usertype', res.data.user.usertype);
             console.log('LOGIN RESPONSE', res)
             this.setState({isLoggedIn: true})
-            this.props.history.push('/search')
+            this.props.history.push(`/users/${res.data.user.id}/dash`)
         })
         .catch(err=> {
             this.setState({loginFail: true})

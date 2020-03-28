@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import ReviewCards from '../reviews/ReviewCards';
+import ReviewCard from '../reviews/ReviewCards';
 import defaultImg from '../../images/default-profile.jpg';
-// import {NavLink} from 'react-router-dom';
 
 class UserDash extends React.Component {
     constructor(props){
@@ -11,13 +10,13 @@ class UserDash extends React.Component {
         this.state = {
             user: [],
             reviews: [],
+            bookmarks: []
         }
         this.openEdit = this.openEdit.bind(this);
     }
     
     openEdit = e => { 
-        // <NavLink to='/edit/user' props={this.state.user}/>
-        this.props.history.push('/edit/user') 
+        this.props.history.push('/edit/user', {...this.state.user}) 
     }
     
     componentDidMount(){
@@ -27,12 +26,12 @@ class UserDash extends React.Component {
         .get(`/users/${id}`)
         .then(res=> { 
             this.setState({user: res.data})
-        })
-
-        return axiosWithAuth()
-        .get(`users/${id}/reviews`)
-        .then(res=> {
-            this.setState({reviews: res.data})
+            return axiosWithAuth()
+            .get(`users/${id}/bookmarks`)
+            .then(res=> {
+                console.log(res.data)
+                this.setState({bookmarks: res.data})
+            })
         })
         .catch(err=>{console.log('Error fetching user data', err.response)});
     }
@@ -47,8 +46,8 @@ class UserDash extends React.Component {
         }
         else{default_image = <img src={defaultImg} alt='default avatar'/>}
 
-        console.log('LocalStorage:', localStorage)
-        console.log('User Data:', this.state.user)
+        // console.log('LocalStorage:', localStorage)
+        // console.log('User Data:', this.state.user)
         // console.log('User Reviews:', this.state.reviews)
         return (
             <Dash>
@@ -65,16 +64,30 @@ class UserDash extends React.Component {
                 </InfoBox>    
                 <section className = 'gallery'>
                     <Gallery>
-                        <p>Your Reviews</p>
+                        <h4>Your Reviews</h4>
                         <div>
-                            {this.state.reviews.map(review => (
-                                <ReviewCards  
+                            {this.state.reviews !== null && this.state.reviews.map(review => (
+                                <ReviewCard  
                                     id={review.id} 
                                     review={review}/>
                             ))}
+                            {this.state.reviews === null && (
+                                <p>You have no reviews</p>
+                            )}
                             
                         </div>
                     </Gallery>
+                    <div className='bookmarked'>
+                        <h4>Your Favorites</h4>
+                        <div>
+                            {this.state.bookmarks && this.state.bookmarks.map(review => (
+                                <p>Stylist Name</p>
+                            ))}
+                            {!this.state.bookmarks && (
+                                <p>You have nothing saved.</p>
+                            )}
+                        </div>
+                    </div>
                 </section>
             </Dash>
         )
@@ -87,7 +100,25 @@ const Dash = styled.div`
     display: flex;
     margin: auto;
     justify-content: space-between;
+    h4{font-family: "Dancing Script", sans-serif; font-size: 1.5rem}
     a{text-decoration: none}
+    .gallery{ width: 75vw}
+    .bookmarked{
+        box-shadow: 0px 3px 8px gray;
+        padding: 2px 4px;
+        width: 90%;
+        margin: 5vh auto;
+        height: 35%;
+        boder-radius: 2px
+        background: #fff;
+        div{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; 
+            margin: 0 auto;
+        }
+    }
+
 `;
 
 const InfoBox = styled.div`
@@ -107,7 +138,6 @@ const InfoBox = styled.div`
         width: 200px;
         margin: 0 auto;
         border-radius: 50%;
-        background: gray;
         img{
             height: 100%;
             width: 100%;
@@ -137,8 +167,13 @@ const InfoBox = styled.div`
 `;
 
 const Gallery = styled.div`
-    width: 75vw;
+    width: 90%;
     margin: 0 auto;
+    height: 65%;
+    boder-radius: 2px
+    background: #fff;
+    box-shadow: 0px 3px 8px gray;
+    padding: 4px;
     div{
         display: flex;
         flex-wrap: wrap; 

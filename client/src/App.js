@@ -20,6 +20,7 @@ import EditUser from './components/forms/EditUser';
 import SearchPage from './components/search/SearchPage';
 import UserDash from './components/users/UserDash';
 import StylistDash from './components/users/StylistDash';
+import AllReviews from './components/reviews/AllReviews';
 // import PrivateRoute from './components/PrivateRoute';
 import bckgImg from './images/Wave-PNG-Clipart.png'
 
@@ -42,6 +43,7 @@ function App() {
             <Route path='/users/:id/dash' component={UserDash}  />
             <Route path='/stylists/:id/dash' component={StylistDash}/>
             <Route path='/edit/user' component={EditUser}/>
+            <Route path='/:id/reviews' component={AllReviews}/>
         </Switch>
         <Footer/>
         </Router>
