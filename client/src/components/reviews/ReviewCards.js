@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
 function ReviewCard (props) {
-    const {image, username, review, date, salon, profile_img, stylist_id, user_id, first_name} = props.review;
+    const {image, review, date, profile_img, stylist_id, user_id, first_name} = props.review;
     return (
         <div>
             <Card>
@@ -38,7 +38,8 @@ export default ReviewCard;
 
 const Card = styled.div`
     width: 30vw;
-    box-shadow: 0px 3px 8px gray;
+    // box-shadow: 0px 3px 8px gray;
+    border: .75px solid lightgray;
     border-radius: 2px;
     font-size: 1rem;
     text-align: left; 

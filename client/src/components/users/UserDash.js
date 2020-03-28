@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import ReviewCard from '../reviews/ReviewCards';
 import defaultImg from '../../images/default-profile.jpg';
+import {Link} from 'react-router-dom';
 
 class UserDash extends React.Component {
     constructor(props){
@@ -12,11 +13,6 @@ class UserDash extends React.Component {
             reviews: [],
             bookmarks: []
         }
-        this.openEdit = this.openEdit.bind(this);
-    }
-    
-    openEdit = e => { 
-        this.props.history.push('/edit/user', {...this.state.user}) 
     }
     
     componentDidMount(){
@@ -27,10 +23,10 @@ class UserDash extends React.Component {
         .then(res=> { 
             this.setState({user: res.data})
             return axiosWithAuth()
-            .get(`users/${id}/bookmarks`)
+            .get(`users/${id}/reviews`)
             .then(res=> {
                 console.log(res.data)
-                this.setState({bookmarks: res.data})
+                this.setState({reviews: res.data})
             })
         })
         .catch(err=>{console.log('Error fetching user data', err.response)});
@@ -60,7 +56,7 @@ class UserDash extends React.Component {
                         <h1>{this.state.user.first_name}</h1> 
                         <p>{this.state.user.email}</p> 
                     </div>
-                    <p className='edit-btn' onClick={this.openEdit}>Edit</p>
+                    <Link to='/edit/user'><p className='edit-btn'>Edit</p></Link>
                 </InfoBox>    
                 <section className = 'gallery'>
                     <Gallery>
@@ -175,9 +171,8 @@ const Gallery = styled.div`
     box-shadow: 0px 3px 8px gray;
     padding: 4px;
     div{
-        display: flex;
-        flex-wrap: wrap; 
         margin: 0 auto;
+        overflow-y: scroll
     }
     p{font-family: "Source Sans Pro", sans-serif}
 `;
