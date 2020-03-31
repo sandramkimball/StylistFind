@@ -7,27 +7,28 @@ class LoginPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            alreadyUser: true
+            loginForm: true,
+            regForm: false
         }
         this.handleUser = this.handleUser.bind(this);
     }
 
-    handleUser(){
-        this.setState({alreadyUser: true ? false : true})
-    }
+    // handleUser(){
+    //     this.setState({loginForm: true ? false : true})
+    // }
     
     render(){
-        const isAlreadyUser = this.state.alreadyUser;
+        const loginForm = this.state.loginForm;
         let form;
         let loginOrSignup;
 
-        if (isAlreadyUser === true){
+        if (loginForm === true){
             form = <LoginForm history={this.props.history}/>;
-            loginOrSignup = <p onClick={this.handleUser}>Signup</p>
+            loginOrSignup = <p onClick={this.setState({loginForm: false, regForm: true})}>Signup</p>
         } else {
             form = <SignUpForm history={this.props.history}/>;
-            loginOrSignup = <p onClick={this.handleUser}>I'm Already a Member</p>
-        }
+            loginOrSignup = <p onClick={this.setState({loginForm: true})}>I'm Already a Member</p>
+        } 
 
         return(
             <Page>

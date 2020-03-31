@@ -1,14 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+// import axiosWithAuth from '../utilis/axiosWithAuth';
+
 
 function ReviewCard (props) {
     const {image, review, date, profile_img, stylist_id, user_id, first_name} = props.review;
+    const handleDelete = e => {
+        e.preventDefault()
+        console.log('Delete!')
+        // axiosWithAuth()
+        // .delete(`/users/${user_id}/reviews/:id`)
+    }
+
     return (
         <div>
             <Card>
                 <div className='reviewer-info'>
                     <img src={profile_img} alt='user profile'/>
+                    {localStorage.getItem('id') === user_id && (
+                        <p className='delete-btn' onClick={handleDelete}>X</p>
+                    )}
                     <div>
                         <Link to={`/users/${user_id}/dash`} key={user_id} id={user_id} props={props}>
                             <h4>{first_name} </h4>
@@ -81,5 +93,11 @@ const Card = styled.div`
         height: 120px;
         object-fit: cover;
         margin: 0
+    }
+    .delete-btn{
+        position: absolute;
+        right: 0;
+        color: gray;
+        :hover{color: orange}
     }
 `;

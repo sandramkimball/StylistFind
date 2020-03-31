@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
+import defaultImg from '../../images/default-profile.jpg'
 
 class Login extends React.Component {
     constructor(props){
@@ -11,6 +12,7 @@ class Login extends React.Component {
             loginFail: false,
             email: '',
             password: '',
+            profile_img: {defaultImg},
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);

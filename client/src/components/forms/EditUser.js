@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useLocation } from "react-router-dom";
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
 
@@ -9,11 +8,10 @@ class EditUser extends React.Component {
         super(props);
         this.state = {
             user: {
-                id: '',
+                id: localStorage.getItem('id'),
                 first_name: '',
                 last_name: '',
                 profile_img: '',
-                email: ''
             }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -59,7 +57,7 @@ class EditUser extends React.Component {
             <EditForm>
             <h3>Edit Profile</h3>
             <img src={this.state.profile_img} alt='user profile'/>
-            <form onSubmit={this.state.handleSubmit}>
+            <form onSubmit={this.state.handleSubmit} enctype='multipart/form-data'>
                 <input 
                     type="file" 
                     className="img-input" 

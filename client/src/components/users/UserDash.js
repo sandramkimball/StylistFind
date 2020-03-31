@@ -114,7 +114,9 @@ const Dash = styled.div`
             margin: 0 auto;
         }
     }
-
+    .gallery{
+        overflow-y: scroll
+    }
 `;
 
 const InfoBox = styled.div`
@@ -172,7 +174,6 @@ const Gallery = styled.div`
     padding: 4px;
     div{
         margin: 0 auto;
-        overflow-y: scroll
     }
     p{font-family: "Source Sans Pro", sans-serif}
 `;

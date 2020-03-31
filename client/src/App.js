@@ -1,13 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
-import './App.css';
 
 // STYLING
 import GlobalStyle from './components/styled-components/GlobalStyle';
-
-// CONTEXTS MANAGE STATE
-import UserProvider from './components/contexts/UserContext';
-import DataProvider from './components/contexts/DataContext';
+import bckgImg from './images/Wave-PNG-Clipart.png'
+import './App.css';
 
 //COMPONENTS
 import Nav from './components/Nav';
@@ -16,6 +13,7 @@ import Home from './components/Home';
 import LoginPage from './components/LoginPage';
 import LoginForm from './components/forms/LoginForm';
 import SignUpForm from './components/forms/SignUpForm';
+import SalonSignUp from './components/forms/SalonRegister';
 import EditUser from './components/forms/EditUser';
 import SearchPage from './components/search/SearchPage';
 import UserDash from './components/users/UserDash';
@@ -23,7 +21,10 @@ import StylistDash from './components/users/StylistDash';
 import AllReviews from './components/reviews/AllReviews';
 import ReviewForm from './components/reviews/ReviewForm';
 // import PrivateRoute from './components/PrivateRoute';
-import bckgImg from './images/Wave-PNG-Clipart.png'
+
+// CONTEXTS
+import DataProvider from './components/contexts/DataContext.js'
+import UserProvider from './components/contexts/UserContext.js'
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/login" component={LoginPage}/>
             <Route path="/userlogin" component={LoginForm}/>
             <Route path="/signup" component={SignUpForm}/>
+            <Route path="/signup/salon" component={SalonSignUp}/>
             <Route path='/search' component={SearchPage}/>
             <Route path='/users/:id/dash' component={UserDash}  />
             <Route path='/stylists/:id/dash' component={StylistDash}/>

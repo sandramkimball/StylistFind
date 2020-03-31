@@ -42,7 +42,7 @@ class Home extends React.Component {
     
     return (
       <div>
-        <Landing>
+        <Landing className='landing-b1'>
           <div>
             <h1>Stylist Find</h1>
             <p>Welcome! Start your search for the perfect stylists here.</p>
@@ -58,7 +58,7 @@ class Home extends React.Component {
             </form>
           </div>
         </Landing>
-        <Info>
+        <Info className='landing-b2'>
           <div>
             <h2>One Community for Stylists and Clients</h2>
             <p>Discover and be discovered. Display, post and update your artist portfolio. Share your talents. Review experiences. Save your favorites. Connect with someone who totally feels your vide. Try something new and feel beautiful.</p>

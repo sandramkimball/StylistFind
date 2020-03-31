@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Link} from 'react-router-dom'
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
@@ -23,13 +24,19 @@ const ReviewForm = (props) => {
     const handleSubmit = e => {
         axiosWithAuth()
         .post(`users/${userId}/reviews`, newReview)
-        .then(res => console.log(res))
+        .then(
+            res => {
+                console.log(res)
+                props.history.push(`/stylists/${stylistId}/dash`);
+            }
+        )
         .catch(err=> console.log(err.message))
     }
 
     return(
         <div>
             {/* <p>You're reviewing {props.stylist.first_name}</p> */}
+            
             <AddReviewBox onSubmit={handleSubmit}>
                 <textarea 
                     rows='12' 
@@ -50,6 +57,7 @@ const ReviewForm = (props) => {
                 />
 
                 <p onClick={handleSubmit}>Submit</p>
+                <Link to={`/stylists/${stylistId}/dash`} className='return-btn'><p>Cancel</p></Link>
             </AddReviewBox>
         </div>
     )
@@ -83,6 +91,7 @@ const AddReviewBox = styled.form`
         padding: 5px 10px;
         margin: 2px auto;
         font-size: 1.25rem;
+        border-radius: 2px;
         :hover{cursor: pointer; color: gray}
     }
     h4{
@@ -90,6 +99,12 @@ const AddReviewBox = styled.form`
         text-align: left;
         font-size: 2.25rem;
         margin: 10px 0 0 0;
+    }
+    .return-btn{        
+        text-decoration: none;
+        width: 40%;
+        color: #000;
+        margin: 0 auto;
     }
     
 `;

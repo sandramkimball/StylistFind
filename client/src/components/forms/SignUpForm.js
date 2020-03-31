@@ -2,6 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import axiosWithAuth from "../utilis/axiosWithAuth";
 import defaultImg from '../../images/default-profile.jpg'
+import SalonSignUp from './SalonRegister';
 
 export default class SignUp extends React.Component {
 
@@ -20,9 +21,10 @@ export default class SignUp extends React.Component {
       salon: '',
       email: '',
       usertype: 'user',
-      id: Date.now(),
+      salonForm: false,
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleNext = this.handleNext.bind(this);
     this.handleChange = this.handleChange.bind(this);
   };
 
@@ -31,28 +33,9 @@ export default class SignUp extends React.Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
 
-  handleSubmit = e => {
-      e.preventDefault();
-      if(this.state.usertype === 'user'){
-        axiosWithAuth()
-        .post('/auth/register/user', {
-          first_name: this.state.first_name,
-          last_name: this.state.last_name,
-          password: this.state.password,
-          email: this.state.email,
-          profile_img: this.state.profile_img,
-          usertype: 'user',
-      })
-        .then( res=> {
-          localStorage.setItem('token', res.data.payload)
-          console.log('Signup Successful')
-          this.props.history.push('/login')
-        })
-        .catch(err=>{console.log('FE Error', err)})
-      }
-
-      if(this.state.usertype === 'stylist'){
-        axiosWithAuth()
+  handleNext = e => {
+    e.preventDefault()
+    axiosWithAuth()
         .post('/auth/register/stylist', {
           first_name: this.state.first_name,
           last_name: this.state.last_name,
@@ -61,126 +44,93 @@ export default class SignUp extends React.Component {
           profile_img: this.state.profile_img,
           usertype: 'stylist'
         })
-        .then(res=> {
+        .then(res => {
           localStorage.setItem('token', res.data.payload)
-          localStorage.setItem('stylist_id', res.data.stylist.id)
-          console.log('Signup Server Response:', res)
-          this.props.history.push('/login')}
-        )   
+          localStorage.setItem('id', res.data.stylist.id);
+          localStorage.setItem('usertype', res.data.user.usertype);
+          this.setState({salonForm: true})
+        })  
+        .catch(err=>{console.log('Register Stylist Error', err)})
+  }
 
-        axiosWithAuth()
-        .post('auth/register/salon', {
-          street_address: this.state.street_address,
-          city: this.state.city,
-          state: this.state.state,
-          zipcode: this.state.zipcode,
-          country: this.state.country,
-        })
-        .then(res=> {
-          axiosWithAuth()
-          .put(
-            `/auth/stylists/${localStorage.getItem('stylist_id', res.data.stylist.id)}`, {
-            salon_id: res.data.salon.id
-          })
-        })   
-        .catch(err=>{console.log('FE Error', err)})
-      }
+  handleSubmit = e => {
+      e.preventDefault();
+      axiosWithAuth()
+      .post('/auth/register/user', {
+        first_name: this.state.first_name,
+        last_name: this.state.last_name,
+        password: this.state.password,
+        email: this.state.email,
+        profile_img: this.state.profile_img,
+        usertype: 'user',
+    })
+      .then( res=> {
+        localStorage.setItem('token', res.data.payload)
+        console.log('Signup Successful')
+        this.props.history.push('/login')
+      })
+      .catch(err=>{console.log('FE Error', err)})
   };
 
   render(){
     return (
       <SignupPage>
-        <SignupForm onSubmit={this.handleSubmit}>
+        <SignupForm>
           <h3>Glad You're Here!</h3>
-          <input
-            type='text'
-            name='first_name'
-            value={this.state.first_name} 
-            placeholder="first name" 
-            onChange={this.handleChange}
-          />
-          <input
-            type='text'
-            name='last_name'
-            value={this.state.last_name} 
-            placeholder="last name" 
-            onChange={this.handleChange}
-          />
+          {this.state.salonForm === false && (
+            <input
+              type='text'
+              name='first_name'
+              value={this.state.first_name} 
+              placeholder="first name" 
+              onChange={this.handleChange}
+            />
+            <input
+              type='text'
+              name='last_name'
+              value={this.state.last_name} 
+              placeholder="last name" 
+              onChange={this.handleChange}
+            />
 
-          <input
-            type='password'
-            name='password'
-            value={this.state.password} 
-            placeholder="password" 
-            onChange={this.handleChange}
-          />
-
-          <input
-            type='text'
-            name='email'
-            value={this.state.email} 
-            placeholder="email" 
-            onChange={this.handleChange}
-          />
-          <div className='check-stylist'>
-            I'm a Stylist
-            <input 
-              type='radio'
-              label='user'
-              name='usertype'
-              value={'stylist'}
-              onClick={this.handleChange}
-            />
-          </div>
-    
-    {this.state.usertype === 'stylist' && (
-        <div>
             <input
-              type='text'
-              name='street_address'
-              value={this.state.street_address} 
-              placeholder="street address" 
-              onChange={this.handleChange}
-            />
-            <input
-              type='text'
-              name='city'
-              value={this.state.city} 
-              placeholder="city" 
-              onChange={this.handleChange}
-            />
-            <input
-              type='text'
-              name='state'
-              value={this.state.state} 
-              placeholder="state" 
-              onChange={this.handleChange}
-            />
-            <input
-              type='text'
-              name='country'
-              value={this.state.country} 
-              placeholder="country" 
-              onChange={this.handleChange}
-            />
-            <input
-              type='text'
-              name='zipcode'
-              value={this.state.zipcode} 
-              placeholder="zipcode" 
+              type='password'
+              name='password'
+              value={this.state.password} 
+              placeholder="password" 
               onChange={this.handleChange}
             />
 
             <input
               type='text'
-              name='salon'
-              value={this.state.salon} 
-              placeholder="salon name" 
+              name='email'
+              value={this.state.email} 
+              placeholder="email" 
               onChange={this.handleChange}
             />
-          </div>
-      )}
-        <button type='submit' onClick={this.handleSubmit}>signup</button>
+
+            <div className='check-stylist'>
+              I'm a Stylist
+              <input 
+                type='radio'
+                label='user'
+                name='usertype'
+                value={'stylist'}
+                onClick={this.handleChange}
+              />
+            </div>
+          )}
+
+          {this.state.salonForm === true && (
+            {SalonSignUp}
+          )}
+
+          {this.state.usertype === 'user' && (
+            <button type='submit' onClick={this.handleSubmit}>signup</button>
+          )}
+          {this.state.usertype === 'stylist' && (
+            <button type='submit' onClick={this.handleNext}>signup</button>
+          )}
         </SignupForm> 
       </SignupPage>
     );

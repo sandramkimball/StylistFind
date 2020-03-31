@@ -62,8 +62,9 @@ class StylistDash extends React.Component {
                 <InfoBox>
                     {localStorage.getItem('usertype') === 'user' && (
                         <div className='toolbar'>
-                            <p className={`add-stylist ${this.state.added ? "not-saved" : "saved"}`} onClick={this.state.handleSave}>❤</p>
-                            <Link to={`/stylist/${this.state.stylist.id}/add-review`}><p>+</p></Link>
+                            <p className={`add-stylist ${this.state.added ? "not-saved" : "saved"}`} onClick={this.state.handleSave}>❤Save</p>
+                            <Link to={`/stylist/${this.state.stylist.id}/add-review`}><p>+Add Review</p></Link>
+                            <Link to={`/${this.state.stylist.id}/reviews`}><p className='read-reviews'>Read Reviews</p></Link>
                         </div>
                     )}
                     <div className='profile-pic-box'>
@@ -81,7 +82,6 @@ class StylistDash extends React.Component {
                             <p>{this.state.stylist.city} {this.state.stylist.state} {this.state.stylist.zipcode}</p>
                         </div>
                     </div>
-                <Link to={`/${this.state.stylist.id}/reviews`}><p className='read-reviews'>Read Reviews</p></Link>
                 </InfoBox>    
                 <section className = 'gallery'>
                     <Gallery>
@@ -162,19 +162,8 @@ const InfoBox = styled.div`
         p{
             text-align: right;
             padding: 0 15px;
-            font-size: 2rem;
-            color: gray;
-            cursor: pointer;
-            :hover{color: #f74d86}
-        }
-        .saved{
-            color: #f74d86;
-        }
-        .read-reviews{
             font-size: 1.25rem;
-            padding: 0 15px;
-            margin-top: 5%;
-            text-align: left;
+            color: gray;
             cursor: pointer;
             :hover{color: orange}
         }
