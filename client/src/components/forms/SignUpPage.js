@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import LoginForm from './forms/LoginForm';
-import salonChair from '../images/salon-chair.jpg';
+import SignUpForm from './SignUpForm';
+import salonChair from '../../images/salon-chair.jpg';
 
-class LoginPage extends React.Component {
+class SignUpPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
         return(
             <Page>
                 <div>
-                   <LoginForm/>             
+                   <SignUpForm/>             
                 </div>
                 <img src={salonChair} alt='salon chair and makeup light'/>
             </Page>
@@ -24,7 +24,7 @@ class LoginPage extends React.Component {
     }
 }
 
-export default LoginPage;
+export default SignUpPage;
 
 const Page = styled.div`
     width: 90vh;

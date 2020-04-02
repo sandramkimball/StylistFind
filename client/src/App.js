@@ -12,8 +12,8 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import LoginPage from './components/LoginPage';
 import LoginForm from './components/forms/LoginForm';
-import SignUpForm from './components/forms/SignUpForm';
-import SalonSignUp from './components/forms/SalonRegister';
+import SignUpPage from './components/forms/SignUpPage';
+import SalonSignUp from './components/forms/SalonSignUp';
 import EditUser from './components/forms/EditUser';
 import SearchPage from './components/search/SearchPage';
 import UserDash from './components/users/UserDash';
@@ -41,7 +41,7 @@ function App() {
             <Route exact path='/' component={Home}/>
             <Route path="/login" component={LoginPage}/>
             <Route path="/userlogin" component={LoginForm}/>
-            <Route path="/signup" component={SignUpForm}/>
+            <Route path="/signup" component={SignUpPage}/>
             <Route path="/signup/salon" component={SalonSignUp}/>
             <Route path='/search' component={SearchPage}/>
             <Route path='/users/:id/dash' component={UserDash}  />

@@ -1,8 +1,9 @@
 import React from "react";
 import styled from 'styled-components';
 import axiosWithAuth from "../utilis/axiosWithAuth";
+import {Link} from 'react-router-dom'
 import defaultImg from '../../images/default-profile.jpg'
-import SalonSignUp from './SalonRegister';
+import SalonSignUp from './SalonSignUp';
 
 export default class SignUp extends React.Component {
 
@@ -47,7 +48,7 @@ export default class SignUp extends React.Component {
     .then(res => {
       localStorage.setItem('token', res.data.payload)
       localStorage.setItem('id', res.data.stylist.id);
-      localStorage.setItem('usertype', res.data.user.usertype);
+      localStorage.setItem('usertype', res.data.stylist.usertype);
       this.setState({salonForm: true})
     })  
     .catch(err=>{console.log('Register Stylist Error', err)})
@@ -113,7 +114,7 @@ export default class SignUp extends React.Component {
               <div className='check-stylist'>
                 I'm a Stylist
                 <input 
-                  type='radio'
+                  type='checkbox'
                   label='usertype'
                   name='usertype'
                   value={'stylist'}
@@ -126,15 +127,19 @@ export default class SignUp extends React.Component {
               )}
 
               {this.state.usertype === 'stylist' && (
-                <button type='submit' onClick={this.handleNext}>signup</button>
+                <button type='submit' onClick={this.handleNext}>sumbit</button>
               )}
-
+              <Link to='/login'><p>I already have an account.</p></Link> 
             </div>
+          
           )}
         </SignupForm> 
 
           {this.state.salonForm === true && (
-            <SalonSignUp/>
+            <div>
+              <SalonSignUp/>
+              <Link to='/login'><p>I already have an account.</p></Link> 
+            </div>
           )}
       </SignupPage>
     );
@@ -145,18 +150,17 @@ const SignupPage = styled.div`
   width: 50vw;
   height: 50vh;
   margin: auto;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    img{height: 100%}
-    a{
-        font-size: .8rem; 
-        text-align: right; 
-        text-decoration: none; 
-        color: black; 
-        :hover{color: gray}
-    }
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  a{
+      font-size: .8rem; 
+      text-align: right; 
+      text-decoration: none; 
+      color: black; 
+      :hover{color: gray}
+  }
   .check-stylist{
     display: flex;
     width: 80%;
@@ -164,35 +168,43 @@ const SignupPage = styled.div`
     justify-content: space-between;
     input{width: 30%; margin-left: 0}
   }
+  a p{text-align: center}
 `;
 
 const SignupForm = styled.form`
-display:flex;
-justify-content: center;
-align-content: spece-between;
-align-items: center;
-margin: 0 auto;
-padding: 20px;
-flex-direction: column;
-width: 50%;
-h3{margin: 0; font-size: 2rem; font-family: 'Dancing Script', cursive}
-p{font-size: .8rem; text-align: right; }
-input, button{
-    height: 25px;
-    width: 80%
-    margin: 5px auto;
-    border: 1px solid #80808095;
-    font-size: 1rem;
-    padding: 2px;
-    border-radius: 2px;
-}
-button{
-    background: orange;
-    max-width: 30%;
-    padding: 2px 5px;
-    color: #fff;
-    border: none;
-    height: 30px;
-    cursor: pointer
-}
+  display:flex;
+  justify-content: center;
+  align-content: spece-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 20px;
+  flex-direction: column;
+  width: 50%;
+  h3{
+    margin: 0; 
+    font-size: 2rem; 
+    font-family: 'Dancing Script', cursive
+  }
+  p{
+    font-size: .8rem; 
+    text-align: right; 
+  }
+  input, button{
+      height: 25px;
+      width: 80%
+      margin: 5px auto;
+      border: 1px solid #80808095;
+      font-size: 1rem;
+      padding: 2px;
+      border-radius: 2px;
+  }
+  button{
+      background: orange;
+      max-width: 30%;
+      padding: 2px 5px;
+      color: #fff;
+      border: none;
+      height: 30px;
+      cursor: pointer
+  }
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import defaultImg from '../../images/default-profile.jpg'
+import {Link} from 'react-router-dom'
 
 class Login extends React.Component {
     constructor(props){
@@ -109,7 +110,9 @@ class Login extends React.Component {
                     </div>
                     <button type='submit' onClick={this.handleSubmit}>Login</button>
                     {loginError}
+                    <Link to='/signup'><p>Don't have an account?</p></Link> 
                 </LoginForm>
+                
             </LoginPage>
     )
 }};

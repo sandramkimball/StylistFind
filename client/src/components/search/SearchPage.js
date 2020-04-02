@@ -2,7 +2,6 @@ import React from 'react';
 import SearchCard from './SearchCard';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import FilterBar from './Filter-Bar';
 
 class SearchPage extends React.Component {
     constructor(props){
@@ -10,8 +9,10 @@ class SearchPage extends React.Component {
         this.state= {
             searchTerm: '',
             searchResults: [],
-            filterOpt: 'posts',
-            sortOpt: ''
+            filterOpt: '',
+            sortOpt: '',
+            isLoading: true,
+            isError: false,
 
         }
         this.handleChange = this.handleChange.bind(this);
@@ -22,10 +23,12 @@ class SearchPage extends React.Component {
             .get('/search') 
             .then(res=> {
                 const results = res.data
-                this.setState({searchResults: results});
+                this.setState({searchResults: results, isLoading: false, isError: false});
             }) 
             .catch(err=>{
                 console.log(err)
+                this.setState({isLoading: false, isError: true});
+
             }) 
     }
 
@@ -69,32 +72,15 @@ class SearchPage extends React.Component {
             .catch(err=> {console.log(err)})
         }
      };
-
-    // filterData = (data, filterOpt) => {
-    //     data.filter( obj => {
-    //         if( obj.includes(filterOpt) ){
-    //             return obj
-    //         }
-    //     })
-    //     return data;
-    // };
-
-    // sortData = (data, sortOpt) => {
-    //     if(sortOpt === 'alphabetical'){
-    //         return data.salon.sort() || data.first_name.sort()
-    //     } else { 
-    //         return data
-    //     }
-    // };
     
     render(){
         return(
             <div>
             <SearchBar>
-                <FilterBar 
+                {/* <FilterBar 
                     props={this.state.searchResults}
                     onChange={this.handleChange}
-                />
+                /> */}
                 <form onSubmit={this.handleChange}>
                     <input
                     id='search_input'
@@ -106,6 +92,14 @@ class SearchPage extends React.Component {
                 </form>
             </SearchBar>
             <SearchResultsContainer>
+                {this.state.isLoading === true && (
+                    <p>Finding stylists...</p>
+                )}
+                {this.state.isError === true && (
+                    <p>There seems to be a server error. Check back later.</p>
+                )}
+
+
                 {this.state.searchResults === [] && (
                     <p>Results</p>
                 )}
