@@ -114,7 +114,7 @@ export default class SignUp extends React.Component {
                 I'm a Stylist
                 <input 
                   type='radio'
-                  label='user'
+                  label='usertype'
                   name='usertype'
                   value={'stylist'}
                   onClick={this.handleChange}
@@ -132,6 +132,7 @@ export default class SignUp extends React.Component {
             </div>
           )}
         </SignupForm> 
+
           {this.state.salonForm === true && (
             <SalonSignUp/>
           )}

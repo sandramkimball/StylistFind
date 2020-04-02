@@ -21,7 +21,6 @@ class StylistDash extends React.Component {
         }
         this.handleSave = this.handleSave.bind(this);
     }
-    
 
     handleSave = e => {
         e.preventDefault();
@@ -33,7 +32,7 @@ class StylistDash extends React.Component {
     componentDidMount(props){
         const { match: { params } } = this.props;
         axiosWithAuth()
-        .get(`/stylists/profile/${params.id}`)
+        .get(`/stylists/${params.id}`)
         .then(res=> { 
             this.setState({ stylist:(res.data) });
             return axiosWithAuth()
@@ -95,7 +94,7 @@ class StylistDash extends React.Component {
                             ))}
                         </div>
                         {localStorage.getItem('usertype') === 'stylist' && (
-                            <p className='open-btn' onClick={this.openAddPost}>+</p>
+                            <Link to={`/stylist/${this.state.stylist.id}/add-post`}><p className='open-btn'>+</p></Link>
                         )}
                         
                     </Gallery>

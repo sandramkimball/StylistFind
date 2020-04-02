@@ -12,7 +12,7 @@ const AllReviews = (props) => {
         axiosWithAuth()
         .get(`/search/reviews`)
         .then(res=> {
-            const filteredArr = res.data.filter(obj=> obj.stylist_id == id)
+            const filteredArr = res.data.filter(obj=> obj.stylist_id === id)
             setReviews(filteredArr)
             console.log('reviews', reviews)
         })

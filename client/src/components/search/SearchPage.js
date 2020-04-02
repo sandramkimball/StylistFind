@@ -49,7 +49,8 @@ class SearchPage extends React.Component {
                 console.log(err)
             }) 
                         
-        } else if(this.state.filterOpt === 'posts'){
+        } 
+        else if(this.state.filterOpt === 'posts'){
             axiosWithAuth()
             .get('/search/posts')
             .then(res=> {
@@ -60,7 +61,8 @@ class SearchPage extends React.Component {
                 console.log(err)
             })  
 
-        } else if(this.state.filterOpt === 'reviews'){
+        } 
+        else if(this.state.filterOpt === 'reviews'){
             axiosWithAuth()
             .get('/search/reviews')
             .then(res=>{ this.setState({searchResults: res.data}) })

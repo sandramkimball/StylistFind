@@ -27,24 +27,48 @@ class Login extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        axiosWithAuth()
-        .post('/auth/login', {
-            email: this.state.email,
-            password: this.state.password
-        })
-        .then(res=> {
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('id', res.data.user.id);
-            localStorage.setItem('usertype', res.data.user.usertype);
-            console.log('LOGIN RESPONSE', res)
-            this.setState({isLoggedIn: true})
-            this.props.history.push(`/users/${res.data.user.id}/dash`)
-        })
-        .catch(err=> {
-            this.setState({loginFail: true})
-            console.log('FE LOGIN ERROR', err)
-        }) 
+        var loginUrl;
+        if(this.state.isStylist === false){
+            axiosWithAuth()
+            .post('/auth/login/user', {
+                email: this.state.email,
+                password: this.state.password
+            })
+            .then(res=> {
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('id', res.data.user.id);
+                localStorage.setItem('usertype', res.data.user.usertype);
+                this.setState({isLoggedIn: true})
+                this.props.history.push(`/users/${res.data.user.id}/dash`)
+            })
+            .catch(err=> {
+                this.setState({loginFail: true})
+                console.log('FE LOGIN ERROR', err)
+            }) 
+        } 
+        
+        
+        else{
+            axiosWithAuth()
+            .post('/auth/login/stylist', {
+                email: this.state.email,
+                password: this.state.password
+            })
+            .then(res=> {
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('id', res.data.stylist.id);
+                localStorage.setItem('usertype', res.data.stylist.usertype);
+                this.setState({isLoggedIn: true})
+                this.props.history.push(`/stylists/${res.data.stylist.id}/dash`)
+            })
+            .catch(err=> {
+                this.setState({loginFail: true})
+                console.log('FE LOGIN ERROR', err)
+            }) 
+        }
     };
+
+    
      
     render(){
         if(this.state.isLoggedIn === true) {
@@ -73,6 +97,16 @@ class Login extends React.Component {
                         placeholder="Password" 
                         onChange={this.handleChange}
                     />
+                    <div className='check-stylist'>
+                        I'm a Stylist
+                        <input 
+                            type='radio'
+                            label='isStylist'
+                            name='isStylist'
+                            value={'true'}
+                            onClick={this.handleChange}
+                        />
+                    </div>
                     <button type='submit' onClick={this.handleSubmit}>Login</button>
                     {loginError}
                 </LoginForm>
@@ -137,4 +171,11 @@ const LoginForm = styled.form`
         height: 30px;
         cursor: pointer
     }    
+    .check-stylist{
+      display: flex;
+      width: 80%;
+      align-items: center;
+      justify-content: space-between;
+      input{width: 30%; margin-left: 0}
+    }
 `;

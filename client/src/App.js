@@ -20,6 +20,7 @@ import UserDash from './components/users/UserDash';
 import StylistDash from './components/users/StylistDash';
 import AllReviews from './components/reviews/AllReviews';
 import ReviewForm from './components/reviews/ReviewForm';
+import AddPost from './components/forms/AddPost.js';
 // import PrivateRoute from './components/PrivateRoute';
 
 // CONTEXTS
@@ -48,6 +49,7 @@ function App() {
             <Route path='/edit/user' component={EditUser}/>
             <Route path='/:id/reviews' component={AllReviews}/>
             <Route path='/stylist/:id/add-review' component={ReviewForm}/>
+            <Route path='/stylist/:id/add-post' component={AddPost}/>
         </Switch>
         <Footer/>
         </Router>
