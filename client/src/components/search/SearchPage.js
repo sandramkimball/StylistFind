@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SearchCard from './SearchCard';
+import PostCard from '../posts/PostCard'
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
@@ -9,106 +10,111 @@ class SearchPage extends React.Component {
         this.state= {
             searchTerm: '',
             searchResults: [],
-            filterOpt: '',
-            sortOpt: '',
+            filterOpt: 'stylist',
             isLoading: true,
             isError: false,
-
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
     };
 
-    componentDidMount(){
-        axiosWithAuth()
-            .get('/search') 
-            .then(res=> {
-                const results = res.data
-                this.setState({searchResults: results, isLoading: false, isError: false});
-            }) 
-            .catch(err=>{
-                console.log(err)
-                this.setState({isLoading: false, isError: true});
-
-            }) 
-    }
-
     handleChange = e => {
-        e.preventDefault();
-        this.setState({searchTerm: e.target.value})
-   
-        if (this.state.filterOpt === 'stylists' || 'salons'){
-            axiosWithAuth()
-            .get('/search') 
-            .then(res=> {
-                const results = res.data.filter(item=> 
-                    item.salon.toLowerCase().includes(this.state.searchTerm.toLowerCase()) ||
-                    item.city.toLowerCase().includes(this.state.searchTerm.toLowerCase()) ||
-                    item.first_name.toLowerCase().includes(this.state.searchTerm.toLowerCase()) ||
-                    item.last_name.toLowerCase().includes(this.state.searchTerm.toLowerCase()) 
-                );
-                this.setState({searchResults: results});
-            }) 
-            .catch(err=>{
-                console.log(err)
-            }) 
-                        
-        } 
-        else if(this.state.filterOpt === 'posts'){
-            axiosWithAuth()
-            .get('/search/posts')
-            .then(res=> {
-                var latest = res.data.filter(item=> item.date.sort())
-                this.setState({searchResults: latest});
-            })
-            .catch(err=>{
-                console.log(err)
-            })  
+        this.setState({ ...this.state, [e.target.name]: e.target.value }); 
+        console.log('change handled')
+    };
 
+    handleFilter = e => {
+        e.preventDefault()
+        let target = this.state.searchTerm.toLowerCase()
+        const results = this.state.searchResults.filter(item=> 
+            item.salon.toLowerCase().includes(target) ||
+            item.city.toLowerCase().includes(target) ||
+            item.first_name.toLowerCase().includes(target) ||
+            item.last_name.toLowerCase().includes(target)         
+        )
+        this.setState({searchResults: results}) 
+        console.log('filtered results', this.state.searchTerm, results)
+    }
+ 
+    componentDidMount(){
+        this.setState({isLoading: true})
+        if(this.state.filterOpt === 'posts'){
+            axiosWithAuth().get('/search/posts')
+            .then(res=> {
+                console.log('POSTS', res.data)
+                this.setState({
+                    searchResults: res.data,
+                    isLoading: false,
+                    isError: false,
+                });
+            })
+            .catch(err=> {
+                console.log(err) 
+                this.setState({
+                    isLoading: false,
+                    isError: true,
+                })
+            })  
         } 
-        else if(this.state.filterOpt === 'reviews'){
-            axiosWithAuth()
-            .get('/search/reviews')
-            .then(res=>{ this.setState({searchResults: res.data}) })
-            .catch(err=> {console.log(err)})
-        }
-     };
-    
+        else{
+            axiosWithAuth().get('/search') 
+            .then(res=> {
+                console.log('STYLISTS', res.data)
+                this.setState({
+                    searchResults: res.data,
+                    isLoading: false,
+                    isError: false,
+                })                
+            }) 
+            .catch(err=> {
+                console.log(err) 
+                this.setState({isLoading: false, isError: true})
+            })         
+        } 
+    }
+   
     render(){
         return(
             <div>
             <SearchBar>
-                {/* <FilterBar 
-                    props={this.state.searchResults}
-                    onChange={this.handleChange}
-                /> */}
-                <form onSubmit={this.handleChange}>
+                <form onSubmit={this.handleFilter}>
                     <input
-                    id='search_input'
-                    type='text'
-                    name='textfield'
-                    placeholder='Search stylist, salon, city...'
-                    value={this.state.searchTerm}
-                    onChange={this.handleChange}/>
+                        type='text'
+                        name='searchTerm'
+                        placeholder='Search stylist, salon, city...'
+                        value={this.state.searchTerm}
+                        onChange={this.handleChange}
+                    />
                 </form>
+                    <select className='filterOpt' name='filterOpt' onChange={this.handleChange}>
+                        <option value='stylists'>Stylists</option>
+                        <option value='posts'>Posts</option>
+                    </select>
             </SearchBar>
             <SearchResultsContainer>
                 {this.state.isLoading === true && (
-                    <p>Finding stylists...</p>
+                    <p>Finding {this.state.filterOpt}...</p>
                 )}
+
                 {this.state.isError === true && (
                     <p>There seems to be a server error. Check back later.</p>
                 )}
 
-
-                {this.state.searchResults === [] && (
-                    <p>Results</p>
-                )}
                 
-                {this.state.searchResults.map(result=> (
+                {this.state.filterOpt === 'stylists' && this.state.searchResults.map(result=> (
                     <SearchCard 
                         key={result.id} 
                         id={result.id} 
                         result={result}
+                    />
+                ))}
+                
+                {this.state.filterOpt === 'posts' && this.state.searchResults.map(result=> (
+                    <PostCard 
+                        key={result.id} 
+                        id={result.id} 
+                        post={result}
+                        stylist={result}
                     />
                 ))}
             </SearchResultsContainer>
@@ -122,6 +128,7 @@ export default SearchPage;
 const SearchResultsContainer = styled.div`
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     margin: 0 auto;
     width: 75%;
     margin: 5vh auto;
@@ -154,5 +161,12 @@ const SearchBar = styled.div`
             font-size: 1rem;
         }
         input:focus{border: 1px solid gray}
+    }
+    .filterOpt{
+        font-size: 1rem;
+        width: 15vw;
+        height: 40px;
+        border-radius: 2px;
+        color: gray;
     }
 `;
