@@ -4,14 +4,14 @@ import Styled from 'styled-components';
 
 function PostCard(props) {
     const {image, comment, date, id} = props.post;
-    const {username, salon} = props.stylist;
+    const {first_name, salon} = props.stylist;
 
     return (
         <div>
             <Card>
                 <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
                     <img src={image} alt='user post'/>
-                    <p>posted by {username} {salon}</p>
+                    <p>posted by {first_name}</p>
                     <h4>{comment}</h4>
                     <p>{date}</p>
                 </Link>

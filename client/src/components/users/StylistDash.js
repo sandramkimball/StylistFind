@@ -48,13 +48,7 @@ class StylistDash extends React.Component {
     render(){
         console.log('Stylist Data', this.state.stylist)
         console.log('Posts Data', this.state.posts)
-        const hasProfileImage = this.state.stylist.profile_image;
-        let profile_image
-        let default_image;
-        if(!hasProfileImage === null){
-            profile_image = <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
-        }
-        else{default_image = <img src={defaultImg} alt='profile of user'/>}
+        
         return (
             <Dash>
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
@@ -67,8 +61,7 @@ class StylistDash extends React.Component {
                         </div>
                     )}
                     <div className='profile-pic-box'>
-                        {profile_image}
-                        {default_image}
+                        <img src={`${this.state.stylist.profile_img}`} alt='profile of user'/>
                     </div>
                     <div className='profile-text'>
                         <h1>{this.state.stylist.first_name} {this.state.stylist.last_name}</h1> 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import SearchCard from './SearchCard';
 import PostCard from '../posts/PostCard'
 import styled from 'styled-components';
@@ -10,7 +10,7 @@ class SearchPage extends React.Component {
         this.state= {
             searchTerm: '',
             searchResults: [],
-            filterOpt: 'stylist',
+            filterOpt: 'stylists',
             isLoading: true,
             isError: false,
         }
@@ -25,15 +25,25 @@ class SearchPage extends React.Component {
 
     handleFilter = e => {
         e.preventDefault()
-        let target = this.state.searchTerm.toLowerCase()
-        const results = this.state.searchResults.filter(item=> 
-            item.salon.toLowerCase().includes(target) ||
-            item.city.toLowerCase().includes(target) ||
-            item.first_name.toLowerCase().includes(target) ||
-            item.last_name.toLowerCase().includes(target)         
-        )
-        this.setState({searchResults: results}) 
-        console.log('filtered results', this.state.searchTerm, results)
+        if(this.state.filterOpt === 'stylists'){
+            let target = this.state.searchTerm.toLowerCase()
+            const results = this.state.searchResults.filter(item=> 
+                item.salon.toLowerCase().includes(target) ||
+                item.city.toLowerCase().includes(target) ||
+                item.first_name.toLowerCase().includes(target) ||
+                item.last_name.toLowerCase().includes(target)         
+            )
+            this.setState({searchResults: results}) 
+        }
+        if(this.state.filterOpt === 'posts'){
+            let target = this.state.searchTerm.toLowerCase()
+            const results = this.state.searchResults.filter(item=>  
+                item.comment !== null &&   
+                item.comment.toLowerCase().includes(target)         
+            )
+            this.setState({searchResults: results}) 
+        }
+       
     }
  
     componentDidMount(){
