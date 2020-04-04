@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SearchCard from './SearchCard';
 import PostCard from '../posts/PostCard'
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
+import {filterFunction} from './Filter.js'
 
 class SearchPage extends React.Component {
     constructor(props){
@@ -15,35 +16,18 @@ class SearchPage extends React.Component {
             isError: false,
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleFilter = this.handleFilter.bind(this);
-    };
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
     handleChange = e => {
         this.setState({ ...this.state, [e.target.name]: e.target.value }); 
         console.log('change handled')
-    };
-
-    handleFilter = e => {
+    }
+    
+    handleSubmit = e => {
         e.preventDefault()
-        if(this.state.filterOpt === 'stylists'){
-            let target = this.state.searchTerm.toLowerCase()
-            const results = this.state.searchResults.filter(item=> 
-                item.salon.toLowerCase().includes(target) ||
-                item.city.toLowerCase().includes(target) ||
-                item.first_name.toLowerCase().includes(target) ||
-                item.last_name.toLowerCase().includes(target)         
-            )
-            this.setState({searchResults: results}) 
-        }
-        if(this.state.filterOpt === 'posts'){
-            let target = this.state.searchTerm.toLowerCase()
-            const results = this.state.searchResults.filter(item=>  
-                item.comment !== null &&   
-                item.comment.toLowerCase().includes(target)         
-            )
-            this.setState({searchResults: results}) 
-        }
-       
+        let filteredData = filterFunction(this.state.searchResults, this.state.filterOpt, this.state.searchTerm)
+        this.setState({searchResults: filteredData})
     }
  
     componentDidMount(){
@@ -52,8 +36,9 @@ class SearchPage extends React.Component {
             axiosWithAuth().get('/search/posts')
             .then(res=> {
                 console.log('POSTS', res.data)
+                let results = res.data
                 this.setState({
-                    searchResults: res.data,
+                    searchResults: results,
                     isLoading: false,
                     isError: false,
                 });
@@ -70,8 +55,9 @@ class SearchPage extends React.Component {
             axiosWithAuth().get('/search') 
             .then(res=> {
                 console.log('STYLISTS', res.data)
+                let results = res.data
                 this.setState({
-                    searchResults: res.data,
+                    searchResults: results,
                     isLoading: false,
                     isError: false,
                 })                
@@ -82,12 +68,13 @@ class SearchPage extends React.Component {
             })         
         } 
     }
+
    
     render(){
         return(
             <div>
             <SearchBar>
-                <form onSubmit={this.handleFilter}>
+                <form onSubmit={this.handleSubmit}>
                     <input
                         type='text'
                         name='searchTerm'

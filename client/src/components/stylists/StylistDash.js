@@ -3,29 +3,24 @@ import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import PostCard from '../posts/PostCard';
-import defaultImg from '../../images/default-profile.jpg'
+import Toolbar from './Toolbar'
 
 class StylistDash extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             stylist: [],
+            salon: [],
             posts: [],
-            reviews: [],
-            added: 'not-saved',
-            user_review: {
-                review: '',
-                user_id: localStorage.getItem('id'),
-                stylist_id: ''
-            }
+            isSaved: false,
         }
         this.handleSave = this.handleSave.bind(this);
     }
 
     handleSave = e => {
         e.preventDefault();
-        const cssName = (this.state.added === 'saved') ? 'not-saved' : 'saved'
-        this.setState({added: cssName})
+        const cssName = (this.state.isSaved === false) ? true : false
+        this.setState({isSaved: cssName})
         // props.user.bookmarks.push({stylist: this.state.stylist})
     }
     
@@ -34,11 +29,11 @@ class StylistDash extends React.Component {
         axiosWithAuth()
         .get(`/stylists/${params.id}`)
         .then(res=> { 
-            this.setState({ stylist:(res.data) });
+            this.setState({ stylist: res.data });
             return axiosWithAuth()
             .get(`/stylists/${params.id}/posts`)
             .then(res=> { 
-                this.setState({ posts:(res.data) });
+                this.setState({ posts: res.data });
             })
         })
         .catch(err=>{console.log('STYLIST DASH API ERROR: ', err)});
@@ -48,18 +43,12 @@ class StylistDash extends React.Component {
     render(){
         console.log('Stylist Data', this.state.stylist)
         console.log('Posts Data', this.state.posts)
-        
+
         return (
             <Dash>
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
                 <InfoBox>
-                    {localStorage.getItem('usertype') === 'user' && (
-                        <div className='toolbar'>
-                            <p className={`add-stylist ${this.state.added ? "not-saved" : "saved"}`} onClick={this.state.handleSave}>❤Save</p>
-                            <Link to={`/stylist/${this.state.stylist.id}/add-review`}><p>+Add Review</p></Link>
-                            <Link to={`/${this.state.stylist.id}/reviews`}><p className='read-reviews'>Read Reviews</p></Link>
-                        </div>
-                    )}
+                    <Toolbar stylist={this.state.stylist} isAdded={this.state.isAdded}/>
                     <div className='profile-pic-box'>
                         <img src={`${this.state.stylist.profile_img}`} alt='profile of user'/>
                     </div>
@@ -75,23 +64,17 @@ class StylistDash extends React.Component {
                         </div>
                     </div>
                 </InfoBox>    
-                <section className = 'gallery'>
-                    <Gallery>
-                        <div>
-                            {this.state.posts.map(post=> (
-                                <PostCard 
-                                    id={post.id} 
-                                    post={post}
-                                    stylist={this.state.stylist}
-                                />
-                            ))}
-                        </div>
-                        {localStorage.getItem('usertype') === 'stylist' && (
-                            <Link to={`/stylist/${this.state.stylist.id}/add-post`}><p className='open-btn'>+</p></Link>
-                        )}
-                        
-                    </Gallery>
-                </section>
+                <div className = 'gallery'>
+                    <div>
+                        {this.state.posts.map(post=> (
+                            <PostCard 
+                                id={post.id} 
+                                post={post}
+                                stylist={this.state.stylist}
+                            />
+                        ))}
+                    </div>                        
+                </div>
             </Dash>
         )
     }
@@ -105,6 +88,15 @@ const Dash = styled.div`
     margin: auto;
     justify-content: space-between;
     a{text-decoration: none}
+    .gallery{ 
+        width: 70vw;
+        margin: 5vh auto;
+        div{
+            display: flex;
+            flex-wrap: wrap; 
+            margin: 0 1px 2px 1px;
+        }
+    }
 `;
 
 const InfoBox = styled.div`
@@ -118,7 +110,10 @@ const InfoBox = styled.div`
     font-size: 1rem;
     display: flex;
     flex-direction: column;
-    p{padding: 0; margin: 0}
+    p{
+        padding: 0; 
+        margin: 0
+    }
     .profile-pic-box{
         height: 200px;
         width: 200px;
@@ -134,53 +129,6 @@ const InfoBox = styled.div`
     .profile-text{
         margin: 2px auto;
         width: 70%;
-    }
-    .edit-btn{
-        color: #80808075;
-        :hover{color: #000}
-    }
-    .default-img{
-        height: 200px;
-        width: 200px;
-        border-radius: 50%;
-        background-color: gold;
-        font-size: 4rem;
-        margin: 0 auto;
-        text-align: center;
-        p{padding-top: 25%;}
-    }
-    .toolbar{
-        display: flex;
-        p{
-            text-align: right;
-            padding: 0 15px;
-            font-size: 1.25rem;
-            color: gray;
-            cursor: pointer;
-            :hover{color: orange}
-        }
-    }
-`;
-
-const Gallery = styled.div`
-    width: 70vw;
-    margin: 5vh auto;
-    div{
-        display: flex;
-        flex-wrap: wrap; 
-        margin: 0 1px 2px 1px;
-    }
-    .open-btn{
-        color: gray;
-        font-size: 3.25rem;
-        position: fixed;
-        bottom: 0px;
-        right: 10%;
-        z-index: 10;
-        cursor: pointer;
-        :hover{
-            color: #80808075;
-            .add-p{display: inherit}
     }
 `;
 

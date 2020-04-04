@@ -10,17 +10,18 @@ import './App.css';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Home from './components/Home';
-import LoginPage from './components/LoginPage';
-import LoginForm from './components/forms/LoginForm';
-import SignUpPage from './components/forms/SignUpPage';
-import SalonSignUp from './components/forms/SalonSignUp';
-import EditUser from './components/forms/EditUser';
+import LoginPage from './components/login&signup/LoginPage';
+import LoginForm from './components/login&signup/LoginForm';
+import SignUpPage from './components/login&signup/SignUpPage';
+import SalonSignUp from './components/login&signup/SalonSignUp';
+import EditUser from './components/users/EditUser';
+import EditStylist from './components/stylists/EditStylist';
 import SearchPage from './components/search/SearchPage';
 import UserDash from './components/users/UserDash';
-import StylistDash from './components/users/StylistDash';
+import StylistDash from './components/stylists/StylistDash';
 import AllReviews from './components/reviews/AllReviews';
 import ReviewForm from './components/reviews/ReviewForm';
-import AddPost from './components/forms/AddPost.js';
+import AddPost from './components/posts/AddPost.js';
 // import PrivateRoute from './components/PrivateRoute';
 
 // CONTEXTS
@@ -44,12 +45,13 @@ function App() {
             <Route path="/signup" component={SignUpPage}/>
             <Route path="/signup/salon" component={SalonSignUp}/>
             <Route path='/search' component={SearchPage}/>
-            <Route path='/users/:id/dash' component={UserDash}  />
+            <Route path='/users/:id/dash' component={UserDash} />
+            <Route path='/user/:id/edit' component={EditUser}/>
             <Route path='/stylists/:id/dash' component={StylistDash}/>
-            <Route path='/edit/user' component={EditUser}/>
-            <Route path='/:id/reviews' component={AllReviews}/>
+            <Route path='/stylist/:id/edit' component={EditStylist}/>
             <Route path='/stylist/:id/add-review' component={ReviewForm}/>
             <Route path='/stylist/:id/add-post' component={AddPost}/>
+            <Route path='/:usertype/:id/reviews' component={AllReviews}/>
         </Switch>
         <Footer/>
         </Router>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import LoginForm from './forms/LoginForm';
-import salonChair from '../images/salon-chair.jpg';
+import LoginForm from './LoginForm';
+import salonChair from '../../images/salon-chair.jpg';
 
 class LoginPage extends React.Component {
     constructor(props){

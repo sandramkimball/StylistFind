@@ -42,9 +42,6 @@ class UserDash extends React.Component {
         }
         else{default_image = <img src={defaultImg} alt='default avatar'/>}
 
-        // console.log('LocalStorage:', localStorage)
-        // console.log('User Data:', this.state.user)
-        // console.log('User Reviews:', this.state.reviews)
         return (
             <Dash>
                 <InfoBox>
@@ -56,7 +53,7 @@ class UserDash extends React.Component {
                         <h1>{this.state.user.first_name}</h1> 
                         <p>{this.state.user.email}</p> 
                     </div>
-                    <Link to='/edit/user'><p className='edit-btn'>Edit</p></Link>
+                    <Link to={`/user/${this.state.user.id}/edit`}><p className='edit-btn'>Edit</p></Link>
                 </InfoBox>    
                 <section className = 'gallery'>
                     <Gallery>

@@ -7,14 +7,14 @@ import {Link} from 'react-router-dom'
 const AllReviews = (props) => {
     const[reviews, setReviews] = useState([])
     var id = props.match.params.id
+    var usertype = props.match.params.usertype
 
     useEffect(()=> {
         axiosWithAuth()
-        .get(`/search/reviews`)
+        .get(`/users/3/reviews`)
         .then(res=> {
-            const filteredArr = res.data.filter(obj=> obj.stylist_id === id)
-            setReviews(filteredArr)
-            console.log('reviews', reviews)
+            setReviews(res.data)
+            console.log('reviews', res.data)
         })
         .catch(err=> console.log('Unable to fetch reviews', err))
     }, [])

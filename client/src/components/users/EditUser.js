@@ -57,7 +57,7 @@ class EditUser extends React.Component {
             <EditForm>
             <h3>Edit Profile</h3>
             <img src={this.state.profile_img} alt='user profile'/>
-            <form onSubmit={this.state.handleSubmit} enctype='multipart/form-data'>
+            <form onSubmit={this.handleSubmit} enctype='multipart/form-data'>
                 <input 
                     type="file" 
                     className="img-input" 
@@ -91,7 +91,7 @@ class EditUser extends React.Component {
                     placeholder='Email'
                 />
                 <div>
-                    <p className='edit-btn-aft' onClick={this.state.handleSubmit}>
+                    <p className='edit-btn-aft' onClick={this.handleSubmit}>
                         <button>Save</button>
                     </p>
                 </div>

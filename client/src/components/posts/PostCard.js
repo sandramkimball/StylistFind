@@ -1,17 +1,31 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Styled from 'styled-components';
+import axiosWithAuth from '../utilis/axiosWithAuth';
 
 function PostCard(props) {
-    const {image, comment, date, id} = props.post;
+    const {image, comment, date, id, stylist_id} = props.post;
     const {first_name, salon} = props.stylist;
+    let stylistId = localStorage.getItem('id')
+    const handleClick = e => {
+        e.preventDefault()
+        axiosWithAuth()
+        .delete(`/${stylistId}/posts/${id}`)
+        .then(res=> console.log('delete', res))
+        .catch(err=> console.log('no delete', err))
+
+    }
 
     return (
         <div>
             <Card>
+                {stylistId === stylist_id &&(
+                    <p className='delete-btn' onClick={handleClick}>X</p>
+                )}
                 <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
                     <img src={image} alt='user post'/>
                     <p>posted by {first_name}</p>
+                    <p>{salon}</p>
                     <h4>{comment}</h4>
                     <p>{date}</p>
                 </Link>
@@ -43,4 +57,13 @@ const Card = Styled.div`
     }
     h4{font-size: 1rem; margin: 0; padding: 0 4px;}
     p{font-size: .85rem; margin: 0;  padding: 0 5px;}
+    .delete-btn{
+        text-align: right;
+        color: gray;
+        cursor: pointer;
+        size: 1rem;
+        :hover{
+            color: orange
+        }
+    }
 `;

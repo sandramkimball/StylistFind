@@ -8,14 +8,13 @@ export default class SalonSignUp extends React.Component {
   constructor(props){
     super(props);
     this.state = { 
-      stylist_id: localStorage.getItem('id'),
-      profile_img: {defaultImg},
+      salon: '',
       street_address: '',
       city: '',
       zipcode: '',
       state: '',
       country: '',
-      salon: '',
+      stylist_id: localStorage.getItem('id'),
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -30,11 +29,11 @@ export default class SalonSignUp extends React.Component {
       e.preventDefault();
       axiosWithAuth()
       .post('auth/register/salon', {
+        salon: this.state.salon,
         street_address: this.state.street_address,
         city: this.state.city,
         state: this.state.state,
         zipcode: this.state.zipcode,
-        country: this.state.country,
         stylist_id: this.state.stylist_id
     })
     .then(res=> {
@@ -51,6 +50,13 @@ export default class SalonSignUp extends React.Component {
         <SignupForm onSubmit={this.handleSubmit}>
           <h3>You're clients need to know where to find you.</h3>
             <div>
+                <input
+                  type='text'
+                  name='salon'
+                  value={this.state.salon} 
+                  placeholder="salon name" 
+                  onChange={this.handleChange}
+                />
                 <input
                 type='text'
                 name='street_address'
@@ -84,14 +90,6 @@ export default class SalonSignUp extends React.Component {
                 name='zipcode'
                 value={this.state.zipcode} 
                 placeholder="zipcode" 
-                onChange={this.handleChange}
-                />
-
-                <input
-                type='text'
-                name='salon'
-                value={this.state.salon} 
-                placeholder="salon name" 
                 onChange={this.handleChange}
                 />
             </div>

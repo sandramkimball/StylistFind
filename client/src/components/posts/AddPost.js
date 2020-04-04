@@ -10,7 +10,7 @@ class AddPost extends React.Component {
         this.state={
             date: Date.now(),
             stylist_id: localStorage.getItem('id'),
-            image: '',    
+            image: null,    
             comment: ''
         }
         this.handleChange = this.handleChange.bind(this)
@@ -18,17 +18,22 @@ class AddPost extends React.Component {
     }
 
     handleChange = e => {
-        this.setState({ ...this.state, [e.target.name]: e.target.value });
+        this.setState({[e.target.name]: e.target.value });
+    }  
+    handleImage = e => {
+        this.setState({image: e.target.files[0], loaded: 0 });
+        console.log('image set', e.target.files[0] )
     }
 
 
     handleSubmit = e => {
-        e.preventDefault()
+        const formattedImg = new FormData() 
+        formattedImg.append('file', this.state.image)
         axiosWithAuth()
         .post(`/stylists/${this.state.stylist_id}/posts`, {
             date: this.state.date,
             stylist_id: this.state.stylist_id,
-            image: this.state.image,
+            image: formattedImg,
             comment: this.state.comment
         })
         .then(()=> 
@@ -40,12 +45,12 @@ class AddPost extends React.Component {
     render(){
         return (
             <div> 
-                <PostForm onSubmit={this.state.handleSubmit}>
+                <PostForm onSubmit={this.handleSubmit}>
                     <input 
                         type='file'
                         accept='image/*'
                         name='image'
-                        onChange={this.state.handleChange}
+                        onChange={this.handleImage}
                         value={this.state.image}
                     />
                     <textarea
@@ -54,10 +59,10 @@ class AddPost extends React.Component {
                         rows='12' 
                         cols='20' 
                         placeholder='Add a comment...'
-                        onChange={this.state.handleChange}
+                        onChange={this.handleChange}
                         value={this.state.comment}
                     ></textarea>
-                    <p onClick={this.state.handleSubmit}>Upload</p>
+                    <p onClick={this.handleSubmit}>Upload</p>
                     <Link to={`/stylists/${this.state.stylist_id}/dash`} className='return-btn'><p>Cancel</p></Link>
                 </PostForm>
             </div>
