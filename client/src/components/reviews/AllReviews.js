@@ -11,18 +11,20 @@ const AllReviews = (props) => {
 
     useEffect(()=> {
         axiosWithAuth()
-        .get(`/users/3/reviews`)
+        .get(`/${usertype}s/${id}/reviews`)
         .then(res=> {
             setReviews(res.data)
-            console.log('reviews', res.data)
         })
-        .catch(err=> console.log('Unable to fetch reviews', err))
+        .catch(err=> console.log(err.response))
     }, [])
         
     return(
         <Page>
             <Link to={`/stylists/${id}/dash`} className='return-btn'><p>Return</p></Link>
             <div className='container'>
+                {!reviews && (
+                    <p>You have no reviews.</p>
+                )}
                 {reviews && reviews.map(review=> (
                     <ReviewCard  
                         key={id}

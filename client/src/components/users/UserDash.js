@@ -25,11 +25,10 @@ class UserDash extends React.Component {
             return axiosWithAuth()
             .get(`users/${id}/reviews`)
             .then(res=> {
-                console.log(res.data)
                 this.setState({reviews: res.data})
             })
         })
-        .catch(err=>{console.log('Error fetching user data', err.response)});
+        .catch(err=>{console.log(err.response)});
     }
 
 

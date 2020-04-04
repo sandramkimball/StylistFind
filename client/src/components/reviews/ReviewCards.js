@@ -5,7 +5,8 @@ import {Link} from 'react-router-dom';
 
 
 function ReviewCard (props) {
-    const {image, review, date, profile_img, stylist_id, user_id, first_name} = props.review;
+    const {image, review, date, profile_img, stylist_id, user_id, user_first, stylist_first, stylist_last} = props.review;
+
     const handleDelete = e => {
         e.preventDefault()
         console.log('Delete!')
@@ -23,11 +24,11 @@ function ReviewCard (props) {
                     )}
                     <div>
                         <Link to={`/users/${user_id}/dash`} key={user_id} id={user_id} props={props}>
-                            <h4>{first_name} </h4>
+                            <h4>{user_first} </h4>
                         </Link>
                         <p>
                             <Link to={`/stylists/${stylist_id}/dash`} key={stylist_id} id={stylist_id} props={props}>
-                                @{stylist_id}
+                               <h4> @{stylist_first} {stylist_last}</h4>
                             </Link>    
                         </p>
                     </div>

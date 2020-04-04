@@ -37,10 +37,9 @@ export default class SalonSignUp extends React.Component {
         stylist_id: this.state.stylist_id
     })
     .then(res=> {
-        console.log('Salon Signup Response:', res)
         this.props.history.push('/login')
     })   
-    .catch(err=>{console.log('FE Error', err)})
+    .catch(err=>{console.log(err)})
     
   };
 

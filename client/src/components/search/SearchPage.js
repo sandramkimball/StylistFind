@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import SearchCard from './SearchCard';
 import PostCard from '../posts/PostCard'
 import styled from 'styled-components';
@@ -11,32 +11,49 @@ class SearchPage extends React.Component {
         this.state= {
             searchTerm: '',
             searchResults: [],
-            filterOpt: 'stylists',
+            filterOpt: '',
             isLoading: true,
             isError: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    
+    // handleSubmit = e => {
+    //     e.preventDefault()
+    //     let filteredData = filterFunction(this.state.searchResults, this.state.filterOpt, this.state.searchTerm)
+    //     this.setState({searchResults: filteredData})
+    // }
 
     handleChange = e => {
         this.setState({ ...this.state, [e.target.name]: e.target.value }); 
-        console.log('change handled')
-    }
-    
-    handleSubmit = e => {
-        e.preventDefault()
-        let filteredData = filterFunction(this.state.searchResults, this.state.filterOpt, this.state.searchTerm)
-        this.setState({searchResults: filteredData})
     }
  
     componentDidMount(){
+       axiosWithAuth()
+       .get('/search') 
+       .then(res=> {
+            this.setState({
+                searchResults: res.data,
+                isLoading: false,
+                isError: false,
+                filterOpt: 'stylists'
+            })                
+        }) 
+        .catch(err=> {
+            console.log(err.message, err) 
+            this.setState({isLoading: false, isError: true})
+        })
+    }
+
+    handleSubmit = e => {
+        e.preventDefault()
         this.setState({isLoading: true})
         if(this.state.filterOpt === 'posts'){
             axiosWithAuth().get('/search/posts')
             .then(res=> {
-                console.log('POSTS', res.data)
-                let results = res.data
+                console.log('Posts', res.data)
+                let results = filterFunction(res.data, this.state.filterOpt, this.state.searchTerm)
                 this.setState({
                     searchResults: results,
                     isLoading: false,
@@ -44,18 +61,17 @@ class SearchPage extends React.Component {
                 });
             })
             .catch(err=> {
-                console.log(err) 
+                console.log(err.message, err) 
                 this.setState({
                     isLoading: false,
                     isError: true,
                 })
             })  
         } 
-        else{
+        if (this.state.filterOpt === 'stylists'){
             axiosWithAuth().get('/search') 
             .then(res=> {
-                console.log('STYLISTS', res.data)
-                let results = res.data
+                let results = filterFunction(res.data, this.state.filterOpt, this.state.searchTerm)
                 this.setState({
                     searchResults: results,
                     isLoading: false,
@@ -63,12 +79,11 @@ class SearchPage extends React.Component {
                 })                
             }) 
             .catch(err=> {
-                console.log(err) 
+                console.log(err.message, err) 
                 this.setState({isLoading: false, isError: true})
             })         
         } 
     }
-
    
     render(){
         return(
@@ -82,11 +97,11 @@ class SearchPage extends React.Component {
                         value={this.state.searchTerm}
                         onChange={this.handleChange}
                     />
-                </form>
                     <select className='filterOpt' name='filterOpt' onChange={this.handleChange}>
                         <option value='stylists'>Stylists</option>
                         <option value='posts'>Posts</option>
                     </select>
+                </form>
             </SearchBar>
             <SearchResultsContainer>
                 {this.state.isLoading === true && (

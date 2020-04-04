@@ -51,7 +51,7 @@ export default class SignUp extends React.Component {
       localStorage.setItem('usertype', res.data.stylist.usertype);
       this.setState({salonForm: true})
     })  
-    .catch(err=>{console.log('Register Stylist Error', err)})
+    .catch(err=>{console.log(err)})
   };
 
   handleSubmit = e => {
@@ -67,10 +67,9 @@ export default class SignUp extends React.Component {
     })
       .then( res=> {
         localStorage.setItem('token', res.data.payload)
-        console.log('Signup Successful')
         this.props.history.push('/login')
       })
-      .catch(err=>{console.log('FE Error', err)})
+      .catch(err=>{console.log(err)})
   };
 
   render(){

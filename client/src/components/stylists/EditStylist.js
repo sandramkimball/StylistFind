@@ -26,7 +26,7 @@ class EditStylist extends React.Component {
             this.setState({stylist: res.data})
         })
 
-        .catch(err=>{console.log('Error fetching stylist data', err.response)});
+        .catch(err=>{console.log(err.response)});
     }
 
     handleChange = e => {
@@ -45,10 +45,9 @@ class EditStylist extends React.Component {
         axiosWithAuth()
         .put(`/stylists/${this.state.stylist.id}`, this.state.stylist)
         .then(()=> {
-            console.log('Successfully updated');
             this.props.history.push(`/stylist/${this.state.stylist.id}/dash`);
         })
-        .catch(err=> console.log('Unable to make updates.', err))
+        .catch(err=> console.log(err))
     };
 
     render(){

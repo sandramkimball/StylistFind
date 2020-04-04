@@ -27,7 +27,7 @@ class EditUser extends React.Component {
             this.setState({user: res.data})
         })
 
-        .catch(err=>{console.log('Error fetching user data', err.response)});
+        .catch(err=>{console.log(err.response)});
     }
 
     handleChange = e => {
@@ -46,7 +46,6 @@ class EditUser extends React.Component {
         axiosWithAuth()
         .put(`/users/${this.state.user.id}`, this.state.user)
         .then(()=> {
-            console.log('Successfully updated');
             this.props.history.push(`/user/${this.state.user.id}/dash`);
         })
         .catch(err=> console.log('Unable to make updates.', err))

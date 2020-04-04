@@ -44,7 +44,7 @@ class Login extends React.Component {
             })
             .catch(err=> {
                 this.setState({loginFail: true})
-                console.log('USER LOGIN ERROR', err)
+                console.log(err)
             }) 
         } 
         
@@ -64,7 +64,7 @@ class Login extends React.Component {
             })
             .catch(err=> {
                 this.setState({loginFail: true})
-                console.log('STYLIST LOGIN ERROR', err)
+                console.log(err)
             }) 
         }
     };
@@ -73,7 +73,6 @@ class Login extends React.Component {
      
     render(){
         if(this.state.isLoggedIn === true) {
-            console.log('Login successful.')
         }
         let loginError;
         if (this.state.loginFail === true){

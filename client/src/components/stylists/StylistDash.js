@@ -36,14 +36,11 @@ class StylistDash extends React.Component {
                 this.setState({ posts: res.data });
             })
         })
-        .catch(err=>{console.log('STYLIST DASH API ERROR: ', err)});
+        .catch(err=>{console.log(err)});
     }
 
 
     render(){
-        console.log('Stylist Data', this.state.stylist)
-        console.log('Posts Data', this.state.posts)
-
         return (
             <Dash>
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
