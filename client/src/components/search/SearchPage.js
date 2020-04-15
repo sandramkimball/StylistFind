@@ -18,12 +18,6 @@ class SearchPage extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
-    // handleSubmit = e => {
-    //     e.preventDefault()
-    //     let filteredData = filterFunction(this.state.searchResults, this.state.filterOpt, this.state.searchTerm)
-    //     this.setState({searchResults: filteredData})
-    // }
 
     handleChange = e => {
         this.setState({ ...this.state, [e.target.name]: e.target.value }); 
@@ -135,11 +129,23 @@ class SearchPage extends React.Component {
     }
 }
 
-export default SearchPage;
+export {SearchPage}
+
+export const handleSubmit=(filterOpt)=> {
+    var isLoading = false
+    if(filterOpt === 'posts'){
+        isLoading = true
+        axiosWithAuth().get('/search/posts')
+    }
+    if(filterOpt === 'stylists'){
+        isLoading = true
+        axiosWithAuth().get('/search')
+    }
+};
 
 const SearchResultsContainer = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
     margin: 0 auto;
     width: 75%;

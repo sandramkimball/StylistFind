@@ -16,7 +16,7 @@ function Nav(props) {
                 <Logo src={logo}/>
             </NavLink>
             <div>
-                <NavLink to='/search'>Search</NavLink>                
+                <NavLink to='/search' className='search-btn'>Search</NavLink>                
 
                 {localStorage.getItem('usertype') === 'user' && (
                     <NavLink to={`/users/${localStorage.getItem('id')}/dash`}>User</NavLink>

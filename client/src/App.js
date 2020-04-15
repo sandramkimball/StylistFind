@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import LoginPage from './components/login&signup/LoginPage';
 import LoginForm from './components/login&signup/LoginForm';
-import SignUpPage from './components/login&signup/SignUpPage';
+import {SignUpPage} from './components/login&signup/SignUpPage';
 import SalonSignUp from './components/login&signup/SalonSignUp';
 import EditUser from './components/users/EditUser';
 import EditStylist from './components/stylists/EditStylist';
