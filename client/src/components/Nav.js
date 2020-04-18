@@ -11,9 +11,9 @@ function Nav(props) {
     };
 
     return(
-        <NavBar>
+        <NavBar className='navbar'>
             <NavLink to='/'>
-                <Logo src={logo}/>
+                <img src={logo} className='logo' alt='hairstylist scissors and comb clipart'/>
             </NavLink>
             <div>
                 <NavLink to='/search' className='search-btn'>Search</NavLink>                
@@ -44,11 +44,6 @@ function Nav(props) {
 
 export default withRouter(Nav);
 
-const Logo = styled.img`
-    height: 7vh;
-    margin: 0 auto;
-`;
-
 const NavBar = styled.nav`
     width: 90%;
     margin: 0 auto;
@@ -67,5 +62,9 @@ const NavBar = styled.nav`
         justify-content: space-between;
         display: flex;
         font-size: 1.2rem
+    }
+    .logo{        
+        height: 7vh;
+        margin: 0 auto;
     }
 `;

@@ -82,7 +82,7 @@ class SearchPage extends React.Component {
     render(){
         return(
             <div>
-            <SearchBar>
+            <SearchBar className='search-bar'>
                 <form onSubmit={this.handleSubmit}>
                     <input
                         type='text'
@@ -97,7 +97,7 @@ class SearchPage extends React.Component {
                     </select>
                 </form>
             </SearchBar>
-            <SearchResultsContainer>
+            <SearchResultsContainer className='search-container'>
                 {this.state.isLoading === true && (
                     <p>Finding {this.state.filterOpt}...</p>
                 )}

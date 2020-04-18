@@ -18,7 +18,7 @@ function PostCard(props) {
 
     return (
         <div>
-            <Card>
+            <Card className='post-card'>
                 {stylistId === stylist_id &&(
                     <p className='delete-btn' onClick={handleClick}>X</p>
                 )}

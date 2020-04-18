@@ -41,10 +41,17 @@ div.App{
   width: 100%
 }
 
-
+/* IPAD */
 @media screen and (max-width: 950px){
+  .navbar div{
+    width: 70% !important;
+    justify-content: space-evenly;
+    font-size: 1.75rem;
+  }
+
+  /* HOME PAGE */
   .landing-b1{
-    width: 98vw !important;
+    width: 90vw !important;
   }
   .landing-b1 h1{
     text-align: center;
@@ -53,15 +60,82 @@ div.App{
     display: none;
   }
   .landing-b1 form input{
-    width: 90vw !important;
+    width: 80vw !important;
   }
   .landing-b2{
-    width: 98vw !important;
-    flex-direction: column
+    width: 90vw !important;
+    flex-direction: column;
+    height: 100% !important;
   }
   .landing-b2 div{
     width: 100% !important;
     margin: 5vh auto;
-    height: 40vh !important
+    height: 40vh !important;
+    margin: 2.5vh auto !important;
   }
+
+  /* SEARCH CARDS */
+  .stylist-card{
+    width: 95vw !important;
+    height: 25vh !important;
+  }
+  .stylist-card a{
+    flex-direction: row !important;
+  }
+  .stylist-card img{
+    height: 25vh !important;
+    width: 200px !important;
+  }
+  .stylist-card h3 {font-size: 1.5rem !important}
+  .stylist-card h4 {font-size: 1.25rem !important}
+  .stylist-card p {font-size: 1.25rem !important}
+  .stylist-card div{
+    text-align: left;
+    margin: 0 0 0 20px;
+  }
+  /* SEARCH PAGE */
+  .search-bar form{
+    display: flex;
+    width: 90vw !important;
+  }
+  .search-bar .filterOpt{
+    width: 25vw !important;
+  }
+  .search-container{
+    justify-content: center;
+    width: 90vw !important;
+    height: 100% !important;
+  }
+
+  /* STYLIST DASH */
+  .stylist-dash .info-box{
+    width: 90vw !important;
+  }
+  .stylist-dash .gallery{
+    width: 90vw !important;
+  }
+  .stylist-dash .info-box h3{ font-size:1.5rem}
+  .stylist-dash .info-box p{ font-size:1.25rem}
+  .stylist-dash .profile-pic-box{
+    height: 300px !important;
+    width: 300px !important;
+  }
+  /* STLYIST POSTS CARDS */
+  .post-card{
+    width: 29vw !important;
+    height: 40vw !important;
+  }
+  .post-card img{
+    height: 25vw;
+  }
+
+  /* LOGIN & SIGNUP */
+  .login-pg img{
+    display: none !important;
+  }
+  .login-pg div{
+    margin: auto;
+    width: 100vw
+  }
+
 }

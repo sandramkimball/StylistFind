@@ -25,3 +25,4 @@ export function filterFunction(data, filterOpt, searchTerm) {
         return data
     }
 }
+

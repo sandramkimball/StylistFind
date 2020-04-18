@@ -42,9 +42,9 @@ class StylistDash extends React.Component {
 
     render(){
         return (
-            <Dash>
+            <Dash className='stylist-dash'>
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
-                <InfoBox>
+                <InfoBox className='info-box'>
                     <Toolbar stylist={this.state.stylist} isAdded={this.state.isAdded}/>
                     <div className='profile-pic-box'>
                         <img src={`${this.state.stylist.profile_img}`} alt='profile of user'/>
