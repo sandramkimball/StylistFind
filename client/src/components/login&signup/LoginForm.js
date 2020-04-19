@@ -100,7 +100,7 @@ class Login extends React.Component {
                     <div className='check-stylist'>
                         I'm a Stylist
                         <input 
-                            type='radio'
+                            type='checkbox'
                             label='isStylist'
                             name='isStylist'
                             value={'true'}

@@ -143,12 +143,14 @@ export const handleSubmit=(filterOpt)=> {
     }
 };
 
+
+
 const SearchResultsContainer = styled.div`
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-wrap: wrap;
     margin: 0 auto;
-    width: 75%;
+    width: 85vw;
     margin: 5vh auto;
     display: flex;
     ::-webkit-scrollbar{ width: 0}
@@ -162,9 +164,10 @@ const SearchBar = styled.div`
     justify-content: space-evenly;
     width: 70%;
     form{
+        display: flex;
+        width: 90vw;
         border: none;
         height: 40px;
-        width: 45%;
         button{
             background: none;
             border: 1px solid black;
@@ -177,14 +180,15 @@ const SearchBar = styled.div`
             width: 100%;
             box-sizing: border-box;
             font-size: 1rem;
+            margin: 0 10px;
         }
         input:focus{border: 1px solid gray}
     }
     .filterOpt{
         font-size: 1rem;
-        width: 15vw;
+        width: 20vw;
         height: 40px;
         border-radius: 2px;
-        color: gray;
+        color: gray; 
     }
 `;

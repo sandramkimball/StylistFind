@@ -31,7 +31,7 @@ function SearchCard(props)  {
 
 const Card = styled.div`
     height: 300px;
-    width: 300px
+    width: 20vw;
     border: .5px solid #e6e6e6
     background: #fff;
     display: flex;

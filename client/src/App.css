@@ -42,7 +42,7 @@ div.App{
 }
 
 /* IPAD */
-@media screen and (max-width: 950px){
+@media screen and (max-width: 900px){
   .navbar div{
     width: 70% !important;
     justify-content: space-evenly;
@@ -94,10 +94,6 @@ div.App{
     margin: 0 0 0 20px;
   }
   /* SEARCH PAGE */
-  .search-bar form{
-    display: flex;
-    width: 90vw !important;
-  }
   .search-bar .filterOpt{
     width: 25vw !important;
   }
@@ -110,6 +106,7 @@ div.App{
   /* STYLIST DASH */
   .stylist-dash .info-box{
     width: 90vw !important;
+    height: 100% !important;
   }
   .stylist-dash .gallery{
     width: 90vw !important;
@@ -159,9 +156,6 @@ div.App{
 @media screen and (max-width: 420px){
 
   /* STYLIST  DASH */
-  .stylist-dash .info-box{
-    height: 100% !important;
-  }
   .stylist-dash .profile-text{
     width: 90% !important;
   }
