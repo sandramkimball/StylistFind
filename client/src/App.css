@@ -153,5 +153,40 @@ div.App{
     height: 40px !important;
     font-size: 1.25rem  !important;
   }
+}
 
+/* SMART PHONE */
+@media screen and (max-width: 420px){
+
+  /* STYLIST  DASH */
+  .stylist-dash .info-box{
+    height: 100% !important;
+  }
+  .stylist-dash .profile-text{
+    width: 90% !important;
+  }
+  .stylist-dash .profile-text{
+    width: 90% !important;
+  }
+  .stylist-dash .profile-text h3{font-size: 1.25rem}
+  .stylist-dash .profile-pic-box{
+    height: 150px !important;
+    width: 150px !important;
+  }
+  /* STLYIST POSTS CARDS */
+  .post-card{
+    width: 28vw !important;
+    height: 28vw !important;
+  }
+  .post-card img{
+    height: 28vw;
+  }
+  .post-card h4, p{
+    display: none
+  }
+
+  /* LOGIN SIGNUP */
+  .login-pg div{
+    width: 90vw !important;
+  }
 }
