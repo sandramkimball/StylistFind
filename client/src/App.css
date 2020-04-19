@@ -130,12 +130,28 @@ div.App{
   }
 
   /* LOGIN & SIGNUP */
+  .login-pg {
+    width: 100vw!important;
+  }
   .login-pg img{
     display: none !important;
   }
   .login-pg div{
     margin: auto;
-    width: 100vw
+  }
+  .login-pg form{
+    padding: 0;
+    width: 100% !important;
+  }
+  .login-form h3{
+    font-size: 3rem !important;
+  }
+  .check-stylist, .login-form p, a{
+    font-size: 1.2rem !important;
+  }
+  .login-form input, button{
+    height: 40px !important;
+    font-size: 1.25rem  !important;
   }
 
 }

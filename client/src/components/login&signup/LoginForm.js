@@ -80,7 +80,7 @@ class Login extends React.Component {
         }
 
         return (
-            <LoginPage>
+            <LoginPage className='login-form'>
                 <LoginForm onSubmit={this.handleSubmit}>
                     <h3>Welcome Back</h3>
                     <input 
@@ -123,11 +123,10 @@ const LoginPage = styled.div`
     width: 50vw;
     height: 50vh;
     margin: auto;
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
-    img{height: 100%}
     a{
         font-size: .8rem; 
         text-align: right; 

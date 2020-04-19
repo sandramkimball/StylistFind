@@ -74,7 +74,7 @@ export default class SignUp extends React.Component {
 
   render(){
     return (
-      <SignupPage>
+      <SignupPage className='login-form'>
         <SignupForm>
           {this.state.salonForm === false && (
             <div>
