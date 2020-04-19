@@ -11,8 +11,8 @@ function PostCard(props) {
         e.preventDefault()
         axiosWithAuth()
         .delete(`/${stylistId}/posts/${id}`)
-        .then(res=> console.log('delete', res))
-        .catch(err=> console.log('no delete', err))
+        .then(res=> console.log('post deleted', res))
+        .catch(err=> console.log('post not deleted', err))
 
     }
 

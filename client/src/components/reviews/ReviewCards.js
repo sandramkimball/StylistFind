@@ -9,7 +9,6 @@ function ReviewCard (props) {
 
     const handleDelete = e => {
         e.preventDefault()
-        console.log('Delete!')
         // axiosWithAuth()
         // .delete(`/users/${user_id}/reviews/:id`)
     }

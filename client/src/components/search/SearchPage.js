@@ -46,7 +46,6 @@ class SearchPage extends React.Component {
         if(this.state.filterOpt === 'posts'){
             axiosWithAuth().get('/search/posts')
             .then(res=> {
-                console.log('Posts', res.data)
                 let results = filterFunction(res.data, this.state.filterOpt, this.state.searchTerm)
                 this.setState({
                     searchResults: results,

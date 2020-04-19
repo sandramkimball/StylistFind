@@ -55,21 +55,21 @@ export default class SignUp extends React.Component {
   };
 
   handleSubmit = e => {
-      e.preventDefault();
-      axiosWithAuth()
-      .post('/auth/register/user', {
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        password: this.state.password,
-        email: this.state.email,
-        profile_img: this.state.profile_img,
-        usertype: 'user',
+    e.preventDefault();
+    axiosWithAuth()
+    .post('/auth/register/user', {
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      password: this.state.password,
+      email: this.state.email,
+      profile_img: this.state.profile_img,
+      usertype: 'user',
+  })
+    .then( res=> {
+      localStorage.setItem('token', res.data.payload)
+      this.props.history.push('/login')
     })
-      .then( res=> {
-        localStorage.setItem('token', res.data.payload)
-        this.props.history.push('/login')
-      })
-      .catch(err=>{console.log(err)})
+    .catch(err=>{console.log(err)})
   };
 
   render(){
@@ -121,12 +121,12 @@ export default class SignUp extends React.Component {
                 />
               </div>
 
-              {this.state.usertype === 'user' && (
+              {this.state.usertype === 'user' &&(
                 <button type='submit' onClick={this.handleSubmit}>signup</button>
               )}
 
               {this.state.usertype === 'stylist' && (
-                <button type='submit' onClick={this.handleNext}>sumbit</button>
+                <button type='submit' onClick={this.handleNext}>next</button>
               )}
               <Link to='/login'><p>I already have an account.</p></Link> 
             </div>

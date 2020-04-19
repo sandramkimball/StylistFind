@@ -1,7 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
 import axiosWithAuth from "../utilis/axiosWithAuth";
-import defaultImg from '../../images/default-profile.jpg'
 
 export default class SalonSignUp extends React.Component {
 
@@ -107,7 +106,6 @@ const SignupPage = styled.div`
     justify-content: center;
     align-items: center;
     align-content: center;
-    img{height: 100%}
     a{
         font-size: .8rem; 
         text-align: right; 

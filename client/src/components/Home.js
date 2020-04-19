@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import Styled from "styled-components";
-import axiosWithAuth from './utilis/axiosWithAuth';
 import hairImg from '../images/pink.jpg'
 import hair2 from '../images/person-cutting-hair.jpg'
 
@@ -11,19 +10,9 @@ class Home extends React.Component {
     this.state = {
         homeSearch: '',
         redirect: false,
-        posts: []
       }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-  
-  componentDidMount(props){
-    axiosWithAuth()
-    .get(`/stylists/1/posts`)
-    .then(res=> { 
-        this.setState({posts: res.data});
-    })
-    .catch(err=>{console.log('RECENT POSTS ERROR: ', err)});
   }
 
   handleChange = e => {

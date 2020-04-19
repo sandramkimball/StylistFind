@@ -28,7 +28,6 @@ class Login extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        var loginUrl;
         if(this.state.isStylist === false){
             axiosWithAuth()
             .post('/auth/login/user', {
