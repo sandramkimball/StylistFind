@@ -22,9 +22,7 @@ function ReviewCard (props) {
                         <p className='delete-btn' onClick={handleDelete}>X</p>
                     )}
                     <div>
-                        <Link to={`/users/${user_id}/dash`} key={user_id} id={user_id} props={props}>
-                            <h4>{user_first} </h4>
-                        </Link>
+                        <h4>{user_first} </h4>
                         <p>
                             <Link to={`/stylists/${stylist_id}/dash`} key={stylist_id} id={stylist_id} props={props}>
                                <h4> @{stylist_first} {stylist_last}</h4>

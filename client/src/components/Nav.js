@@ -19,11 +19,11 @@ function Nav(props) {
                 <NavLink to='/search' className='search-btn'>Search</NavLink>                
 
                 {localStorage.getItem('usertype') === 'user' && (
-                    <NavLink to={`/users/${localStorage.getItem('id')}/dash`}>User</NavLink>
+                    <NavLink to={`/users/${localStorage.getItem('id')}/dash`}>Dashboard</NavLink>
                 )}
 
                 {localStorage.getItem('usertype') === 'stylist' && (
-                    <NavLink to={`/stylists/${localStorage.getItem('id')}/dash`}>Stylist</NavLink>
+                    <NavLink to={`/stylists/${localStorage.getItem('id')}/dash`}>Profile</NavLink>
                 )}
 
                 {!localStorage.getItem('usertype') && (

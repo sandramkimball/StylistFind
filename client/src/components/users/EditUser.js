@@ -20,7 +20,7 @@ class EditUser extends React.Component {
     }
 
     componentDidMount(){
-        const id = localStorage.getItem('id')
+        const id = this.state.user.id
         axiosWithAuth()
         .get(`/users/${id}`)
         .then(res=> { 
@@ -41,12 +41,12 @@ class EditUser extends React.Component {
     }
 
     handleSubmit = e => {        
-        const id = localStorage.getItem('id')
+        const id = this.state.user.id
         e.preventDefault()
         axiosWithAuth()
-        .put(`/users/${this.state.user.id}`, this.state.user)
+        .put(`/users/${id}`, this.state.user)
         .then(()=> {
-            this.props.history.push(`/user/${this.state.user.id}/dash`);
+            this.props.history.push(`/user/${id}/dash`);
         })
         .catch(err=> console.log('Unable to make updates.', err))
     };

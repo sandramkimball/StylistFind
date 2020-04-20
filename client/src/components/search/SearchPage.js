@@ -20,6 +20,7 @@ class SearchPage extends React.Component {
     }
 
     handleChange = e => {
+        e.preventDefault()
         this.setState({ ...this.state, [e.target.name]: e.target.value }); 
     }
  
@@ -40,6 +41,7 @@ class SearchPage extends React.Component {
         })
     }
 
+    // switches between stylist and posts api. Currently there is a bug in the dropdown that, when switched, auto returns a post/card with no data until form is fully submitted.
     handleSubmit = e => {
         e.preventDefault()
         this.setState({isLoading: true})
@@ -81,6 +83,7 @@ class SearchPage extends React.Component {
     render(){
         return(
             <div>
+            {/* this is the keyword search and stylist/post option */}
             <SearchBar className='search-bar'>
                 <form onSubmit={this.handleSubmit}>
                     <input
@@ -130,6 +133,7 @@ class SearchPage extends React.Component {
 
 export {SearchPage}
 
+// modified export for testing
 export const handleSubmit=(filterOpt)=> {
     var isLoading = false
     if(filterOpt === 'posts'){
@@ -146,7 +150,7 @@ export const handleSubmit=(filterOpt)=> {
 
 const SearchResultsContainer = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     margin: 0 auto;
     width: 85vw;

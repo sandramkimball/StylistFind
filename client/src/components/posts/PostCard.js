@@ -38,7 +38,7 @@ export default PostCard;
 
 const Card = Styled.div`
     width: 17vw;
-    height: 20vw;
+    height: 25vw;
     background: #fff;
     display: flex;
     flex-direction: column;

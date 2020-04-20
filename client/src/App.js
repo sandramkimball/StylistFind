@@ -13,6 +13,7 @@ import Home from './components/Home';
 import LoginPage from './components/login&signup/LoginPage';
 import LoginForm from './components/login&signup/LoginForm';
 import SignUpPage from './components/login&signup/SignUpPage';
+import SignUpForm from './components/login&signup/SignUpForm';
 import SalonSignUp from './components/login&signup/SalonSignUp';
 import EditUser from './components/users/EditUser';
 import EditStylist from './components/stylists/EditStylist';
@@ -43,6 +44,7 @@ function App() {
             <Route path="/login" component={LoginPage}/>
             <Route path="/userlogin" component={LoginForm}/>
             <Route path="/signup" component={SignUpPage}/>
+            <Route path="/signupform" component={SignUpForm}/>
             <Route path="/signup/salon" component={SalonSignUp}/>
             <Route path='/search' component={SearchPage}/>
             <Route path='/users/:id/dash' component={UserDash} />

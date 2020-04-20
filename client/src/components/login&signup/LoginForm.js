@@ -26,6 +26,7 @@ class Login extends React.Component {
         })
     };
 
+    //seperate api calls for stylist and user 
     handleSubmit = e => {
         e.preventDefault();
         if(this.state.isStylist === false){
@@ -43,11 +44,9 @@ class Login extends React.Component {
             })
             .catch(err=> {
                 this.setState({loginFail: true})
-                console.log(err)
+                console.log(err, err.message)
             }) 
         } 
-        
-        
         else{
             axiosWithAuth()
             .post('/auth/login/stylist', {
@@ -63,69 +62,66 @@ class Login extends React.Component {
             })
             .catch(err=> {
                 this.setState({loginFail: true})
-                console.log(err)
+                console.log(err, err.message)
             }) 
         }
     };
-
     
      
     render(){
-        if(this.state.isLoggedIn === true) {
-        }
         let loginError;
         if (this.state.loginFail === true){
-            loginError =  <p className='login-fail'>Email or Password Incorrect</p>
+            loginError = <p className='login-fail'>Email or Password Incorrect</p>
         }
 
         return (
-            <LoginPage className='login-form'>
-                <LoginForm onSubmit={this.handleSubmit}>
-                    <h3>Welcome Back</h3>
+            <LoginForm className='login-form' onSubmit={this.handleSubmit}>
+                <h3>Welcome Back</h3>
+                <input 
+                    type='text' 
+                    name='email' 
+                    value={this.email} 
+                    placeholder="Email" 
+                    onChange={this.handleChange}
+                />
+                <input 
+                    type='password' 
+                    name='password' 
+                    value={this.password} 
+                    placeholder="Password" 
+                    onChange={this.handleChange}
+                />
+                <div className='check-stylist'>
+                    I'm a Stylist
                     <input 
-                        type='text' 
-                        name='email' 
-                        value={this.email} 
-                        placeholder="Email" 
-                        onChange={this.handleChange}
+                        type='checkbox'
+                        label='isStylist'
+                        name='isStylist'
+                        value={'true'}
+                        onClick={this.handleChange}
                     />
-                    <input 
-                        type='password' 
-                        name='password' 
-                        value={this.password} 
-                        placeholder="Password" 
-                        onChange={this.handleChange}
-                    />
-                    <div className='check-stylist'>
-                        I'm a Stylist
-                        <input 
-                            type='checkbox'
-                            label='isStylist'
-                            name='isStylist'
-                            value={'true'}
-                            onClick={this.handleChange}
-                        />
-                    </div>
-                    <button type='submit' onClick={this.handleSubmit}>Login</button>
-                    {loginError}
-                    <Link to='/signup'><p>Don't have an account?</p></Link> 
-                </LoginForm>
-                
-            </LoginPage>
+                </div>
+                <button type='submit' onClick={this.handleSubmit}>Login</button>
+                {loginError}
+                <Link to='/signup'><p>Don't have an account?</p></Link> 
+            </LoginForm>   
     )
 }};
 
 export default Login;
 
 
-const LoginPage = styled.div`
-    width: 50vw;
+const LoginForm = styled.form`
+    width: 40vw;
     height: 50vh;
     margin: auto;
-    display: flex;
+    display:flex;
     justify-content: center;
+    align-content: spece-between;
     align-items: center;
     align-content: center;
+    padding: 20px;
+    flex-direction: column;
     a{
         font-size: .8rem; 
         text-align: right; 
@@ -133,29 +129,15 @@ const LoginPage = styled.div`
         color: black; 
         :hover{color: gray}
     }
-    .login-fail p{
-        color: red,
-        font-size: .5rem;
-    }
-`;
-
-const LoginForm = styled.form`
-    display:flex;
-    justify-content: center;
-    align-content: spece-between;
-    align-items: center;
-    margin: 0 auto;
-    padding: 20px;
-    flex-direction: column;
     h3{
         margin: 0; 
         font-size: 2rem; 
         font-family: 'Dancing Script', cursive
     }
     
-    input, button{
+    input{
         height: 25px;
-        width: 100%
+        width: 50%
         margin: 5px auto;
         border: 1px solid #80808095;
         font-size: 1rem;
@@ -164,18 +146,26 @@ const LoginForm = styled.form`
     }
     button{
         background: orange;
+        margin: 5px auto;
+        width: 25%;
+        font-size: 1rem;
         max-width: 30%;
-        padding: 2px 5px;
+        padding: 4px ;
         color: #fff;
         border: none;
         height: 30px;
+        border-radius: 2px;
         cursor: pointer
     }    
     .check-stylist{
       display: flex;
-      width: 80%;
+      width: 50%;
       align-items: center;
       justify-content: space-between;
       input{width: 30%; margin-left: 0}
+    }
+    .login-fail p{
+        color: red,
+        font-size: .5rem;
     }
 `;

@@ -29,11 +29,12 @@ export default class SignUp extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   };
 
-
+  //populates state with data from form input
   handleChange = e => {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
 
+  //if stylist is checked, routes to salon signup form
   handleNext = e => {
     e.preventDefault()
     axiosWithAuth()
@@ -54,6 +55,7 @@ export default class SignUp extends React.Component {
     .catch(err=>{console.log(err)})
   };
 
+  //if user, submits and routes to login page
   handleSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
@@ -121,6 +123,7 @@ export default class SignUp extends React.Component {
                 />
               </div>
 
+              {/* conditionally renders submit button for usertype */}
               {this.state.usertype === 'user' &&(
                 <button type='submit' onClick={this.handleSubmit}>signup</button>
               )}

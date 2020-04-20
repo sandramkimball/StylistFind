@@ -26,17 +26,32 @@ class StylistDash extends React.Component {
     
     componentDidMount(props){
         const { match: { params } } = this.props;
-        axiosWithAuth()
-        .get(`/stylists/${params.id}`)
-        .then(res=> { 
-            this.setState({ stylist: res.data });
-            return axiosWithAuth()
-            .get(`/stylists/${params.id}/posts`)
+        if(localStorage.getItem('usertype')==='stylist' && localStorage.getItem('id')===params.id){    
+            axiosWithAuth()
+            .get(`/stylists/${params.id}`)
             .then(res=> { 
-                this.setState({ posts: res.data });
+                this.setState({ stylist: res.data });
+                return axiosWithAuth()
+                .get(`/stylists/${params.id}/posts`)
+                .then(res=> { 
+                    this.setState({ posts: res.data });
+                })
             })
-        })
-        .catch(err=>{console.log(err)});
+            .catch(err=>{console.log(err)});
+        }
+        else{   
+            axiosWithAuth()
+            .get(`/stylists/public/${params.id}`)
+            .then(res=> { 
+                this.setState({ stylist: res.data });
+                return axiosWithAuth()
+                .get(`/stylists/${params.id}/posts`)
+                .then(res=> { 
+                    this.setState({ posts: res.data });
+                })
+            })
+            .catch(err=>{console.log(err, err.message)});
+        }
     }
 
 
@@ -87,6 +102,7 @@ const Dash = styled.div`
     a{text-decoration: none}
     .gallery{ 
         width: 70vw;
+        height: 100%;
         margin: 5vh auto;
         div{
             display: flex;
