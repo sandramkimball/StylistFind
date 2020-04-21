@@ -10,6 +10,7 @@ function Footer(props) {
                 <img src='https://image.flaticon.com/icons/png/512/41/41463.png' alt='clipart of scissors and a comb'/>
             </NavLink>
             <p>copyright Sandy 2020</p>
+            <NavLink to='policy'><p>Privacy Policy</p></NavLink>
         </FooterBar>
     )
 }
@@ -19,10 +20,11 @@ export default withRouter(Footer);
 const FooterBar = styled.nav`
     width: 98%;
     margin: auto;
+    margin-top: 2vh;
     padding: 10px 0;
     align-self: center
-    img{height: 40px}
-    p{margin: 0 0; font-size: .75rem}
+    img{height: 35px}
+    p{margin: 0 0; font-size: .5rem}
     position: absolute;
     bottom: 0
 `;

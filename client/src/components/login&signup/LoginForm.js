@@ -26,7 +26,8 @@ class Login extends React.Component {
         })
     };
 
-    //seperate api calls for stylist and user 
+    //seperate api calls for stylist and user. 
+    //Current Bug: this.props.historty.push() throws type error and returns the login error despite a successfully logging in.
     handleSubmit = e => {
         e.preventDefault();
         if(this.state.isStylist === false){
