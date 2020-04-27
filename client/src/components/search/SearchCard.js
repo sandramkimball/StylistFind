@@ -35,7 +35,6 @@ const Card = styled.div`
     border: .5px solid #e6e6e6
     background: #fff;
     display: flex;
-    flex-direction: column;
     overflow: hidden;
     cursor: pointer;
     font-size: 1rem
@@ -47,6 +46,7 @@ const Card = styled.div`
     }
     div{
         margin: auto;
+        flex-direction: column;
         h3{text-decoration: underline; padding: 0; margin: 0}
         h4{font-size: .95rem; margin: 0}
         p{padding: 0; margin: 0; font-size: .85rem }

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
 // STYLING
 import GlobalStyle from './components/styled-components/GlobalStyle';
 import bckgImg from './images/Wave-PNG-Clipart.png'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import './App.css';
 
 //COMPONENTS
@@ -44,8 +45,8 @@ function App() {
             <Route exact path='/' component={Home}/>
             <Route exact path='/policy' component={PrivacyPolicy}/>
             <Route path="/login" component={LoginPage}/>
-            {/* <Route path="/userlogin" component={LoginForm}/> */}
             <Route path="/signup" component={SignUpPage}/>
+            {/* <Route path="/userlogin" component={LoginForm}/> */}
             {/* <Route path="/signupform" component={SignUpForm}/>
             <Route path="/signup/salon" component={SalonSignUp}/> */}
             <Route path='/search' component={SearchPage}/>
