@@ -102,6 +102,12 @@ div.App{
     width: 90vw !important;
     height: 100% !important;
   }
+  .search-container .map-container{
+    display: none
+  }
+  .search-container .results{
+    width: 90vw
+  }
 
   /* STYLIST DASH */
   .stylist-dash .info-box{

@@ -30,8 +30,8 @@ function SearchCard(props)  {
 
 
 const Card = styled.div`
-    height: 300px;
-    width: 20vw;
+    height: 200px;
+    width: 40vw;
     border: .5px solid #e6e6e6
     background: #fff;
     display: flex;
@@ -40,12 +40,13 @@ const Card = styled.div`
     font-size: 1rem
     margin: 2px;
     img{
-        height: 175px;
-        width: 100%;
+        height: 200px;
+        width: 45%;
         object-fit: cover;
+        margin-right: 10px;
     }
     div{
-        margin: auto;
+        margin: 0 auto;
         flex-direction: column;
         h3{text-decoration: underline; padding: 0; margin: 0}
         h4{font-size: .95rem; margin: 0}
@@ -53,10 +54,10 @@ const Card = styled.div`
     }    
     a{
         display: flex;
-        flex-direction: column;
         align-items: center;
         text-decoration: none;
         color: black
+        text-align: left;
     }
 `;
 

@@ -16,7 +16,6 @@ class SearchPage extends React.Component {
         this.state= {
             searchTerm: '',
             searchResults: [],
-            filterOpt: '',
             isLoading: true,
             isError: false,
         }
@@ -47,45 +46,23 @@ class SearchPage extends React.Component {
         })
     }
 
-    // switches between stylist and posts api. 
-    // Current bug: when dropdown is changed, results auto renders
-    // one post/card with no data until form is fully submitted.
+
     handleSubmit = e => {
         e.preventDefault()
         this.setState({isLoading: true})
-        if(this.state.filterOpt === 'posts'){
-            axiosWithAuth().get('/search/posts')
-            .then(res=> {
-                let results = filterFunction(res.data, this.state.filterOpt, this.state.searchTerm)
-                this.setState({
-                    searchResults: results,
-                    isLoading: false,
-                    isError: false,
-                });
-            })
-            .catch(err=> {
-                console.log(err.message, err) 
-                this.setState({
-                    isLoading: false,
-                    isError: true,
-                })
-            })  
-        } 
-        if (this.state.filterOpt === 'stylists'){
-            axiosWithAuth().get('/search') 
-            .then(res=> {
-                let results = filterFunction(res.data, this.state.filterOpt, this.state.searchTerm)
-                this.setState({
-                    searchResults: results,
-                    isLoading: false,
-                    isError: false,
-                })                
-            }) 
-            .catch(err=> {
-                console.log(err.message, err) 
-                this.setState({isLoading: false, isError: true})
-            })         
-        } 
+        axiosWithAuth().get('/search') 
+        .then(res=> {
+            let results = filterFunction(res.data, this.state.filterOpt, this.state.searchTerm)
+            this.setState({
+                searchResults: results,
+                isLoading: false,
+                isError: false,
+            })                
+        }) 
+        .catch(err=> {
+            console.log(err.message, err) 
+            this.setState({isLoading: false, isError: true})
+        })         
     }
    
     render(){
@@ -100,14 +77,10 @@ class SearchPage extends React.Component {
                         value={this.state.searchTerm}
                         onChange={this.handleChange}
                     />
-                    <select className='filterOpt' name='filterOpt' onChange={this.handleChange}>
-                        <option value='stylists'>Stylists</option>
-                        <option value='posts'>Posts</option>
-                    </select>
                 </form>
             </SearchBar>
             <SearchResultsContainer className='search-container'>
-                <div>
+                <div className='results'>
                     {this.state.isLoading === true && (                        
                         <Loader
                             type="Puff"
@@ -140,8 +113,9 @@ class SearchPage extends React.Component {
                         />
                     ))}
                 </div>
-                <div style={{ height: '90vh', width: '100%' }}>
+                <div  className='map-container' style={{ height: '80vh', width: '40vw' }}>
                     <SearchMap
+                        results={this.state.searchResults}
                         googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&ley=${process.env.REACT_APP_GOOGLE_KEY}`}
                         yesIWantToUseGoogleMapApiInternals
                         loadingElement={<div style={{height: '100%'}}/>}
@@ -149,6 +123,7 @@ class SearchPage extends React.Component {
                         mapElement={<div style={{height: '100%'}}/>}
                     />
                 </div>
+            
             </SearchResultsContainer>
         </div>
         )
@@ -179,10 +154,9 @@ const SearchResultsContainer = styled.div`
     display: flex;
     width: 85vw;  
     div{
-        width: 40vw;   
+        width: 40vw; 
         display: flex;
-        justify-content: space-evenly;
-        flex-wrap: wrap;
+        flex-direction: column;
     }
 
 `;
