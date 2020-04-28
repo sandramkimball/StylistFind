@@ -20,7 +20,7 @@ function Map(props) {
     return(
         <GoogleMap
             defaultZoom={11}
-            defaultCenter={{lat: 59.95, lng: -75.33}}
+            defaultCenter={{lat: 32.723555, lng: -117.168417}}
         >
             {/* {props.results.map(stylist=> (
                 <Marker 
