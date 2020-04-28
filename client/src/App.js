@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
 
 // STYLING
 import GlobalStyle from './components/styled-components/GlobalStyle';
@@ -22,10 +23,10 @@ import EditStylist from './components/stylists/EditStylist';
 import {SearchPage} from './components/search/SearchPage';
 import UserDash from './components/users/UserDash';
 import StylistDash from './components/stylists/StylistDash';
+import StylistPortfolio from './components/stylists/StylistPortfolio';
 import AllReviews from './components/reviews/AllReviews';
 import ReviewForm from './components/reviews/ReviewForm';
 import AddPost from './components/posts/AddPost.js';
-// import PrivateRoute from './components/PrivateRoute';
 
 // CONTEXTS
 import DataProvider from './components/contexts/DataContext.js'
@@ -50,10 +51,11 @@ function App() {
             <Route path="/signupform" component={SignUpForm}/>
             <Route path="/signup/salon" component={SalonSignUp}/>
             <Route path='/search' component={SearchPage}/>
-            <Route path='/users/:id/dash' component={UserDash} />
-            <Route path='/user/:id/edit' component={EditUser}/>
-            <Route path='/stylists/:id/dash' component={StylistDash}/>
-            <Route path='/stylist/:id/edit' component={EditStylist}/>
+            <Route path='/users/:id/dash' PrivateRoute={UserDash} />
+            <Route path='/user/:id/edit' PrivateRoute={EditUser}/>
+            <Route path='/stylists/:id/portfolio' component={StylistPortfolio}/>
+            <Route path='/stylists/:id/dash' PrivateRoute={StylistDash}/>
+            <Route path='/stylist/:id/edit' PrivateRoute={EditStylist}/>
             <Route path='/stylist/:id/add-review' component={ReviewForm}/>
             <Route path='/stylist/:id/add-post' component={AddPost}/>
             <Route path='/:usertype/:id/reviews' component={AllReviews}/>

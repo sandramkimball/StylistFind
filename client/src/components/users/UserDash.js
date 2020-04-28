@@ -19,7 +19,7 @@ class UserDash extends React.Component {
         const id = localStorage.getItem('id')
         const token = localStorage.getItem('token')
         axiosWithAuth()
-        .get(`/users/${id}`)
+        .get(`/users/${id}`, token)
         .then(res=> { 
             this.setState({user: res.data})
             return axiosWithAuth()
@@ -59,6 +59,7 @@ class UserDash extends React.Component {
                     <div>
                         {this.state.reviews !== null && this.state.reviews.map(review => (
                             <ReviewCard  
+                                key={review.id}
                                 id={review.id} 
                                 review={review}/>
                         ))}

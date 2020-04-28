@@ -42,6 +42,8 @@ class EditUser extends React.Component {
 
     handleSubmit = e => {        
         const id = this.state.user.id
+        const fd = new FormData()
+        fd.append('image', this.state.profile_img)
         e.preventDefault()
         axiosWithAuth()
         .put(`/users/${id}`, this.state.user)

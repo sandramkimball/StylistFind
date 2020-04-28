@@ -24,12 +24,9 @@ const ReviewForm = (props) => {
     const handleSubmit = e => {
         axiosWithAuth()
         .post(`users/${userId}/reviews`, newReview)
-        .then(
-            res => {
-                console.log(res)
-                props.history.push(`/stylists/${stylistId}/dash`);
-            }
-        )
+        .then(res => {
+            props.history.push(`/stylists/${stylistId}/profile`);
+        })
         .catch(err=> console.log(err.message))
     }
 

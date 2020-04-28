@@ -5,30 +5,39 @@ import axiosWithAuth from '../utilis/axiosWithAuth';
 import PostCard from '../posts/PostCard';
 import Toolbar from './Toolbar'
 
-class StylistDash extends React.Component {
+class StylistPortfolio extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             stylist: [],
             salon: [],
             posts: [],
+            isSaved: false,
         }
+        this.handleSave = this.handleSave.bind(this);
+    }
+
+    handleSave = e => {
+        e.preventDefault();
+        const cssName = (this.state.isSaved === false) ? true : false
+        this.setState({isSaved: cssName})
+        // props.user.bookmarks.push({stylist: this.state.stylist})
     }
     
     componentDidMount(){
-        const id = localStorage.getItem('id')    
-        const token = localStorage.getItem('token')
+        const { match: { params } } = this.props;
         axiosWithAuth()
-        .get(`/stylists/${id}`, token)
+        .get(`/stylists/public/${params.id}`)
         .then(res=> { 
             this.setState({ stylist: res.data });
             return axiosWithAuth()
-            .get(`/stylists/${id}/posts`, token)
+            .get(`/stylists/${params.id}/posts`)
             .then(res=> { 
                 this.setState({ posts: res.data });
             })
         })
-        .catch(err=>{console.log(err)});
+        .catch(err=>{console.log(err, err.message)});
+    
     }
 
 
@@ -52,7 +61,6 @@ class StylistDash extends React.Component {
                             <p>{this.state.stylist.city} {this.state.stylist.state} {this.state.stylist.zipcode}</p>
                         </div>
                     </div>
-               
                 </InfoBox>    
                 <div className = 'gallery'>
                     <div>
@@ -71,7 +79,7 @@ class StylistDash extends React.Component {
     }
 }
 
-export default StylistDash;
+export default StylistPortfolio;
 
 const Dash = styled.div`
     display: flex;

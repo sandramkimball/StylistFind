@@ -29,7 +29,7 @@ class Login extends React.Component {
     // Separate APIs for stylist and user. 
     // Current Bug: this.props.history.push() throws typeError-history is undefined
     handleSubmit = e => {
-    e.preventDefault();
+        e.preventDefault();
         if(this.state.isStylist === false){
             axiosWithAuth()
             .post('/auth/login/user', {

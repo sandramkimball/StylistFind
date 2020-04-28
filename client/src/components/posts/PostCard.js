@@ -22,7 +22,7 @@ function PostCard(props) {
                 {stylistId === stylist_id &&(
                     <p className='delete-btn' onClick={handleClick}>X</p>
                 )}
-                <Link to={`/stylists/${id}/dash`} key={props.id} id={props.id} props={props}>
+                <Link to={`/stylists/${id}/profile`} key={props.id} id={props.id} props={props}>
                     <img src={image} alt='user post'/>
                     <p>posted by {first_name}</p>
                     <p>{salon}</p>

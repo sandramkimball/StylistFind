@@ -46,7 +46,6 @@ class SearchPage extends React.Component {
         })
     }
 
-
     handleSubmit = e => {
         e.preventDefault()
         this.setState({isLoading: true})
