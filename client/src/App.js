@@ -13,10 +13,10 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import LoginPage from './components/login&signup/LoginPage';
-// import LoginForm from './components/login&signup/LoginForm';
+import LoginForm from './components/login&signup/LoginForm';
 import SignUpPage from './components/login&signup/SignUpPage';
-// import SignUpForm from './components/login&signup/SignUpForm';
-// import SalonSignUp from './components/login&signup/SalonSignUp';
+import SignUpForm from './components/login&signup/SignUpForm';
+import SalonSignUp from './components/login&signup/SalonSignUp';
 import EditUser from './components/users/EditUser';
 import EditStylist from './components/stylists/EditStylist';
 import {SearchPage} from './components/search/SearchPage';
@@ -46,9 +46,9 @@ function App() {
             <Route exact path='/policy' component={PrivacyPolicy}/>
             <Route path="/login" component={LoginPage}/>
             <Route path="/signup" component={SignUpPage}/>
-            {/* <Route path="/userlogin" component={LoginForm}/> */}
-            {/* <Route path="/signupform" component={SignUpForm}/>
-            <Route path="/signup/salon" component={SalonSignUp}/> */}
+            <Route path="/userlogin" component={LoginForm}/>
+            <Route path="/signupform" component={SignUpForm}/>
+            <Route path="/signup/salon" component={SalonSignUp}/>
             <Route path='/search' component={SearchPage}/>
             <Route path='/users/:id/dash' component={UserDash} />
             <Route path='/user/:id/edit' component={EditUser}/>

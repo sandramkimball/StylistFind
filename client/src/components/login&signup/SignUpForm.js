@@ -66,13 +66,12 @@ export default class SignUp extends React.Component {
       email: this.state.email,
       profile_img: this.state.profile_img,
       usertype: 'user',
-  })
+    })
     .then( res=> {
       localStorage.setItem('token', res.data.payload)
       localStorage.setItem('id', res.data.user.id)
       localStorage.setItem('usertype', res.data.user.usertype)
       this.props.history.push('/login')
-      console.log(res)
     })
     .catch(err=>{console.log(err)})
   };

@@ -46,7 +46,7 @@ class EditUser extends React.Component {
         axiosWithAuth()
         .put(`/users/${id}`, this.state.user)
         .then(()=> {
-            this.props.history.push(`/user/${id}/dash`);
+            this.props.history.push(`/users/${id}/dash`);
         })
         .catch(err=> console.log('Unable to make updates.', err))
     };
