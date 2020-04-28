@@ -29,7 +29,7 @@ class Login extends React.Component {
     //seperate api calls for stylist and user. 
     //Current Bug: this.props.historty.push() throws type error and returns the login error despite a successfully logging in.
     handleSubmit = e => {
-        e.preventDefault();
+    e.preventDefault();
         if(this.state.isStylist === false){
             axiosWithAuth()
             .post('/auth/login/user', {
@@ -40,6 +40,7 @@ class Login extends React.Component {
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('id', res.data.user.id);
                 localStorage.setItem('usertype', res.data.user.usertype);
+                console.log(res)
                 this.setState({isLoggedIn: true})
                 this.props.history.push(`/users/${res.data.user.id}/dash`)
             })

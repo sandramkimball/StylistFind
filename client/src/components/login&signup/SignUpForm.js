@@ -34,7 +34,7 @@ export default class SignUp extends React.Component {
     this.setState({ ...this.state, [e.target.name]: e.target.value });
   };
 
-  //if stylist is checked, routes to salon signup form
+  //if stylist box is checked, submit btn routes to salon signup form
   handleNext = e => {
     e.preventDefault()
     axiosWithAuth()
@@ -69,7 +69,10 @@ export default class SignUp extends React.Component {
   })
     .then( res=> {
       localStorage.setItem('token', res.data.payload)
+      localStorage.setItem('id', res.data.user.id)
+      localStorage.setItem('usertype', res.data.user.usertype)
       this.props.history.push('/login')
+      console.log(res)
     })
     .catch(err=>{console.log(err)})
   };
@@ -131,7 +134,7 @@ export default class SignUp extends React.Component {
               {this.state.usertype === 'stylist' && (
                 <button type='submit' onClick={this.handleNext}>next</button>
               )}
-              <Link to='/login'><p>I already have an account.</p></Link> 
+              <Link to='/login'><p>Already have an account?</p></Link> 
             </div>
           
           )}
@@ -140,7 +143,7 @@ export default class SignUp extends React.Component {
           {this.state.salonForm === true && (
             <div>
               <SalonSignUp/>
-              <Link to='/login'><p>I already have an account.</p></Link> 
+              <Link to='/login'><p>Already have an account?</p></Link> 
             </div>
           )}
       </SignupPage>
