@@ -24,7 +24,7 @@ function ReviewCard (props) {
                     <div>
                         <h4>{user_first} </h4>
                         <p>
-                            <Link to={`/stylists/${stylist_id}/profile`} key={stylist_id} id={stylist_id} props={props}>
+                            <Link to={`/stylists/${stylist_id}/portfolio`} key={stylist_id} id={stylist_id} props={props}>
                                <h4> @{stylist_first} {stylist_last}</h4>
                             </Link>    
                         </p>

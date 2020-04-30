@@ -51,14 +51,17 @@ function App() {
             <Route path="/signupform" component={SignUpForm}/>
             <Route path="/signup/salon" component={SalonSignUp}/>
             <Route path='/search' component={SearchPage}/>
-            <Route path='/users/:id/dash' PrivateRoute={UserDash} />
-            <Route path='/user/:id/edit' PrivateRoute={EditUser}/>
             <Route path='/stylists/:id/portfolio' component={StylistPortfolio}/>
-            <Route path='/stylists/:id/dash' PrivateRoute={StylistDash}/>
-            <Route path='/stylist/:id/edit' PrivateRoute={EditStylist}/>
-            <Route path='/stylist/:id/add-review' component={ReviewForm}/>
-            <Route path='/stylist/:id/add-post' component={AddPost}/>
             <Route path='/:usertype/:id/reviews' component={AllReviews}/>
+            <Route path='/stylist/:id/add-review' component={ReviewForm}/>
+            <Route component={LoginForm}/>
+            <Route component={SignUpForm}/>
+            <Route component={SalonSignUp}/>
+            <PrivateRoute path='/users/:id/dash' component={UserDash} />
+            <PrivateRoute path='/user/:id/edit' component={EditUser}/>
+            <PrivateRoute path='/stylists/:id/dash' component={StylistDash}/>
+            <PrivateRoute path='/stylist/:id/edit' component={EditStylist}/>
+            <PrivateRoute path='/stylist/:id/add-post' component={AddPost}/>
         </Switch>
         <Footer/>
         </Router>

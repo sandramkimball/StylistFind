@@ -26,6 +26,12 @@ class UserDash extends React.Component {
             .get(`users/${id}/reviews`, token)
             .then(res=> {
                 this.setState({reviews: res.data})
+                return axiosWithAuth()
+                .get(`users/${id}/bookmarks`, token)
+                .then(res=> {
+                    this.setState({bookmarks: res.data})
+                    console.log(res.data)
+                })
             })
         })
         .catch(err=>{console.log(err.response)});
@@ -54,7 +60,7 @@ class UserDash extends React.Component {
                     </div>
                     <Link to={`/user/${this.state.user.id}/edit`}><p className='edit-btn'>Edit</p></Link>
                 </InfoBox>    
-                <div className = 'gallery'>
+                <div className = 'reviews'>
                     <h4>Your Reviews</h4>
                     <div>
                         {this.state.reviews !== null && this.state.reviews.map(review => (
@@ -93,7 +99,7 @@ const Dash = styled.div`
     margin: auto;
     justify-content: space-between;
     a{text-decoration: none}
-    .gallery, .bookmarks{ 
+    .reviews, .bookmarks{ 
         background: white;
         box-shadow: 0px 3px 8px gray;
         border-radius: 4px;
@@ -102,7 +108,6 @@ const Dash = styled.div`
         margin: 5vh auto;
         div{
             display: flex;
-            flex-wrap: wrap; 
             margin: 0 1px 2px 1px;
         }
     }

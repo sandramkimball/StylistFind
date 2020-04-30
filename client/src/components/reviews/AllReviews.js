@@ -21,7 +21,7 @@ const AllReviews = (props) => {
     return(
         <Page>
             {localStorage.getItem('id') === id && (<Link to={`/stylists/${id}/dash`} className='return-btn'><p>Return</p></Link>)}
-            {localStorage.getItem('id') !== id && (<Link to={`/stylists/${id}/profile`} className='return-btn'><p>Return</p></Link>)}
+            {localStorage.getItem('id') !== id && (<Link to={`/stylists/${id}/portfolio`} className='return-btn'><p>Return</p></Link>)}
             <div className='container'>
                 {!reviews && (
                     <p>You have no reviews.</p>

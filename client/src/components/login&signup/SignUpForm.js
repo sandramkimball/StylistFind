@@ -6,7 +6,6 @@ import defaultImg from '../../images/default-profile.jpg'
 import SalonSignUp from './SalonSignUp';
 
 export default class SignUp extends React.Component {
-
   constructor(props){
     super(props);
     this.state = { 
@@ -68,12 +67,14 @@ export default class SignUp extends React.Component {
       usertype: 'user',
     })
     .then( res=> {
-      localStorage.setItem('token', res.data.payload)
-      localStorage.setItem('id', res.data.user.id)
-      localStorage.setItem('usertype', res.data.user.usertype)
+      // console.log('res', res)
+      // localStorage.setItem('token', res.data.payload)
+      // localStorage.setItem('id', res.data.user.id)
+      // localStorage.setItem('usertype', res.data.user.usertype)
       this.props.history.push('/login')
     })
     .catch(err=>{console.log(err)})
+    console.log('localStorage', localStorage)
   };
 
   render(){

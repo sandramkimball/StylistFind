@@ -1,15 +1,30 @@
-import React from  'react'
+import React, {useState} from  'react'
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+import axiosWithAuth from '../utilis/axiosWithAuth'
     
 const Toolbar = (props) => {
     const {id} = props.stylist;
-    const isAdded = props.added
+    const [heartColor, setColor] = useState('gray')
+    var isAdded = props.added
+
     const handleSave = e => {
+        //determine if already saved
+        if(isAdded === true){
+            setColor('orange')
+
+        } else{
+            setColor('gray')
+
+        }
+        // post new fave to bookmark api
         e.preventDefault();
-        const cssName = (this.state.isSaved === false) ? true : false
-        this.setState({added: cssName})
-        // props.user.bookmarks.push({stylist: this.state.stylist})
+        const userId = localStorage.getItem('id')
+        const token = localStorage.getItem('token')
+        axiosWithAuth()
+        .post(`/users/${userId}/bookmarks`, props.stylist.id, token)
+        .then(res=>console.log(res.message))
+        .catch(err=>console.log(err.message))
     }
     
     return(
@@ -18,9 +33,9 @@ const Toolbar = (props) => {
 
             {localStorage.getItem('usertype') === 'user' && (
                 <>
-                    <p className={`add-stylist ${isAdded ? false : true}`} onClick={handleSave}>❤ Save</p>
+                    <p style={{color:heartColor}} onClick={handleSave}>❤ Save</p>
                     <Link to={`/stylist/${id}/add-review`} params={{ props: props.stylist }}>
-                        <p>+ Add Review</p>
+                        <p>+Add Review</p>
                     </Link>
                 </>
             )}
@@ -43,10 +58,11 @@ export default Toolbar
 
 const Bar = styled.div`
     display: flex;
+    a{ padding: 0 5px;
+        align-items: center;
+    }
     p{
-        text-align: right;
-        padding: 0 15px;
-        font-size: 1.25rem;
+        font-size: 1rem;
         color: gray;
         cursor: pointer;
         :hover{color: orange}
@@ -54,8 +70,5 @@ const Bar = styled.div`
     .edit-btn{
         color: #80808075;
         :hover{color: #000}
-    }
-    .add-stylist :hover{
-        color: pink
     }
 `;
