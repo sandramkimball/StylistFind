@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import PostCard from '../posts/PostCard';
+import defaultImg from '../../images/default-profile.jpg'
 import Toolbar from './Toolbar'
 
 class StylistDash extends React.Component {
@@ -16,6 +17,7 @@ class StylistDash extends React.Component {
     }
     
     componentDidMount(){
+        console.log(localStorage)
         const id = localStorage.getItem('id')    
         const token = localStorage.getItem('token')
         axiosWithAuth()
@@ -28,18 +30,27 @@ class StylistDash extends React.Component {
                 this.setState({ posts: res.data });
             })
         })
-        .catch(err=>{console.log(err)});
+        .catch(err=>{console.log(err, err.message)});
     }
 
 
     render(){
+        const hasProfileImage = this.state.stylist.profile_image;
+        let profile_image
+        let default_image;
+        if(!hasProfileImage === null){
+            profile_image = <img src={`${this.stylist.user.profile_img}`} alt='profile of stylist'/>
+        }
+        else{default_image = <img src={defaultImg} alt='default avatar'/>}
+
         return (
             <Dash className='stylist-dash'>
                 <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
                 <InfoBox className='info-box'>
                     <Toolbar stylist={this.state.stylist} isAdded={this.state.isAdded}/>
                     <div className='profile-pic-box'>
-                        <img src={`${this.state.stylist.profile_img}`} alt='profile of user'/>
+                        {profile_image}
+                        {default_image}
                     </div>
                     <div className='profile-text'>
                         <h1>{this.state.stylist.first_name} {this.state.stylist.last_name}</h1> 
@@ -55,6 +66,8 @@ class StylistDash extends React.Component {
                
                 </InfoBox>    
                 <div className = 'gallery'>
+                    <h4>Your Posts</h4>
+                    <Link to='/stylist/:id/add-post'>+Post</Link>
                     <div>
                         {this.state.posts.map(post=> (
                             <PostCard 

@@ -30,7 +30,6 @@ const Toolbar = (props) => {
     return(
         <Bar>
             <Link to={`/stylist/${id}/reviews`} usertype={'stylist'}><p>Read Reviews</p></Link>
-
             {localStorage.getItem('usertype') === 'user' && (
                 <>
                     <p style={{color:heartColor}} onClick={handleSave}>❤ Save</p>

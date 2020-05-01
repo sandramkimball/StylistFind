@@ -1,7 +1,7 @@
 
 // This object initializes login data
 export const initialUserState = {
-    username: '',
+    email: '',
     password: '',
     usertype: 'stylist' || 'customer',
     isLoading: false,
@@ -10,7 +10,7 @@ export const initialUserState = {
 
 
 
-// This reducer handles dispatches to update global user state
+// This reducer handles dispatches to update global user/stylist state
 export const userReducer = (state = initialUserState, action) => {
     switch(action.type){
 
@@ -33,19 +33,18 @@ export const userReducer = (state = initialUserState, action) => {
                 isLoggedIn: true,
                 isLoading: true,
                 usertype: action.usertype,
-                username: action.username,
+                email: action.email,
             };
 
         case 'LOGIN_FAILURE':
             return {
                 ...state,
-                error: 'Incorrect username or password.',
+                error: 'Incorrect email or password.',
                 isLoggedIn: false,
                 isLoading: false,
                 usertype: '',
-                username: '',
-                password: '',
-                city: '',
+                email: '',
+                password: ''
             };
             
         case 'LOGIN_TRUE':
@@ -61,9 +60,10 @@ export const userReducer = (state = initialUserState, action) => {
                 isLoggedIn: true,
                 isLoading: false,
                 usertype: action.usertype,
-                username: action.username,
-                password: action.password,
-                city: action.city,
+                first_name: action.first_name,
+                last_name: action.last_name,
+                email: action.email,
+                password: action.password
             };
 
         case 'REGISTRATION_FAILURE':
@@ -72,10 +72,9 @@ export const userReducer = (state = initialUserState, action) => {
                 error: 'Username already taken.',
                 isLoggedIn: false,
                 isLoading: false,
-                username: '',
+                email: '',
                 password: '',
-                usertype: '',
-                city: '',
+                usertype: ''
             };
         
         case 'LOGOUT':

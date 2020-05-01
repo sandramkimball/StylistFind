@@ -38,7 +38,7 @@ export default class SalonSignUp extends React.Component {
     .then(res=> {
         this.props.history.push('/login')
     })   
-    .catch(err=>{console.log(err)})
+    .catch(err=>{console.log(err, err.message)})
     
   };
 

@@ -46,9 +46,7 @@ export default class SignUp extends React.Component {
       usertype: 'stylist'
     })
     .then(res => {
-      localStorage.setItem('token', res.data.payload)
-      localStorage.setItem('id', res.data.stylist.id);
-      localStorage.setItem('usertype', res.data.stylist.usertype);
+      console.log(res.message)
       this.setState({salonForm: true})
     })  
     .catch(err=>{console.log(err)})
@@ -66,15 +64,11 @@ export default class SignUp extends React.Component {
       profile_img: this.state.profile_img,
       usertype: 'user',
     })
-    .then( res=> {
-      // console.log('res', res)
-      // localStorage.setItem('token', res.data.payload)
-      // localStorage.setItem('id', res.data.user.id)
-      // localStorage.setItem('usertype', res.data.user.usertype)
+    .then(res=> {
+      console.log(res.message)
       this.props.history.push('/login')
     })
     .catch(err=>{console.log(err)})
-    console.log('localStorage', localStorage)
   };
 
   render(){

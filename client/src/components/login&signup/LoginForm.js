@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import UserContext from '../contexts/UserContext';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import defaultImg from '../../images/default-profile.jpg'
-import {Link} from 'react-router-dom'
+import defaultImg from '../../images/default-profile.jpg';
+import {Link} from 'react-router-dom';
 
 class Login extends React.Component {
+    static contextType = UserContext
     constructor(props){
         super(props);
         this.state = {
@@ -14,6 +16,8 @@ class Login extends React.Component {
             email: '',
             password: '',
             profile_img: {defaultImg},
+            stylist: [],
+            user: []
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -27,7 +31,6 @@ class Login extends React.Component {
     };
 
     // Separate APIs for stylist and user. 
-    // Current Bug: this.props.history.push() throws typeError-history is undefined
     handleSubmit = e => {
         e.preventDefault();
         if(this.state.isStylist === false){
@@ -59,6 +62,7 @@ class Login extends React.Component {
                 localStorage.setItem('id', res.data.stylist.id);
                 localStorage.setItem('usertype', res.data.stylist.usertype);
                 this.setState({isLoggedIn: true})
+                //this.UserContext.setUser(res.data.stylist)
                 this.props.history.push(`/stylists/${res.data.stylist.id}/dash`)
             })
             .catch(err=> {
@@ -67,9 +71,11 @@ class Login extends React.Component {
             }) 
         }
     };
-    
      
-    render(){
+    render(
+    ){
+        const userData = useContext(this.UserContext)
+        console.log('context user:', userData)
         let loginError;
         if (this.state.loginFail === true){
             loginError = <p className='login-fail'>Email or Password Incorrect</p>

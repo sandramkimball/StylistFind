@@ -7,6 +7,7 @@ function PostCard(props) {
     const {image, comment, date, id, stylist_id} = props.post;
     const {first_name, salon} = props.stylist;
     let stylistId = localStorage.getItem('id')
+    let isStylist = localStorage.getItem('usertype')
     const handleClick = e => {
         e.preventDefault()
         axiosWithAuth()
@@ -15,19 +16,20 @@ function PostCard(props) {
         .catch(err=> console.log('post not deleted', err))
 
     }
+    console.log('is stylist the same?',stylistId, stylist_id)
 
     return (
         <div>
             <Card className='post-card'>
-                {stylistId === stylist_id &&(
+                {isStylist === "stylist" && stylistId === stylist_id && (
                     <p className='delete-btn' onClick={handleClick}>X</p>
                 )}
                 <Link to={`/stylists/${id}/portfolio`} key={props.id} id={props.id} props={props}>
-                    <img src={image} alt='user post'/>
+                    {image && (<img src={image} alt='user post'/>)}
                     <p>posted by {first_name}</p>
                     <p>{salon}</p>
                     <h4>{comment}</h4>
-                    <p>{date}</p>
+                    {/* <p>{date}</p> */}
                 </Link>
            </Card>
         </div>

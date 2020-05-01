@@ -54,9 +54,6 @@ function App() {
             <Route path='/stylists/:id/portfolio' component={StylistPortfolio}/>
             <Route path='/:usertype/:id/reviews' component={AllReviews}/>
             <Route path='/stylist/:id/add-review' component={ReviewForm}/>
-            <Route component={LoginForm}/>
-            <Route component={SignUpForm}/>
-            <Route component={SalonSignUp}/>
             <PrivateRoute path='/users/:id/dash' component={UserDash} />
             <PrivateRoute path='/user/:id/edit' component={EditUser}/>
             <PrivateRoute path='/stylists/:id/dash' component={StylistDash}/>

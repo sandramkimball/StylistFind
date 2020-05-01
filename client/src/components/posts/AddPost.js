@@ -21,8 +21,8 @@ class AddPost extends React.Component {
         this.setState({[e.target.name]: e.target.value });
     }  
     handleImage = e => {
-        this.setState({image: e.target.files[0], loaded: 0 });
-        console.log('image set', e.target.files[0] )
+        e.preventDefault()
+        this.setState({profile_img: e.target.files[0]});
     }
 
 
@@ -36,8 +36,9 @@ class AddPost extends React.Component {
             image: formattedImg,
             comment: this.state.comment
         })
-        .then(()=> 
-            this.props.history.push(`/stylists/${this.state.stylist_id}/dash`)
+        .then((res) => 
+            console.log(res.message),
+            this.props.history.push(`/stylists/${this.state.stylist.id}/dash`)
         )
         .catch(err=> console.log('Unable to submit post.', err))
     };
@@ -56,7 +57,7 @@ class AddPost extends React.Component {
                     <textarea
                         type='textarea'
                         name='comment'
-                        rows='12' 
+                        rows='6' 
                         cols='20' 
                         placeholder='Add a comment...'
                         onChange={this.handleChange}
@@ -80,15 +81,17 @@ const PostForm = styled.form`
     margin: auto;
     padding: 20px;
     background: orange;
-    border-radius: 2px;
+    border-radius: 4px;
     input{
-        height: 50px;
+        height: 30px;
         padding: 10px 0;
-        font-size: 1.25rem;
+        border-radius: 4px;
+        font-size: 1.05rem;
     }
     textarea{
         border: none; 
         padding: 4px;
+        margin: 10px 0;
         font-size: 1.25rem;
         font-family: 'Source Sans Pro',sans-serif;
     }
@@ -103,14 +106,15 @@ const PostForm = styled.form`
             color: #80808075;
         }
     }
-    .return-btn, p{        
+    p, a.return-btn{        
         text-decoration: none;
+        text-align: center
         width: 25%;
         color: #000;
         background: #fff;
-        padding: 5px 10px;
+        padding: 2px 0;
         margin: 2px auto;
-        font-size: 1.25rem;
+        font-size: 1rem;
         border-radius: 2px;
         :hover{cursor: pointer; color: gray}
     }

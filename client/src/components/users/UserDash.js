@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import UserContext from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import ReviewCard from '../reviews/ReviewCards';
 import defaultImg from '../../images/default-profile.jpg';
@@ -48,7 +49,9 @@ class UserDash extends React.Component {
         else{default_image = <img src={defaultImg} alt='default avatar'/>}
 
         return (
-            <Dash>
+                <UserContext.Consumer>
+                    {context=>(
+                <Dash>                   
                 <InfoBox>
                     <div className='profile-pic-box'>
                         {profile_image}
@@ -86,7 +89,9 @@ class UserDash extends React.Component {
                         )}
                     </div>
                 </div>
-            </Dash>
+                </Dash> 
+            )}
+            </UserContext.Consumer>
         )
     }
 }

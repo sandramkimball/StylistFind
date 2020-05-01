@@ -15,7 +15,7 @@ class SignUpPage extends React.Component {
         return(
             <Page className='login-pg'>
                 <div>
-                   <SignUpForm/>             
+                   <SignUpForm />             
                 </div>
                 <img src={salonChair} alt='salon chair and makeup light'/>
             </Page>
