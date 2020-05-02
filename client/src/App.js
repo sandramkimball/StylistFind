@@ -30,7 +30,7 @@ import AddPost from './components/posts/AddPost.js';
 
 // CONTEXTS
 import DataProvider from './components/contexts/DataContext.js'
-import UserProvider from './components/contexts/UserContext.js'
+import {UserProvider} from './components/contexts/UserContext.js'
 
 function App() {
 

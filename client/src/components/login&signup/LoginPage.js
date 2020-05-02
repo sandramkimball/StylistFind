@@ -9,13 +9,14 @@ class LoginPage extends React.Component {
         this.state = {
             alreadyUser: true,
         }
-    }
+    }        
 
-    render(){      
+    render(){   
+  
         return(
             <Page className='login-pg'>
                 <div>
-                   <LoginForm />             
+                   <LoginForm/>             
                 </div>
                 <img src={salonChair} alt='salon chair and makeup light'/>
             </Page>

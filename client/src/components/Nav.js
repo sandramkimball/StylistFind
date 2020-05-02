@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from './contexts/UserContext';
 import { NavLink, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../images/logo.png'
 
 function Nav(props) {
+    const [user, setUser] = useContext(UserContext)
 
     const logout = e => {
         localStorage.clear();
+        setUser(null)
         props.history.push('/')
     };
 
@@ -18,23 +21,23 @@ function Nav(props) {
             <div>
                 <NavLink to='/search' className='search-btn'>Search</NavLink>                
 
-                {localStorage.getItem('usertype') === 'user' && (
-                    <NavLink to={`/users/${localStorage.getItem('id')}/dash`}>Dashboard</NavLink>
+                {user && user.usertype === 'user' && (
+                    <NavLink to={`/users/${user.id}/dash`}>Dashboard</NavLink>
                 )}
 
-                {localStorage.getItem('usertype') === 'stylist' && (
-                    <NavLink to={`/stylists/${localStorage.getItem('id')}/dash`}>Profile</NavLink>
+                {user && user.usertype === 'stylist' && (
+                    <NavLink to={`/stylists/${user.id}/dash`}>Profile</NavLink>
                 )}
 
-                {!localStorage.getItem('usertype') && (
+                {user === null && (
                     <NavLink to='/login'>Login</NavLink>
                 )}
 
-                {!localStorage.getItem('usertype') && (
+                {user === null && (
                     <NavLink to='/signup'>Signup</NavLink>
                 )}
 
-                {localStorage.getItem('usertype') && (
+                {user && (
                     <NavLink to='/' onClick={logout}>Logout</NavLink>
                 )}                
             </div>

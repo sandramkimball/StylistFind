@@ -1,105 +1,76 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
 
 
-class EditUser extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            user: {
-                id: localStorage.getItem('id'),
-                first_name: '',
-                last_name: '',
-                profile_img: '',
-            }
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleImageChange = this.handleImageChange.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
+const EditUser = (props) => {
+    const [user, setUser] = useContext(UserContext);
 
-    componentDidMount(){
-        const id = this.state.user.id
-        axiosWithAuth()
-        .get(`/users/${id}`)
-        .then(res=> { 
-            this.setState({user: res.data})
-        })
-
-        .catch(err=>{console.log(err.response)});
-    }
-
-    handleChange = e => {
+    const handleChange = e => {
         e.preventDefault()
-        this.setState({ ...this.state, user: {...this.state.user, [e.target.name]: e.target.value} });
+        setUser({ ...user, [e.target.name]: e.target.value });
     }
 
-    handleImageChange = e => {
-        e.preventDefault()
-        this.setState({profile_img: e.target.files[0]});
-    }
-
-    handleSubmit = e => {        
-        const id = this.state.user.id
+    const handleImageChange = e => {
         const fd = new FormData()
-        fd.append('image', this.state.profile_img)
+        fd.append('image', user.profile_img)
+        setUser({profile_img: e.target.files[0]});
+    }
+
+    const handleSubmit = e => {        
         e.preventDefault()
         axiosWithAuth()
-        .put(`/users/${id}`, this.state.user)
-        .then(()=> {
-            this.props.history.push(`/users/${id}/dash`);
-        })
+        .put(`/users/${user.id}`, user)
+        .then(()=> { props.history.push(`/users/${user.id}/dash`) })
         .catch(err=> console.log('Unable to make updates.', err))
     };
 
-    render(){
-        return (
-            <EditForm>
-            <h3>Edit Profile</h3>
-            <img src={this.state.profile_img} alt='user profile'/>
-            <form onSubmit={this.handleSubmit} enctype='multipart/form-data'>
-                <input 
-                    type="file" 
-                    className="img-input" 
-                    name="profile_img" 
-                    value={this.state.user.profile_img}
-                    accept="image/*"
-                    onChange={this.handleImageChange}
-                />
+    return (
+        <EditForm>
+        <h3>Edit Profile</h3>
+        <img src={user.profile_img} alt='user profile'/>
+        <form onSubmit={handleSubmit} enctype='multipart/form-data'>
+            <input 
+                type="file" 
+                className="img-input" 
+                name="profile_img" 
+                value={user.profile_img}
+                accept="image/*"
+                onChange={handleImageChange}
+            />
 
-                <input 
-                    name='first_name'
-                    type='text'
-                    onChange={this.handleChange}
-                    value={this.state.user.first_name}
-                    placeholder='First Name'
-                />
+            <input 
+                name='first_name'
+                type='text'
+                onChange={handleChange}
+                value={user.first_name}
+                placeholder='First Name'
+            />
 
-                <input 
-                    name='last_name'
-                    type='text'
-                    onChange={this.handleChange}
-                    value={this.state.user.last_name}
-                    placeholder='Last Name'
-                />
+            <input 
+                name='last_name'
+                type='text'
+                onChange={handleChange}
+                value={user.last_name}
+                placeholder='Last Name'
+            />
 
-                <input 
-                    name='email'
-                    type='text'
-                    onChange={this.handleChange}
-                    value={this.state.user.email}
-                    placeholder='Email'
-                />
-                <div>
-                    <p className='edit-btn-aft' onClick={this.handleSubmit}>
-                        <button>Save</button>
-                    </p>
-                </div>
-            </form>    
-        </EditForm>
-        )
-    }
+            <input 
+                name='email'
+                type='text'
+                onChange={handleChange}
+                value={user.email}
+                placeholder='Email'
+            />
+            <div>
+                <p className='edit-btn-aft' onClick={handleSubmit}>
+                    <button>Save</button>
+                </p>
+            </div>
+        </form>    
+    </EditForm>
+    )
 }
 
 

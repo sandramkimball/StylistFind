@@ -1,119 +1,102 @@
-import React, {useContext} from 'react';
-import UserContext from '../contexts/UserContext';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import defaultImg from '../../images/default-profile.jpg';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-class Login extends React.Component {
-    static contextType = UserContext
-    constructor(props){
-        super(props);
-        this.state = {
-            isStylist: false,
-            isLoggedIn: false,
-            loginFail: false,
-            email: '',
-            password: '',
-            profile_img: {defaultImg},
-            stylist: [],
-            user: []
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    };
+function Login(props){
+    const [user, setUser] = useContext(UserContext)
+    const [state, setState] = useState({
+        isStylist: false,
+        isLoggedIn: false,
+        loginFail: false,
+        email: '',
+        password: '',
+        profile_img: {defaultImg}
+    })
 
-    handleChange = e => {
-        this.setState({
-            ...this.state,
-            [e.target.name]: e.target.value 
-        })
+    const handleChange = e => {
+        setState({...state, [e.target.name]: e.target.value})
     };
 
     // Separate APIs for stylist and user. 
-    handleSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
-        if(this.state.isStylist === false){
+        if(state.isStylist === false){
             axiosWithAuth()
             .post('/auth/login/user', {
-                email: this.state.email,
-                password: this.state.password
+                email: state.email,
+                password: state.password
             })
             .then(res=> {
-                localStorage.setItem('token', res.data.token);
-                localStorage.setItem('id', res.data.user.id);
-                localStorage.setItem('usertype', res.data.user.usertype);
-                this.setState({isLoggedIn: true})
-                this.props.history.push(`/users/${res.data.user.id}/dash`)
+                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('usertype', 'user')                
+                setState({isLoggedIn: true})
+                setUser(res.data.user)  
+                props.history.push(`/users/${res.data.user.id}/dash`)
             })
             .catch(err=> {
-                this.setState({loginFail: true})
+                setState({loginFail: true})
                 console.log(err, err.message)
             }) 
         } 
         else{
             axiosWithAuth()
             .post('/auth/login/stylist', {
-                email: this.state.email,
-                password: this.state.password
+                email: state.email,
+                password: state.password
             })
             .then(res=> {
-                localStorage.setItem('token', res.data.token);
-                localStorage.setItem('id', res.data.stylist.id);
-                localStorage.setItem('usertype', res.data.stylist.usertype);
-                this.setState({isLoggedIn: true})
-                //this.UserContext.setUser(res.data.stylist)
-                this.props.history.push(`/stylists/${res.data.stylist.id}/dash`)
+                localStorage.setItem({
+                    'token': res.data.token,
+                    'id': res.data.stylist.id,
+                    'usertype': 'stylist'});
+                setState({isLoggedIn: true})
+                props.history.push(`/stylists/${res.data.stylist.id}/dash`)
             })
             .catch(err=> {
-                this.setState({loginFail: true})
+                setState({loginFail: true})
                 console.log(err, err.message)
             }) 
         }
     };
      
-    render(
-    ){
-        const userData = useContext(this.UserContext)
-        console.log('context user:', userData)
-        let loginError;
-        if (this.state.loginFail === true){
-            loginError = <p className='login-fail'>Email or Password Incorrect</p>
-        }
 
-        return (
-            <LoginForm className='login-form' onSubmit={this.handleSubmit}>
-                <h3>Welcome Back</h3>
+    return (
+        <LoginForm className='login-form' onSubmit={handleSubmit}>
+            <h3>Welcome Back</h3>
+            <input 
+                type='text' 
+                name='email' 
+                value={state.email} 
+                placeholder="Email" 
+                onChange={handleChange}
+            />
+            <input 
+                type='password' 
+                name='password' 
+                value={state.password} 
+                placeholder="Password" 
+                onChange={handleChange}
+            />
+            <div className='check-stylist'>
+                I'm a Stylist
                 <input 
-                    type='text' 
-                    name='email' 
-                    value={this.email} 
-                    placeholder="Email" 
-                    onChange={this.handleChange}
+                    type='checkbox'
+                    label='isStylist'
+                    name='isStylist'
+                    value={'true'}
+                    onClick={handleChange}
                 />
-                <input 
-                    type='password' 
-                    name='password' 
-                    value={this.password} 
-                    placeholder="Password" 
-                    onChange={this.handleChange}
-                />
-                <div className='check-stylist'>
-                    I'm a Stylist
-                    <input 
-                        type='checkbox'
-                        label='isStylist'
-                        name='isStylist'
-                        value={'true'}
-                        onClick={this.handleChange}
-                    />
-                </div>
-                <button type='submit' onClick={this.handleSubmit}>Login</button>
-                {loginError}
-                <Link to='/signup'><p>Don't have an account?</p></Link> 
-            </LoginForm>   
-    )
-}};
+            </div>
+            <button type='submit' onClick={handleSubmit}>Login</button>
+            {state.loginFail === true && (
+                <p className='login-fail'>Email or Password Incorrect</p>
+            )}
+            <Link to='/signup'><p>Don't have an account?</p></Link> 
+        </LoginForm>   
+)};
 
 export default Login;
 
