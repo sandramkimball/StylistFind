@@ -1,151 +1,132 @@
-import React from "react";
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 import styled from 'styled-components';
 import axiosWithAuth from "../utilis/axiosWithAuth";
 import {Link} from 'react-router-dom'
 import defaultImg from '../../images/default-profile.jpg'
 import SalonSignUp from './SalonSignUp';
 
-export default class SignUp extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = { 
+function SignUp(props) {
+  const [state, setState] = useState({ 
       password: '',
       first_name: '',
       last_name: '',
       profile_img: {defaultImg},
+      email: '',
+      usertype: 'user',
+    })
+    
+  const [salon, setSalon] = useState({
       street_address: '',
       city: '',
       zipcode: '',
       state: '',
       country: '',
       salon: '',
-      email: '',
-      usertype: 'user',
-      salonForm: false,
-    }
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleNext = this.handleNext.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  };
+  })
+
+  let [salonForm, setForm] = useState(false)
 
   //populates state with data from form input
-  handleChange = e => {
-    this.setState({ ...this.state, [e.target.name]: e.target.value });
+  const handleChange = e => {
+    setState({ ...state, [e.target.name]: e.target.value });
   };
 
   //if stylist box is checked, submit btn routes to salon signup form
-  handleNext = e => {
+  const handleNext = e => {
     e.preventDefault()
     axiosWithAuth()
-    .post('/auth/register/stylist', {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      password: this.state.password,
-      email: this.state.email,          
-      profile_img: this.state.profile_img,
-      usertype: 'stylist'
-    })
-    .then(res => {
-      console.log(res.message)
-      this.setState({salonForm: true})
-    })  
-    .catch(err=>{console.log(err)})
+    .post('/auth/register/stylist', state)
+    .then(() => setForm(true) )  
+    .catch(err=> console.log(err) )
   };
 
   //if user, submits and routes to login page
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
-    .post('/auth/register/user', {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      password: this.state.password,
-      email: this.state.email,
-      profile_img: this.state.profile_img,
-      usertype: 'user',
-    })
+    .post('/auth/register/user', state)
     .then(res=> {
       console.log(res.message)
-      this.props.history.push('/login')
+      // props.history.push('/login')
     })
     .catch(err=>{console.log(err)})
   };
 
-  render(){
-    return (
-      <SignupPage className='login-form'>
-        <SignupForm>
-          {this.state.salonForm === false && (
-            <div>
-              <h3>Glad You're Here!</h3>
-              <input
-                type='text'
-                name='first_name'
-                value={this.state.first_name} 
-                placeholder="first name" 
-                onChange={this.handleChange}
+  return (
+    <SignupPage className='login-form'>
+      <Form>
+        {salonForm === false && (
+          <div>
+            <h3>Glad You're Here!</h3>
+            <input
+              type='text'
+              name='first_name'
+              value={state.first_name} 
+              placeholder="first name" 
+              onChange={handleChange}
+            />
+            <input
+              type='text'
+              name='last_name'
+              value={state.last_name} 
+              placeholder="last name" 
+              onChange={handleChange}
+            />
+
+            <input
+              type='password'
+              name='password'
+              value={state.password} 
+              placeholder="password" 
+              onChange={handleChange}
+            />
+
+            <input
+              type='text'
+              name='email'
+              value={state.email} 
+              placeholder="email" 
+              onChange={handleChange}
+            />
+
+            <div className='check-stylist'>
+              I'm a Stylist
+              <input 
+                type='checkbox'
+                label='usertype'
+                name='usertype'
+                value={'stylist'}
+                onClick={handleChange}
               />
-              <input
-                type='text'
-                name='last_name'
-                value={this.state.last_name} 
-                placeholder="last name" 
-                onChange={this.handleChange}
-              />
-
-              <input
-                type='password'
-                name='password'
-                value={this.state.password} 
-                placeholder="password" 
-                onChange={this.handleChange}
-              />
-
-              <input
-                type='text'
-                name='email'
-                value={this.state.email} 
-                placeholder="email" 
-                onChange={this.handleChange}
-              />
-
-              <div className='check-stylist'>
-                I'm a Stylist
-                <input 
-                  type='checkbox'
-                  label='usertype'
-                  name='usertype'
-                  value={'stylist'}
-                  onClick={this.handleChange}
-                />
-              </div>
-
-              {/* conditionally renders submit button for usertype */}
-              {this.state.usertype === 'user' &&(
-                <button type='submit' onClick={this.handleSubmit}>signup</button>
-              )}
-
-              {this.state.usertype === 'stylist' && (
-                <button type='submit' onClick={this.handleNext}>next</button>
-              )}
-              <Link to='/login'><p>Already have an account?</p></Link> 
             </div>
-          
-          )}
-        </SignupForm> 
 
-          {this.state.salonForm === true && (
-            <div>
-              <SalonSignUp/>
-              <Link to='/login'><p>Already have an account?</p></Link> 
-            </div>
-          )}
-      </SignupPage>
-    );
-  }
+            {/* conditionally renders submit button for usertype */}
+            {state.usertype === 'user' &&(
+              <button type='submit' onClick={handleSubmit}>signup</button>
+            )}
+
+            {state.usertype === 'stylist' && (
+              <button type='submit' onClick={handleNext}>next</button>
+            )}
+            <Link to='/login'><p>Already have an account?</p></Link> 
+          </div>
+        
+        )}
+      </Form> 
+
+        {salonForm === true && (
+          <div>
+            <SalonSignUp/>
+            <Link to='/login'><p>Already have an account?</p></Link> 
+          </div>
+        )}
+    </SignupPage>
+  );
 }
+export default SignUp
 
-const SignupPage = styled.div`
+const SignupPage = styled.section`
   width: 50vw;
   height: 50vh;
   margin: auto;
@@ -171,7 +152,8 @@ const SignupPage = styled.div`
   a p{text-align: center}
 `;
 
-const SignupForm = styled.form`
+
+const Form = styled.form`
   display:flex;
   justify-content: center;
   align-content: spece-between;

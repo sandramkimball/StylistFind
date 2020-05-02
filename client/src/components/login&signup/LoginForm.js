@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import defaultImg from '../../images/default-profile.jpg';
-import { Link } from 'react-router-dom';
 
 function Login(props){
     const [user, setUser] = useContext(UserContext)
@@ -13,7 +12,6 @@ function Login(props){
         loginFail: false,
         email: '',
         password: '',
-        profile_img: {defaultImg}
     })
 
     const handleChange = e => {
@@ -34,7 +32,7 @@ function Login(props){
                 localStorage.setItem('usertype', 'user')                
                 setState({isLoggedIn: true})
                 setUser(res.data.user)  
-                props.history.push(`/users/${res.data.user.id}/dash`)
+                //props.history.push(`/users/${res.data.user.id}/dash`)
             })
             .catch(err=> {
                 setState({loginFail: true})
@@ -48,12 +46,11 @@ function Login(props){
                 password: state.password
             })
             .then(res=> {
-                localStorage.setItem({
-                    'token': res.data.token,
-                    'id': res.data.stylist.id,
-                    'usertype': 'stylist'});
+                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('usertype', 'stylist')                
                 setState({isLoggedIn: true})
-                props.history.push(`/stylists/${res.data.stylist.id}/dash`)
+                setUser(res.data.user)  
+                // props.history.push(`/stylists/${res.data.stylist.id}/dash`)
             })
             .catch(err=> {
                 setState({loginFail: true})
