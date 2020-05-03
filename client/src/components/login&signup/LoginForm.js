@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
-function Login(props){
+function LoginForm(props){
     const [user, setUser] = useContext(UserContext)
     const [state, setState] = useState({
         isStylist: false,
@@ -29,6 +29,7 @@ function Login(props){
             })
             .then(res=> {
                 localStorage.setItem('token', res.data.token)
+                localStorage.setItem('id', res.data.user.id)
                 localStorage.setItem('usertype', 'user')                
                 setState({isLoggedIn: true})
                 setUser(res.data.user)  
@@ -47,6 +48,7 @@ function Login(props){
             })
             .then(res=> {
                 localStorage.setItem('token', res.data.token)
+                localStorage.setItem('id', res.data.stylist.id)
                 localStorage.setItem('usertype', 'stylist')                
                 setState({isLoggedIn: true})
                 setUser(res.data.user)  
@@ -61,7 +63,7 @@ function Login(props){
      
 
     return (
-        <LoginForm className='login-form' onSubmit={handleSubmit}>
+        <Form className='login-form' onSubmit={handleSubmit}>
             <h3>Welcome Back</h3>
             <input 
                 type='text' 
@@ -92,13 +94,13 @@ function Login(props){
                 <p className='login-fail'>Email or Password Incorrect</p>
             )}
             <Link to='/signup'><p>Don't have an account?</p></Link> 
-        </LoginForm>   
+        </Form>   
 )};
 
-export default Login;
+export default LoginForm;
 
 
-const LoginForm = styled.form`
+const Form = styled.form`
     width: 40vw;
     height: 50vh;
     margin: auto;

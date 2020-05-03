@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import defaultImg from '../../images/default-profile.jpg'
 import SalonSignUp from './SalonSignUp';
 
-function SignUp(props) {
+function SignUpForm(props) {
   const [state, setState] = useState({ 
       password: '',
       first_name: '',
@@ -124,7 +124,7 @@ function SignUp(props) {
     </SignupPage>
   );
 }
-export default SignUp
+export default SignUpForm
 
 const SignupPage = styled.section`
   width: 50vw;

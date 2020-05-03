@@ -2,10 +2,17 @@ import React, { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
+import defaultImg from '../../images/default-profile.jpg'
 
 
 const EditUser = (props) => {
     const [user, setUser] = useContext(UserContext);
+    const token = localStorage.getItem('token')
+    const user_id = 3
+    if (user.profile_img === null){
+        setUser({ profile_img: defaultImg })
+    }
+    console.log('user context:', user)
 
     const handleChange = e => {
         e.preventDefault()
@@ -13,29 +20,44 @@ const EditUser = (props) => {
     }
 
     const handleImageChange = e => {
-        const fd = new FormData()
-        fd.append('image', user.profile_img)
-        setUser({profile_img: e.target.files[0]});
+        e.preventDefault()
+        setUser({ ...user, profile_img: e.target.files[0]});
+    }
+
+    const submitImage = () => {   
+        const fd = new FormData().append('userImg', user.profile_img)
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-date'
+            }
+        }
+        axiosWithAuth()
+        .put(`users/${user_id}/upload`, fd, config)
+        .then(()=> {
+            console.log('image sent')
+            props.history.push(`/users/${user.id}/dash`) 
+        })            
+        .catch(err=> console.log('Unable to send image.', err, err.message))
     }
 
     const handleSubmit = e => {        
         e.preventDefault()
         axiosWithAuth()
-        .put(`/users/${user.id}`, user)
-        .then(()=> { props.history.push(`/users/${user.id}/dash`) })
-        .catch(err=> console.log('Unable to make updates.', err))
+        .put(`/users/${user_id}`, user, token)
+        .then(()=> { 
+            return submitImage()
+        })
+        .catch(err=> console.log('Unable to make updates.', err, err.message))
     };
 
     return (
         <EditForm>
         <h3>Edit Profile</h3>
-        <img src={user.profile_img} alt='user profile'/>
-        <form onSubmit={handleSubmit} enctype='multipart/form-data'>
+        <img src={defaultImg} alt='user profile'/>
+        <form onSubmit={handleSubmit} encType='multipart/form-data'>
             <input 
                 type="file" 
                 className="img-input" 
-                name="profile_img" 
-                value={user.profile_img}
                 accept="image/*"
                 onChange={handleImageChange}
             />
@@ -95,7 +117,7 @@ const EditForm = styled.div`
         width: 200px;
         border-radius: 50%;
         margin: 5px auto;
-        border: 1px solid purple;
+        background: #e7e7e7;
     }
     h3{
         margin: 0; 
