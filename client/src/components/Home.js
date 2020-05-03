@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import Styled from "styled-components";
 import hairImg from '../images/pink.jpg'
 import hair2 from '../images/person-cutting-hair.jpg'
@@ -50,7 +50,8 @@ class Home extends React.Component {
         <Info className='landing-b2'>
           <div>
             <h2>One Community for Stylists and Clients</h2>
-            <p>Discover and be discovered. Display, post and update your artist portfolio. Share your talents. Review experiences. Save your favorites. Connect with someone who totally feels your vide. Try something new and feel beautiful.</p>
+            <p>Discover and be discovered. Display, post and update your artist portfolio. Share your talents. Review experiences. Save your favorites. Connect with someone who totally feels your vide. Try something new and feel beautiful. Get started today!</p>
+            <Link to='/signup'><button>Join</button></Link>
           </div>
           <div>
             <img src={hair2} alt='person cutting hiar'/>
@@ -64,11 +65,12 @@ class Home extends React.Component {
 export default Home;
 
 const Landing = Styled.div`
-  height: 90vh;
+  height: 80vh;
   width: 70vw;
   margin: auto;
   display: flex;
-  justify-content: space-evenly;
+  padding: 0 15px;
+  justify-content: space-between;
   align-items: center;
   background-image: url(${hairImg});
   background-size: cover;
@@ -132,4 +134,17 @@ const Info = Styled.div`
     height: 100%;
     object-fit: cover;
   }
+  button{
+      background: orange;
+      margin: 5px auto;
+      width: 25%;
+      font-size: 1rem;
+      max-width: 30%;
+      padding: 4px ;
+      color: #fff;
+      border: none;
+      height: 30px;
+      border-radius: 2px;
+      cursor: pointer
+  }    
 `

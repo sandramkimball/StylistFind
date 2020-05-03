@@ -32,7 +32,7 @@ const EditUser = (props) => {
             }
         }
         axiosWithAuth()
-        .put(`users/${user_id}/upload`, fd, config)
+        .put(`users/${user_id}/upload`, fd, config, token)
         .then(()=> {
             console.log('image sent')
             props.history.push(`/users/${user.id}/dash`) 
@@ -40,6 +40,8 @@ const EditUser = (props) => {
         .catch(err=> console.log('Unable to send image.', err, err.message))
     }
 
+    // BUG: OnSubmit, context doesn't persist and must re-login,
+    // but changes still go through
     const handleSubmit = e => {        
         e.preventDefault()
         axiosWithAuth()
