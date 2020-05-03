@@ -7,6 +7,7 @@ import defaultImg from '../../images/default-profile.jpg'
 import SalonSignUp from './SalonSignUp';
 
 function SignUpForm(props) {
+  const [user, setUser] = useContext(UserContext)
   const [state, setState] = useState({ 
       password: '',
       first_name: '',
@@ -30,6 +31,7 @@ function SignUpForm(props) {
   //populates state with data from form input
   const handleChange = e => {
     setState({ ...state, [e.target.name]: e.target.value });
+    setUser({ ...state, [e.target.name]: e.target.value });
   };
 
   //if stylist box is checked, submit btn routes to salon signup form

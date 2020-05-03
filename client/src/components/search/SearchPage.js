@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect, useContext, useState} from 'react';
+import {DataContext} from '../contexts/DataContext'
 import SearchCard from './SearchCard';
-import PostCard from '../posts/PostCard'
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import Loader from 'react-loader-spinner'
@@ -8,51 +8,45 @@ import {filterFunction} from './Filter.js'
 import {SearchMap} from './Map.js'
 
 
+const SearchPage = () => {
+    const [state, setState] = useState({
+        searchTerm: '',
+        searchResults: [],
+        isLoading: true,
+        isError: false,
+    })
+    const [data, setData] = useContext(DataContext)
 
-
-class SearchPage extends React.Component {
-    constructor(props){
-        super(props);
-        this.state= {
-            searchTerm: '',
-            searchResults: [],
-            isLoading: true,
-            isError: false,
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-
-    handleChange = e => {
-        e.preventDefault()
-        this.setState({ ...this.state, [e.target.name]: e.target.value }); 
-    }
- 
-    componentDidMount(){
+    useEffect(()=>{
        axiosWithAuth()
        .get('/search') 
        .then(res=> {
-            this.setState({
+            setState({
                 searchResults: res.data,
                 isLoading: false,
-                isError: false,
-                filterOpt: 'stylists'
-            })                
+                isError: false
+            })      
+            setData(res.data)          
         }) 
         .catch(err=> {
             console.log(err.message, err) 
-            this.setState({isLoading: false, isError: true})
+            setState({isLoading: false, isError: true})
         })
-    }
+    }, [])
 
-    handleSubmit = e => {
+    const handleChange = e => {
         e.preventDefault()
-        this.setState({isLoading: true})
-        axiosWithAuth().get('/search') 
+        setState({ ...state, [e.target.name]: e.target.value }); 
+    }
+ 
+    const handleSubmit = e => {
+        e.preventDefault()
+        setState({isLoading: true})
+        axiosWithAuth()
+        .get('/search') 
         .then(res=> {
-            let results = filterFunction(res.data, this.state.filterOpt, this.state.searchTerm)
-            this.setState({
+            let results = filterFunction(res.data, state.searchTerm)
+            setState({
                 searchResults: results,
                 isLoading: false,
                 isError: false,
@@ -60,93 +54,83 @@ class SearchPage extends React.Component {
         }) 
         .catch(err=> {
             console.log(err.message, err) 
-            this.setState({isLoading: false, isError: true})
+            setState({isLoading: false, isError: true})
         })         
     }
    
-    render(){
-        return(
-            <div>
-            <SearchBar className='search-bar'>
-                <form onSubmit={this.handleSubmit}>
-                    <input
-                        type='text'
-                        name='searchTerm'
-                        placeholder='Search stylist, salon, city...'
-                        value={this.state.searchTerm}
-                        onChange={this.handleChange}
+    return(
+        <div>
+        <SearchBar className='search-bar'>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type='text'
+                    name='searchTerm'
+                    placeholder='Search stylist, salon, city...'
+                    value={state.searchTerm}
+                    onChange={handleChange}
+                />
+            </form>
+        </SearchBar>
+        <Container className='search-container'>
+            <div className='results'>
+                {state.isLoading === true && (                        
+                    <Loader
+                        type="Puff"
+                        color="#925967"
+                        height={100}
+                        width={100}
                     />
-                </form>
-            </SearchBar>
-            <SearchResultsContainer className='search-container'>
-                <div className='results'>
-                    {this.state.isLoading === true && (                        
-                        <Loader
-                            type="Puff"
-                            color="#925967"
-                            height={100}
-                            width={100}
+                )}
 
-                        />
-                    )}
+                {state.isError === true && (
+                    <p>There seems to be a server error. Check back later.</p>
+                )}
 
-                    {this.state.isError === true && (
-                        <p>There seems to be a server error. Check back later.</p>
-                    )}
-
-                    
-                    {this.state.filterOpt === 'stylists' && this.state.searchResults.map(result=> (
-                        <SearchCard 
-                            key={result.id} 
-                            id={result.id} 
-                            result={result}
-                        />
-                    ))}
-                    
-                    {this.state.filterOpt === 'posts' && this.state.searchResults.map(result=> (
-                        <PostCard 
-                            key={result.id} 
-                            id={result.id} 
-                            post={result}
-                            stylist={result}
-                        />
-                    ))}
-                </div>
-                <div  className='map-container' style={{ height: '80vh', width: '40vw' }}>
-                    <SearchMap
-                        results={this.state.searchResults}
-                        googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
-                        yesIWantToUseGoogleMapApiInternals
-                        loadingElement={<div style={{height: '100%'}}/>}
-                        containerElement={<div style={{height: '100%'}}/>}
-                        mapElement={<div style={{height: '100%'}}/>}
+                
+                {state.searchResults && state.searchResults.map(result=> (
+                    <SearchCard 
+                        key={result.id} 
+                        id={result.id} 
+                        result={result}
                     />
-                </div>
-            
-            </SearchResultsContainer>
-        </div>
-        )
-    }
+                ))}
+
+            </div>
+            <div  className='map-container' style={{ height: '80vh', width: '40vw' }}>
+                <SearchMap
+                    results={state.searchResults}
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
+                    yesIWantToUseGoogleMapApiInternals
+                    loadingElement={<div style={{height: '100%'}}/>}
+                    containerElement={<div style={{height: '100%'}}/>}
+                    mapElement={<div style={{height: '100%'}}/>}
+                />
+            </div>
+        
+        </Container>
+    </div>
+    )
+
 }
 
 export {SearchPage}
 
 // modified export for testing
 export const handleSubmit=(filterOpt)=> {
-    var isLoading = false
+    // var isLoading = false
     if(filterOpt === 'posts'){
-        isLoading = true
+        // isLoading = true
         axiosWithAuth().get('/search/posts')
     }
     if(filterOpt === 'stylists'){
-        isLoading = true
+        // isLoading = true
         axiosWithAuth().get('/search')
     }
 };
 
 
 
-const SearchResultsContainer = styled.div`
+const Container = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 0 auto;

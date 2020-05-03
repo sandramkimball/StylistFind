@@ -4,7 +4,7 @@ import axios from 'axios'
 
 
 function Map(props) {
-    const [selectedStylist, setSelectedStylist] = useState(props.results[0])
+    //const [selectedStylist, setSelectedStylist] = useState(props.results[0])
 
     // useEffect(()=>{
     //     var adrs = `${selectedStylist.city}+${selectedStylist.state}+${selectedStylist.zipcode}`;
