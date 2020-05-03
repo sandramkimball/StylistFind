@@ -8,6 +8,7 @@ import SalonSignUp from './SalonSignUp';
 
 function SignUpForm(props) {
   const [user, setUser] = useContext(UserContext)
+  let [salonForm, setForm] = useState(false)
   const [state, setState] = useState({ 
       password: '',
       first_name: '',
@@ -16,17 +17,7 @@ function SignUpForm(props) {
       email: '',
       usertype: 'user',
     })
-    
-  const [salon, setSalon] = useState({
-      street_address: '',
-      city: '',
-      zipcode: '',
-      state: '',
-      country: '',
-      salon: '',
-  })
 
-  let [salonForm, setForm] = useState(false)
 
   //populates state with data from form input
   const handleChange = e => {
@@ -41,6 +32,7 @@ function SignUpForm(props) {
     .post('/auth/register/stylist', state)
     .then(() => setForm(true) )  
     .catch(err=> console.log(err) )
+    console.log('context', user)
   };
 
   //if user, submits and routes to login page
@@ -53,6 +45,7 @@ function SignUpForm(props) {
       // props.history.push('/login')
     })
     .catch(err=>{console.log(err)})
+    console.log('context', user)
   };
 
   return (

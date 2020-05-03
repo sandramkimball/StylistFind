@@ -32,6 +32,7 @@ const SearchPage = () => {
             console.log(err.message, err) 
             setState({isLoading: false, isError: true})
         })
+        console.log(data)
     }, [])
 
     const handleChange = e => {
