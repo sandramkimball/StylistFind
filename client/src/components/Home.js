@@ -26,7 +26,7 @@ class Home extends React.Component {
 
   render(){
     if(this.state.redirect === true){
-      return <Redirect to="/search" searchTerm={this.state.homeSearch}/>
+      return <Redirect to="/search" props={this.state.homeSearch}/>
     }
     
     return (

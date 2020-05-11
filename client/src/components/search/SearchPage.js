@@ -8,9 +8,10 @@ import {filterFunction} from './Filter.js'
 import {SearchMap} from './Map.js'
 
 
-const SearchPage = () => {
+const SearchPage = (props) => {
+    console.log('props', props)
     const [state, setState] = useState({
-        searchTerm: '',
+        searchTerm: props.homeSearch || '',
         searchResults: [],
         isLoading: true,
         isError: false,
