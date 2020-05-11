@@ -1,31 +1,29 @@
-import React, {useState} from "react";
-import {Link} from 'react-router-dom'
+import React, {useState, useContext} from "react";
+import { UserContext } from '../contexts/UserContext';
+import { Link } from 'react-router-dom'
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
 const ReviewForm = (props) => {
-    var userId = localStorage.getItem('id');
-    var stylistId = props.match.params.id;
+    const [user, setUser] = useContext(UserContext)
+    var stylist_id = props.match.params.id;
     const [newReview, setNewReview] = useState({
         review: '',
         image: '',
-        stylist_id: stylistId,
-        user_id: userId,
+        stylist_id: stylist_id,
+        user_id: user.id,
     })
     
     const handleChange = e => {
         e.preventDefault();
-        setNewReview({
-            ...newReview,
-                [e.target.name]: e.target.value
-        });
+        setNewReview({ ...newReview, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = e => {
         axiosWithAuth()
-        .post(`users/${userId}/reviews`, newReview)
-        .then(res => {
-            props.history.push(`/stylists/${stylistId}/portfolio`);
+        .post(`users/${user.id}/reviews`, newReview)
+        .then(() => {
+            props.history.push(`/stylists/${stylist_id}/portfolio`);
         })
         .catch(err=> console.log(err.message))
     }
@@ -54,7 +52,7 @@ const ReviewForm = (props) => {
                 />
 
                 <p onClick={handleSubmit}>Submit</p>
-                <Link to={`/stylists/${stylistId}/dash`} className='return-btn'><p>Cancel</p></Link>
+                <Link to={`/stylists/${stylist_id}/dash`} className='return-btn'><p>Cancel</p></Link>
             </AddReviewBox>
         </div>
     )

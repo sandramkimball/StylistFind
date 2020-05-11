@@ -1,105 +1,100 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
+import defaultImg from '../../images/default-profile.jpg'
 
 
-class EditUser extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            user: {
-                id: localStorage.getItem('id'),
-                first_name: '',
-                last_name: '',
-                profile_img: '',
+const EditUser = (props) => {
+    const [user, setUser] = useContext(UserContext);
+    const token = localStorage.getItem('token')
+    const user_id = 3
+    if (user.profile_img === null){
+        setUser({ profile_img: defaultImg })
+    }
+    console.log('user context:', user)
+
+    const handleChange = e => {
+        e.preventDefault()
+        setUser({ ...user, [e.target.name]: e.target.value });
+    }
+
+    const handleImageChange = e => {
+        e.preventDefault()
+        setUser({ ...user, profile_img: e.target.files[0]});
+    }
+
+    const submitImage = () => {   
+        const fd = new FormData().append('userImg', user.profile_img)
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-date'
             }
         }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleImageChange = this.handleImageChange.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    componentDidMount(){
-        const id = this.state.user.id
         axiosWithAuth()
-        .get(`/users/${id}`)
-        .then(res=> { 
-            this.setState({user: res.data})
-        })
-
-        .catch(err=>{console.log(err.response)});
-    }
-
-    handleChange = e => {
-        e.preventDefault()
-        this.setState({ ...this.state, user: {...this.state.user, [e.target.name]: e.target.value} });
-    }
-
-    handleImageChange = e => {
-        e.preventDefault()
-        this.setState({profile_img: e.target.files[0]});
-    }
-
-    handleSubmit = e => {        
-        const id = this.state.user.id
-        const fd = new FormData()
-        fd.append('image', this.state.profile_img)
-        e.preventDefault()
-        axiosWithAuth()
-        .put(`/users/${id}`, this.state.user)
+        .put(`users/${user_id}/upload`, fd, config, token)
         .then(()=> {
-            this.props.history.push(`/users/${id}/dash`);
+            console.log('image sent')
+            props.history.push(`/users/${user.id}/dash`) 
+        })            
+        .catch(err=> console.log('Unable to send image.', err, err.message))
+    }
+
+    // BUG: OnSubmit, context doesn't persist and must re-login,
+    // but changes still go through
+    const handleSubmit = e => {        
+        e.preventDefault()
+        axiosWithAuth()
+        .put(`/users/${user_id}`, user, token)
+        .then(()=> { 
+            return submitImage()
         })
-        .catch(err=> console.log('Unable to make updates.', err))
+        .catch(err=> console.log('Unable to make updates.', err, err.message))
     };
 
-    render(){
-        return (
-            <EditForm>
-            <h3>Edit Profile</h3>
-            <img src={this.state.profile_img} alt='user profile'/>
-            <form onSubmit={this.handleSubmit} enctype='multipart/form-data'>
-                <input 
-                    type="file" 
-                    className="img-input" 
-                    name="profile_img" 
-                    value={this.state.user.profile_img}
-                    accept="image/*"
-                    onChange={this.handleImageChange}
-                />
+    return (
+        <EditForm>
+        <h3>Edit Profile</h3>
+        <img src={defaultImg} alt='user profile'/>
+        <form onSubmit={handleSubmit} encType='multipart/form-data'>
+            <input 
+                type="file" 
+                className="img-input" 
+                accept="image/*"
+                onChange={handleImageChange}
+            />
 
-                <input 
-                    name='first_name'
-                    type='text'
-                    onChange={this.handleChange}
-                    value={this.state.user.first_name}
-                    placeholder='First Name'
-                />
+            <input 
+                name='first_name'
+                type='text'
+                onChange={handleChange}
+                value={user.first_name}
+                placeholder='First Name'
+            />
 
-                <input 
-                    name='last_name'
-                    type='text'
-                    onChange={this.handleChange}
-                    value={this.state.user.last_name}
-                    placeholder='Last Name'
-                />
+            <input 
+                name='last_name'
+                type='text'
+                onChange={handleChange}
+                value={user.last_name}
+                placeholder='Last Name'
+            />
 
-                <input 
-                    name='email'
-                    type='text'
-                    onChange={this.handleChange}
-                    value={this.state.user.email}
-                    placeholder='Email'
-                />
-                <div>
-                    <p className='edit-btn-aft' onClick={this.handleSubmit}>
-                        <button>Save</button>
-                    </p>
-                </div>
-            </form>    
-        </EditForm>
-        )
-    }
+            <input 
+                name='email'
+                type='text'
+                onChange={handleChange}
+                value={user.email}
+                placeholder='Email'
+            />
+            <div>
+                <p className='edit-btn-aft' onClick={handleSubmit}>
+                    <button>Save</button>
+                </p>
+            </div>
+        </form>    
+    </EditForm>
+    )
 }
 
 
@@ -124,7 +119,7 @@ const EditForm = styled.div`
         width: 200px;
         border-radius: 50%;
         margin: 5px auto;
-        border: 1px solid purple;
+        background: #e7e7e7;
     }
     h3{
         margin: 0; 

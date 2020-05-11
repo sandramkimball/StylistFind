@@ -1,36 +1,35 @@
-import React, {useState} from  'react'
+import React, {useState, useContext} from  'react'
+import { UserContext } from '../contexts/UserContext';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import axiosWithAuth from '../utilis/axiosWithAuth'
     
 const Toolbar = (props) => {
+    const [user, setUser] = useContext(UserContext)
     const {id} = props.stylist;
     const [heartColor, setColor] = useState('gray')
     var isAdded = props.added
 
     const handleSave = e => {
-        //determine if already saved
-        if(isAdded === true){
-            setColor('orange')
-
-        } else{
-            setColor('gray')
-
-        }
+        // determine if already saved (later will just filter context.user.bookmarks)
+        if(isAdded === true){ setColor('orange') } 
+        else{ setColor('gray') }
+        
         // post new fave to bookmark api
         e.preventDefault();
-        const userId = localStorage.getItem('id')
         const token = localStorage.getItem('token')
         axiosWithAuth()
-        .post(`/users/${userId}/bookmarks`, props.stylist.id, token)
+        .post(`/users/${user.id}/bookmarks`, props.stylist.id, token)
         .then(res=>console.log(res.message))
         .catch(err=>console.log(err.message))
     }
     
     return(
         <Bar>
+            
             <Link to={`/stylist/${id}/reviews`} usertype={'stylist'}><p>Read Reviews</p></Link>
-            {localStorage.getItem('usertype') === 'user' && (
+
+            {user.usertype === 'user' && (
                 <>
                     <p style={{color:heartColor}} onClick={handleSave}>❤ Save</p>
                     <Link to={`/stylist/${id}/add-review`} params={{ props: props.stylist }}>
@@ -39,7 +38,7 @@ const Toolbar = (props) => {
                 </>
             )}
 
-            {localStorage.getItem('id') === id && (
+            {user.usertype ==='stylist' && user.id === id && (
                 <>
                     <Link to={`/stylist/${id}/edit`} className='edit-btn'>
                         <p>Edit</p>
@@ -49,6 +48,7 @@ const Toolbar = (props) => {
                     </Link>
                 </>
             )}
+
         </Bar>
     )
 }

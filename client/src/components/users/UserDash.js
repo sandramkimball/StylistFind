@@ -1,104 +1,80 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 import styled from 'styled-components';
-import UserContext from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import ReviewCard from '../reviews/ReviewCards';
 import defaultImg from '../../images/default-profile.jpg';
 import {Link} from 'react-router-dom';
 
-class UserDash extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            user: [],
-            reviews: [],
-            bookmarks: []
-        }
-    }
+const UserDash = () => {
+    const [user, setUser] = useContext(UserContext)
+    const [reviews, setReviews] = useState([])
+    const [bookmarks, setBookmarks] = useState([])
     
-    componentDidMount(){
-        const id = localStorage.getItem('id')
+    useEffect(()=>{
         const token = localStorage.getItem('token')
         axiosWithAuth()
-        .get(`/users/${id}`, token)
+        .get(`/users/${user.id}/reviews`, token)
         .then(res=> { 
-            this.setState({user: res.data})
+            setReviews(res.data)
             return axiosWithAuth()
-            .get(`users/${id}/reviews`, token)
-            .then(res=> {
-                this.setState({reviews: res.data})
-                return axiosWithAuth()
-                .get(`users/${id}/bookmarks`, token)
-                .then(res=> {
-                    this.setState({bookmarks: res.data})
-                    console.log(res.data)
-                })
-            })
+            .get(`users/${user.id}/bookmarks`, token)
+            .then(res=> setBookmarks(res.data) )
         })
-        .catch(err=>{console.log(err.response)});
-    }
+        .catch(err => console.log(err.response) );
+    }, [])
 
 
-    render(){
-        const hasProfileImage = this.state.user.profile_image;
-        let profile_image
-        let default_image;
-        if(!hasProfileImage === null){
-            profile_image = <img src={`${this.state.user.profile_img}`} alt='profile of user'/>
-        }
-        else{default_image = <img src={defaultImg} alt='default avatar'/>}
-
-        return (
-                <UserContext.Consumer>
-                    {context=>(
-                <Dash>                   
-                <InfoBox>
-                    <div className='profile-pic-box'>
-                        {profile_image}
-                        {default_image}
-                    </div>
-                    <div className='profile-text'>
-                        <h1>{this.state.user.first_name}</h1> 
-                        <p>{this.state.user.email}</p> 
-                    </div>
-                    <Link to={`/user/${this.state.user.id}/edit`}><p className='edit-btn'>Edit</p></Link>
-                </InfoBox>    
-                <div className = 'reviews'>
-                    <h4>Your Reviews</h4>
-                    <div>
-                        {this.state.reviews !== null && this.state.reviews.map(review => (
-                            <ReviewCard  
-                                key={review.id}
-                                id={review.id} 
-                                review={review}/>
-                        ))}
-                        {this.state.reviews === null && (
-                            <p>You have no reviews</p>
-                        )}
-                        
-                    </div>
+    return (
+        <Dash>                   
+            <InfoBox>
+                <div className='profile-pic-box'>
+                    {user.profile_img !== null &&(
+                        <img src={`${user.profile_img}`} alt='profile of user'/>
+                    )}
+                    {user.profile_img === null && (
+                        <img src={defaultImg} alt='default avatar'/>
+                    )}
                 </div>
-                <div className='bookmarks'>
-                    <h4>Your Favorites</h4>
-                    <div>
-                        {this.state.bookmarks && this.state.bookmarks.map(review => (
-                            <p>Stylist Name</p>
-                        ))}
-                        {!this.state.bookmarks && (
-                            <p>You have nothing saved.</p>
-                        )}
-                    </div>
+                <div className='profile-text'>
+                    <h1>{user.first_name}</h1> 
+                    <p>{user.email}</p> 
                 </div>
-                </Dash> 
-            )}
-            </UserContext.Consumer>
-        )
-    }
+                <Link to={`/user/${user.id}/edit`}><p className='edit-btn'>Edit</p></Link>
+            </InfoBox>    
+            <div className='reviews'>
+                <h4>Your Reviews</h4>
+                <div>
+                    {reviews && reviews.map(review => (
+                        <ReviewCard  
+                            key={review.id}
+                            id={review.id} 
+                            review={review}/>
+                    ))}
+                    {reviews === null && (
+                        <p>You have no reviews</p>
+                    )}
+                    
+                </div>
+            </div>
+            <div className='bookmarks'>
+                <h4>Your Favorites</h4>
+                <div>
+                    {bookmarks && bookmarks.map(review => (
+                        <p>Stylist Name</p>
+                    ))}
+                    {!bookmarks && (
+                        <p>You have nothing saved.</p>
+                    )}
+                </div>
+            </div>
+        </Dash>  
+    )
 }
 
 export default UserDash;
 
-const Dash = styled.div`
+const Dash = styled.section`
     display: flex;
     flex-direction: column;
     margin: auto;
