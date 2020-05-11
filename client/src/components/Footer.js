@@ -19,6 +19,8 @@ export default withRouter(Footer);
 
 const FooterBar = styled.nav`
     width: 98%;
+    position: relative;
+    bottom: 0;
     margin: auto;
     margin-top: 5vh;
     padding: 10px 0;

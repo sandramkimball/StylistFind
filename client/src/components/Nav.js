@@ -61,6 +61,7 @@ const NavBar = styled.nav`
         font-weight: 600;
         margin: 0 5px;
         color: #000;
+        :hover{color: gray}
     }
     div{
         justify-content: space-between;

@@ -70,7 +70,7 @@ const Landing = Styled.div`
   margin: auto;
   display: flex;
   padding: 0 15px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-image: url(${hairImg});
   background-size: cover;
