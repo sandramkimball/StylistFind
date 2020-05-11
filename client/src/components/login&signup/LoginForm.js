@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
@@ -32,7 +32,8 @@ function LoginForm(props){
                 localStorage.setItem('id', res.data.user.id)
                 localStorage.setItem('usertype', 'user')                
                 setState({isLoggedIn: true})
-                setUser(res.data.user)  
+                setUser(res.data.user)                  
+                return <Redirect to={`/users/${res.data.user.id}/dash`}/>
                 //props.history.push(`/users/${res.data.user.id}/dash`)
             })
             .catch(err=> {
@@ -51,7 +52,8 @@ function LoginForm(props){
                 localStorage.setItem('id', res.data.stylist.id)
                 localStorage.setItem('usertype', 'stylist')                
                 setState({isLoggedIn: true})
-                setUser(res.data.user)  
+                setUser(res.data.user)                    
+                return <Redirect to={`/users/${res.data.stylist.id}/dash`}/>
                 // props.history.push(`/stylists/${res.data.stylist.id}/dash`)
             })
             .catch(err=> {

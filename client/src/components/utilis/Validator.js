@@ -1,13 +1,17 @@
-import Validator from 'Validator';
+import validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
-export default function validateInput(data){
+function validateInput(data){
     let errors =[];
-    if (Validator.isNull(data.username)){
-        errors.username = 'Required field.'
+    if (validator.isNull(data.email)){
+        errors.email = 'Required field.'
     }
 
-    if (Validator.isNull(data.password)){
+    if (validator.isEmail(data.email)===false){
+        errors.email = 'Please enter a real email.'
+    }
+
+    if (validator.isNull(data.password)){
         errors.password = 'Required field.'
     }
 
@@ -16,3 +20,5 @@ export default function validateInput(data){
         isValid: isEmpty(errors)
     }
 }
+
+export default validateInput;

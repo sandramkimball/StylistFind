@@ -2,9 +2,10 @@ import React, { useState, useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import styled from 'styled-components';
 import axiosWithAuth from "../utilis/axiosWithAuth";
-import {Link} from 'react-router-dom'
-import defaultImg from '../../images/default-profile.jpg'
+import {Redirect, Link} from 'react-router-dom';
+import defaultImg from '../../images/default-profile.jpg';
 import SalonSignUp from './SalonSignUp';
+import validateInput from '../utilis/Validator.js';
 
 function SignUpForm(props) {
   const [user, setUser] = useContext(UserContext)
@@ -38,14 +39,16 @@ function SignUpForm(props) {
   //if user, submits and routes to login page
   const handleSubmit = e => {
     e.preventDefault();
-    axiosWithAuth()
-    .post('/auth/register/user', state)
-    .then(res=> {
-      console.log(res.message)
-      // props.history.push('/login')
-    })
-    .catch(err=>{console.log(err)})
-    console.log('context', user)
+    if( validateInput(state).errors = 0 ){
+      axiosWithAuth()
+      .post('/auth/register/user', state)
+      .then(res=> {
+        console.log(res.message)
+        return <Redirect to='/login'/>
+      })
+      .catch(err=>{console.log(err)})
+      console.log('context', user)
+    }
   };
 
   return (

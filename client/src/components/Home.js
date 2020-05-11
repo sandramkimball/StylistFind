@@ -2,8 +2,7 @@ import React from "react";
 import { Redirect, Link } from "react-router-dom";
 import Styled from "styled-components";
 import hairImg from '../images/pink.jpg'
-import hair2 from '../images/person-cutting-hair.jpg'
-import { handleSubmit } from "./search/SearchPage";
+import hair2 from '../images/person-cutting-hair.jpg';
 
 class Home extends React.Component {
   constructor(props){
@@ -103,14 +102,13 @@ const Landing = Styled.section`
       font-size:1.125rem
     }
     button{
-      background: #fff;
+      background: #eeeeef;
       margin: 0;
       font-size: 1rem;
       padding: 0 7px;
       border: none;
       height: 50px;
       cursor: pointer
-      :hover{background: #eeeeef}
     }
   }
 `;

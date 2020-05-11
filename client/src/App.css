@@ -59,6 +59,14 @@ div.App{
   .landing-b1 p{
     display: none;
   }
+  .landing-b1 form{
+    flex-direction: column;
+    align-self: center;
+  }
+  .landing-b1 form button{
+    margin-top: 10px;
+    width: 30vw;
+  }
   .landing-b1 form input{
     width: 80vw !important;
   }

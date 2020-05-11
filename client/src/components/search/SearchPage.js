@@ -10,30 +10,30 @@ import {SearchMap} from './Map.js'
 
 const SearchPage = (props) => {
     console.log('props', props)
+    const [data, setData] = useContext(DataContext)
     const [state, setState] = useState({
-        searchTerm: props.homeSearch || '',
+        searchTerm:'',
         searchResults: [],
         isLoading: true,
         isError: false,
     })
-    const [data, setData] = useContext(DataContext)
 
     useEffect(()=>{
        axiosWithAuth()
        .get('/search') 
        .then(res=> {
+            let results = filterFunction(res.data, state.searchTerm)
             setState({
-                searchResults: res.data,
+                searchResults: results,
                 isLoading: false,
-                isError: false
-            })      
+                isError: false,
+            })    
             setData(res.data)          
         }) 
         .catch(err=> {
             console.log(err.message, err) 
             setState({isLoading: false, isError: true})
         })
-        console.log(data)
     }, [])
 
     const handleChange = e => {
@@ -52,7 +52,7 @@ const SearchPage = (props) => {
                 searchResults: results,
                 isLoading: false,
                 isError: false,
-            })                
+            })              
         }) 
         .catch(err=> {
             console.log(err.message, err) 
