@@ -3,6 +3,7 @@ import { Redirect, Link } from "react-router-dom";
 import Styled from "styled-components";
 import hairImg from '../images/pink.jpg'
 import hair2 from '../images/person-cutting-hair.jpg'
+import { handleSubmit } from "./search/SearchPage";
 
 class Home extends React.Component {
   constructor(props){
@@ -22,6 +23,7 @@ class Home extends React.Component {
 
   handleSubmit = e => {
     this.setState({redirect: true})
+    //this.props.history.push(`/search`, props=this.state.homeSearch)
   };
 
   render(){
@@ -44,6 +46,7 @@ class Home extends React.Component {
                   value={this.state.homeSearch}
                   onChange={this.handleChange}
                 />
+                <button onSubmit={this.handleSubmit}>Search</button>
             </form>
           </div>
         </Landing>
@@ -64,7 +67,7 @@ class Home extends React.Component {
 
 export default Home;
 
-const Landing = Styled.div`
+const Landing = Styled.section`
   height: 80vh;
   width: 70vw;
   margin: auto;
@@ -89,23 +92,30 @@ const Landing = Styled.div`
   }
   form{
     border: none;
-    button{
-      background: red;
-      border: 1px solid black;
-      padding: 7px;
-    }
+    display: flex;
+    justify-content: center;
     input{
-      height: 40px;
+      height: 50px;
       width: 40vw;
       text-align: left;
-      padding: 5px;
+      padding: 0 5px;
       border: none;
-      border-bottom: 1.5px solid #eeeeef;
+      font-size:1.125rem
+    }
+    button{
+      background: #fff;
+      margin: 0;
+      font-size: 1rem;
+      padding: 0 7px;
+      border: none;
+      height: 50px;
+      cursor: pointer
+      :hover{background: #eeeeef}
     }
   }
 `;
 
-const Info = Styled.div`
+const Info = Styled.section`
   display: flex;
   justify-content: space-between;
   margin 15vh auto;
