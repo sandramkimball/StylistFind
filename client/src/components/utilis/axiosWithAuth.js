@@ -10,6 +10,7 @@ export default function axiosWithAuth() {
       Authorization: token,
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE'
     },
   });
 };

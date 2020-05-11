@@ -5,7 +5,7 @@ import axiosWithAuth from "../utilis/axiosWithAuth";
 import {Redirect, Link} from 'react-router-dom';
 import defaultImg from '../../images/default-profile.jpg';
 import SalonSignUp from './SalonSignUp';
-import validateInput from '../utilis/Validator.js';
+// import validateInput from '../utilis/Validator.js';
 
 function SignUpForm(props) {
   const [user, setUser] = useContext(UserContext)
@@ -39,7 +39,7 @@ function SignUpForm(props) {
   //if user, submits and routes to login page
   const handleSubmit = e => {
     e.preventDefault();
-    if( validateInput(state).errors = 0 ){
+    // if( validateInput(state).errors = 0 ){
       axiosWithAuth()
       .post('/auth/register/user', state)
       .then(res=> {
@@ -48,7 +48,7 @@ function SignUpForm(props) {
       })
       .catch(err=>{console.log(err)})
       console.log('context', user)
-    }
+    // }
   };
 
   return (

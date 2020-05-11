@@ -22,6 +22,7 @@ class Home extends React.Component {
 
   handleSubmit = e => {
     this.setState({redirect: true})
+    localStorage.setItem('searched', this.state.homeSearch)
     //this.props.history.push(`/search`, props=this.state.homeSearch)
   };
 
