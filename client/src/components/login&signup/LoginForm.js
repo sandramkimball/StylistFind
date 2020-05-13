@@ -103,15 +103,12 @@ export default LoginForm;
 
 
 const Form = styled.form`
-    width: 40vw;
-    height: 100%;
+    width: 100%;
     margin: auto;
     display: flex;
     justify-content: center;
     align-content: spece-between;
     align-items: center;
-    align-content: center;
-    padding: 20px;
     flex-direction: column;
     a{
         font-size: .8rem; 

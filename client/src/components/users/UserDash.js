@@ -24,6 +24,7 @@ const UserDash = () => {
         .catch(err => console.log(err.response) );
     }, [])
 
+    console.log(user, localStorage)
 
     return (
         <Dash>                   

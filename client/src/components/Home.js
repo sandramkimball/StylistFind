@@ -68,9 +68,9 @@ class Home extends React.Component {
 export default Home;
 
 const Landing = Styled.section`
-  height: 80vh;
+  height: 60vh;
   width: 70vw;
-  margin: auto;
+  margin: 5vh auto;
   display: flex;
   padding: 0 15px;
   justify-content: center;
@@ -78,7 +78,7 @@ const Landing = Styled.section`
   background-image: url(${hairImg});
   background-size: cover;
   border-radius: 2px;  
-  box-shadow: 0px 4px 10px #d7d7d7;
+  //box-shadow: 0px 2px 8px #d7d7d7;
   h1{
     font-size: 4rem; 
     margin: 0 0 10px 0; 

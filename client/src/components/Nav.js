@@ -20,26 +20,26 @@ function Nav(props) {
                 <img src={logo} className='logo' alt='hairstylist scissors and comb clipart'/>
             </NavLink>
             <div>
-                <NavLink to='/search' className='search-btn'>Search</NavLink>                
+                <NavLink to='/search' className='search-btn'><p>Search</p></NavLink>                
 
                 {user && user.usertype === 'user' && (
-                    <NavLink to={`/users/${user_id}/dash`}>Dashboard</NavLink>
+                    <NavLink to={`/users/${user_id}/dash`}><p>Dashboard</p></NavLink>
                 )}
 
                 {user && user.usertype === 'stylist' && (
-                    <NavLink to={`/stylists/${user.id}/dash`}>Dashboard</NavLink>
+                    <NavLink to={`/stylists/${user.id}/dash`}><p>Dashboard</p></NavLink>
                 )}
 
                 {user === null && (
-                    <NavLink to='/login'>Login</NavLink>
+                    <NavLink to='/login'><p>Login</p></NavLink>
                 )}
 
                 {user === null && (
-                    <NavLink to='/signup'>Signup</NavLink>
+                    <NavLink to='/signup'><p>Signup</p></NavLink>
                 )}
 
                 {user && (
-                    <NavLink to='/' onClick={logout}>Logout</NavLink>
+                    <NavLink to='/' onClick={logout}><p>Logout</p></NavLink>
                 )}                
             </div>
         </NavBar>
@@ -49,27 +49,31 @@ function Nav(props) {
 export default withRouter(Nav);
 
 const NavBar = styled.nav`
-    width: 90%;
+    width: 100%;
+    background: #ef6978;
     margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 8vh;
+    height: 7vh;
     justify-content: space-between;
     a{
         text-decoration: none;
         font-weight: 600;
-        margin: 0 5px;
+        padding: 0 5px;
+        height: 7vh;
+        width: 7vh;
         color: #000;
-        :hover{color: gray}
+        :hover{background: #ff8794}
     }
+    p{align-self: center}
     div{
-        justify-content: space-between;
         display: flex;
-        font-size: 1.2rem
+        font-size: 1.2rem;
+        margin: 0 2vw;
     }
     .logo{        
-        height: 7vh;
+        height: 6vh;
         margin: 0 auto;
     }
 `;

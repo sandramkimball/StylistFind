@@ -19,8 +19,7 @@ function SearchCard(props)  {
                 <div>
                     <h3>{first_name} {last_name}</h3>
                     <h4>{salon}</h4> 
-                    <p>{street_address},</p>
-                    <p>{city}, {state} {zipcode}</p>
+                    <p>{street_address}, {city}, {state} {zipcode}</p>
                     <p>{email}</p>
                 </div>
             </Link>
@@ -30,18 +29,19 @@ function SearchCard(props)  {
 
 
 const Card = styled.div`
-    height: 200px;
+    height: 150px;
     width: 40vw;
     border: .5px solid #e6e6e6
     background: #fff;
     display: flex;
+    align-content: center;
     overflow: hidden;
     cursor: pointer;
-    font-size: 1rem
+    font-size: .95rem
     margin: 2px;
     img{
-        height: 200px;
-        width: 45%;
+        height: 150px;
+        width: 25%;
         object-fit: cover;
         margin-right: 10px;
     }
@@ -49,7 +49,7 @@ const Card = styled.div`
         margin: 0 auto;
         flex-direction: column;
         h3{text-decoration: underline; padding: 0; margin: 0}
-        h4{font-size: .95rem; margin: 0}
+        h4{font-size: .85rem; margin: 0}
         p{padding: 0; margin: 0; font-size: .85rem }
     }    
     a{

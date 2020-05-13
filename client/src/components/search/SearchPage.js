@@ -3,9 +3,9 @@ import {DataContext} from '../contexts/DataContext'
 import SearchCard from './SearchCard';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
-import Loader from 'react-loader-spinner'
-import {filterFunction} from './Filter.js'
-import {SearchMap} from './Map.js'
+import Loader from 'react-loader-spinner';
+import {filterFunction} from './Filter.js';
+import {SearchMap} from './Map.js';
 
 
 const SearchPage = (props) => {
@@ -22,9 +22,8 @@ const SearchPage = (props) => {
         axiosWithAuth()
         .get('/search') 
         .then(res=> {
-            let results = filterFunction(res.data, state.searchTerm)
             setState({
-                searchResults: results,
+                searchResults: res.data,
                 isLoading: false,
                 isError: false,
             })    
@@ -71,6 +70,7 @@ const SearchPage = (props) => {
                     value={state.searchTerm}
                     onChange={handleChange}
                 />
+                <button>Search</button>
             </form>
         </SearchBar>
         <Container className='search-container'>
@@ -81,6 +81,7 @@ const SearchPage = (props) => {
                         color="#925967"
                         height={100}
                         width={100}
+                        className='loader'
                     />
                 )}
 
@@ -138,12 +139,13 @@ const Container = styled.div`
     margin: 0 auto;
     display: flex;
     width: 85vw;  
+    height: 70vh;
     div{
         width: 40vw; 
         display: flex;
         flex-direction: column;
     }
-
+    .loader{align-self: center; margin: auto}
 `;
 
 const SearchBar = styled.div`
@@ -154,7 +156,7 @@ const SearchBar = styled.div`
     width: 70%;
     form{
         display: flex;
-        width: 90vw;
+        width: 40vw;
         border: none;
         height: 40px;
         button{
@@ -169,15 +171,17 @@ const SearchBar = styled.div`
             width: 100%;
             box-sizing: border-box;
             font-size: 1rem;
-            margin: 0 10px;
+            padding: 0 5px
         }
         input:focus{border: 1px solid gray}
-    }
-    .filterOpt{
-        font-size: 1rem;
-        width: 20vw;
-        height: 40px;
-        border-radius: 2px;
-        color: gray; 
+        button{
+            background: orange;
+            font-size: 1rem;
+            padding: 2px 5px;
+            color: #fff;
+            border: none;
+            height: 100%;
+            cursor: pointer
+        }
     }
 `;

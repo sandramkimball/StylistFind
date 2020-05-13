@@ -56,7 +56,7 @@ const EditUser = (props) => {
         <EditForm>
         <h3>Edit Profile</h3>
         <img src={defaultImg} alt='user profile'/>
-        <form onSubmit={handleSubmit} encType='multipart/form-data'>
+        <form onSubmit={handleSubmit} method="put" enctype="multipart/form-data">
             <input 
                 type="file" 
                 className="img-input" 

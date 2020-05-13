@@ -26,6 +26,12 @@ function SignUpForm(props) {
     setUser({ ...state, [e.target.name]: e.target.value });
   };
 
+  //sets first file to profile_img
+  const handleImageChange = e => {
+      e.preventDefault()
+      setUser({ ...user, profile_img: e.target.files[0]});
+  }
+
   //if stylist box is checked, submit btn routes to salon signup form
   const handleNext = e => {
     e.preventDefault()
@@ -38,10 +44,17 @@ function SignUpForm(props) {
 
   //if user, submits and routes to login page
   const handleSubmit = e => {
+    //formats image file
+    const fd = new FormData().append('userImg', user.profile_img)
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-date'
+        }
+    }
     e.preventDefault();
     // if( validateInput(state).errors = 0 ){
       axiosWithAuth()
-      .post('/auth/register/user', state)
+      .post('/auth/register/user', fd, config, state)
       .then(res=> {
         console.log(res.message)
         return <Redirect to='/login'/>
@@ -53,7 +66,7 @@ function SignUpForm(props) {
 
   return (
     <SignupPage className='login-form'>
-      <Form>
+      <Form method="post" enctype="multipart/form-data">
         {salonForm === false && (
           <div>
             <h3>Glad You're Here!</h3>
@@ -88,6 +101,13 @@ function SignUpForm(props) {
               onChange={handleChange}
             />
 
+            <input 
+                type="file" 
+                name='profile_image'
+                accept="image/*"
+                onChange={handleImageChange}
+            />
+
             <div className='check-stylist'>
               I'm a Stylist
               <input 
@@ -101,11 +121,11 @@ function SignUpForm(props) {
 
             {/* conditionally renders submit button for usertype */}
             {state.usertype === 'user' &&(
-              <button type='submit' onClick={handleSubmit}>signup</button>
+              <button type='submit' onClick={handleSubmit}>Signup</button>
             )}
 
             {state.usertype === 'stylist' && (
-              <button type='submit' onClick={handleNext}>next</button>
+              <button type='submit' onClick={handleNext}>Next</button>
             )}
             <Link to='/login'><p>Already have an account?</p></Link> 
           </div>
@@ -125,8 +145,7 @@ function SignUpForm(props) {
 export default SignUpForm
 
 const SignupPage = styled.section`
-  width: 50vw;
-  height: 50vh;
+  width: 100%;
   margin: auto;
   display:flex;
   justify-content: center;
@@ -141,7 +160,7 @@ const SignupPage = styled.section`
   }
   .check-stylist{  
     margin: 0 auto;
-    width: 80%;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -152,14 +171,13 @@ const SignupPage = styled.section`
 
 
 const Form = styled.form`
+  width: 100%;
+  margin: 0 auto;
   display:flex;
   justify-content: center;
   align-content: spece-between;
   align-items: center;
-  margin: 0 auto;
-  padding: 20px;
   flex-direction: column;
-  width: 50%;
   h3{
     margin: 0; 
     font-size: 2rem; 
@@ -171,7 +189,7 @@ const Form = styled.form`
   }
   input, button{
       height: 25px;
-      width: 80%
+      width: 50%
       margin: 5px auto;
       border: 1px solid #80808095;
       font-size: 1rem;
