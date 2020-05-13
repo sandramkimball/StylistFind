@@ -5,7 +5,7 @@ import SignUpForm from './SignUpForm';
 
 function LoginLanding() {
     return (
-        <Landing>
+        <Landing className='login-landing'>
             <LoginForm/>
             <SignUpForm/>
         </Landing>

@@ -35,7 +35,7 @@ function Nav(props) {
                 )}
 
                 {user === null && (
-                    <NavLink to='/signup'><p>Signup</p></NavLink>
+                    <NavLink to='/login'><p>Signup</p></NavLink>
                 )}
 
                 {user && (
@@ -62,7 +62,7 @@ const NavBar = styled.nav`
         font-weight: 600;
         padding: 0 5px;
         height: 7vh;
-        width: 7vh;
+        min-width: 7vh;
         color: #000;
         :hover{background: #ff8794}
     }

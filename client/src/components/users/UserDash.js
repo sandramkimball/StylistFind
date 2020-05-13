@@ -24,7 +24,7 @@ const UserDash = () => {
         .catch(err => console.log(err.response) );
     }, [])
 
-    console.log(user, localStorage)
+    console.log('User', user)
 
     return (
         <Dash>                   
@@ -38,10 +38,10 @@ const UserDash = () => {
                     )}
                 </div>
                 <div className='profile-text'>
-                    <h1>{user.first_name}</h1> 
+                    <h1>{user.first_name} {user.last_name}</h1> 
                     <p>{user.email}</p> 
+                    <Link to={`/user/${user.id}/edit`}><p className='edit-btn'>Edit</p></Link>
                 </div>
-                <Link to={`/user/${user.id}/edit`}><p className='edit-btn'>Edit</p></Link>
             </InfoBox>    
             <div className='reviews'>
                 <h4>Your Reviews</h4>
@@ -78,7 +78,7 @@ export default UserDash;
 const Dash = styled.section`
     display: flex;
     flex-direction: column;
-    margin: auto;
+    margin: 5vh auto;
     justify-content: space-between;
     a{text-decoration: none}
     .reviews, .bookmarks{ 
@@ -100,19 +100,20 @@ const InfoBox = styled.div`
     box-shadow: 0px 3px 8px gray;
     border-radius: 4px;
     width: 70vw;
-    height: 50vh;
+    height: 30vh;
     padding: 10px 5px;
     margin: auto;
     font-size: 1rem;
     display: flex;
-    flex-direction: column;
-    p{
+    justify-content: flex-start;
+    align-items: center;
+    h1{
         padding: 0; 
         margin: 0
     }
     .profile-pic-box{
-        height: 200px;
-        width: 200px;
+        height: 25vh;
+        width: 25vh;
         margin: 0 auto;
         border-radius: 50%;
         img{
@@ -125,6 +126,11 @@ const InfoBox = styled.div`
     .profile-text{
         margin: 2px auto;
         width: 70%;
+        text-align: left;
+    }
+    .edit-btn{
+        color: gray;
+        :hover{color: #000}
     }
 `;
 

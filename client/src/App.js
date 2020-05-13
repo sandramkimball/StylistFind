@@ -14,8 +14,6 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import LoginLanding from './components/login&signup/LoginLanding';
-import LoginForm from './components/login&signup/LoginForm';
-import SignUpForm from './components/login&signup/SignUpForm';
 import SalonSignUp from './components/login&signup/SalonSignUp';
 import EditUser from './components/users/EditUser';
 import EditStylist from './components/stylists/EditStylist';
@@ -45,7 +43,6 @@ function App() {
             <Route exact path='/' component={Home}/>
             <Route exact path='/policy' component={PrivacyPolicy}/>
             <Route path="/login" component={LoginLanding}/>
-            <Route path="/signup" component={SignUpForm}/>
             <Route path="/signup/salon" component={SalonSignUp}/>
             <Route path='/search' component={SearchPage}/>
             <Route path='/stylists/:id/portfolio' component={StylistPortfolio}/>

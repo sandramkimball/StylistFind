@@ -44,24 +44,18 @@ function SignUpForm(props) {
 
   //if user, submits and routes to login page
   const handleSubmit = e => {
-    //formats image file
-    const fd = new FormData().append('userImg', user.profile_img)
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-date'
-        }
-    }
     e.preventDefault();
-    // if( validateInput(state).errors = 0 ){
-      axiosWithAuth()
-      .post('/auth/register/user', fd, config, state)
-      .then(res=> {
-        console.log(res.message)
-        return <Redirect to='/login'/>
-      })
-      .catch(err=>{console.log(err)})
-      console.log('context', user)
-    // }
+    axiosWithAuth()
+    .post('/auth/register/user', state)
+    .then(res=> {
+      localStorage.setItem('token', res.data.token)
+      localStorage.setItem('id', res.data.user.id)
+      localStorage.setItem('usertype', 'user')                
+      // setState({isLoggedIn: true})
+      setUser(res.data.user)          
+    })
+    .catch(err=>{console.log(err)})
+    console.log('context', user)
   };
 
   return (

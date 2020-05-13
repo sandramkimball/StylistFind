@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
@@ -7,12 +7,12 @@ import defaultImg from '../../images/default-profile.jpg'
 
 const EditUser = (props) => {
     const [user, setUser] = useContext(UserContext);
-    const token = localStorage.getItem('token')
-    const user_id = 3
+    const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('id');
+
     if (user.profile_img === null){
         setUser({ profile_img: defaultImg })
     }
-    console.log('user context:', user)
 
     const handleChange = e => {
         e.preventDefault()
@@ -21,43 +21,44 @@ const EditUser = (props) => {
 
     const handleImageChange = e => {
         e.preventDefault()
-        setUser({ ...user, profile_img: e.target.files[0]});
-    }
 
-    const submitImage = () => {   
-        const fd = new FormData().append('userImg', user.profile_img)
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-date'
-            }
-        }
+        //Format file and headers:
+        const fd = new FormData();
+        fd.append('userImg', e.target.files[0]);
+
+        //Submit file to recieve filePath for user.profile_img:
         axiosWithAuth()
-        .put(`users/${user_id}/upload`, fd, config, token)
-        .then(()=> {
-            console.log('image sent')
-            props.history.push(`/users/${user.id}/dash`) 
+        .post(`users/${user_id}/upload`, fd, token, { 
+            headers: { 'content-type': 'multipart/form-date' }
+        })
+        .then(res=> {
+            console.log('Image uploaded.', res.data)
+            setUser({...user, profile_img: res.data })
+            props.history.push(`/users/${user_id}/dash`) 
         })            
-        .catch(err=> console.log('Unable to send image.', err, err.message))
+        .catch(err=> console.log('Client Side Error: Unable to send image.', err.message, err))
     }
 
-    // BUG: OnSubmit, context doesn't persist and must re-login,
-    // but changes still go through
+    //BUG: Submitting data resets context and need to re-login.
     const handleSubmit = e => {        
         e.preventDefault()
         axiosWithAuth()
         .put(`/users/${user_id}`, user, token)
         .then(()=> { 
-            return submitImage()
+            console.log('Edits were successful.')
+            props.history.push(`/user/${user_id}/dash`)
         })
-        .catch(err=> console.log('Unable to make updates.', err, err.message))
+        .catch(err=> console.log('Client Side Error: Unable to make updates.', err, err.message))
+        console.log('User after Edits Submitted:', user)
     };
 
     return (
-        <EditForm>
+        <EditForm className='edit-form'> 
         <h3>Edit Profile</h3>
-        <img src={defaultImg} alt='user profile'/>
-        <form onSubmit={handleSubmit} method="put" enctype="multipart/form-data">
+        <img src={user.profile_img != 'null' ? user.profile_img : {defaultImg} } />
+        <form onSubmit={handleSubmit} method="PUT" action='/upload' encType="multipart/form-data">
             <input 
+                name='userImg'
                 type="file" 
                 className="img-input" 
                 accept="image/*"
@@ -102,27 +103,27 @@ const EditUser = (props) => {
 export default EditUser;
 
 
-const EditForm = styled.div`
+const EditForm = styled.section`
     display:flex;
     width: 30vw;
     justify-content: center;
     align-content: spece-between;
     align-items: center;
-    margin: auto;
+    margin: 5vh auto;
     padding: 20px;
     flex-direction: column;
     background: #fff;
     border-radius: 2px;
     box-shadow: 0px 3px 8px gray;
     img{
-        height: 200px;
-        width: 200px;
+        height: 150px;
+        width: 150px;
         border-radius: 50%;
         margin: 5px auto;
         background: #e7e7e7;
     }
     h3{
-        margin: 0; 
+        margin: 0 0 10px 0; 
         font-size: 2rem; 
         font-family: 'Dancing Script', cursive
     }

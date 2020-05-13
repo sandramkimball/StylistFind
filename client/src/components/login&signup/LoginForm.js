@@ -33,7 +33,7 @@ function LoginForm(props){
                 localStorage.setItem('usertype', 'user')                
                 setState({isLoggedIn: true})
                 setUser(res.data.user)                  
-                return <Redirect to={`/users/${res.data.user.id}/dash`}/>
+                //return <Redirect to={`/users/${res.data.user.id}/dash`}/>
                 //props.history.push(`/users/${res.data.user.id}/dash`)
             })
             .catch(err=> {
