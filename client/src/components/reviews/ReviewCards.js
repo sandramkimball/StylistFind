@@ -30,14 +30,14 @@ function ReviewCard (props) {
                         </p>
                     </div>
                 </div>
-                {image && (
-                    <div className='review-img' >
-                        <img src={image} alt='review'/>
-                    </div>
-                )}
                 <div className='review-text'>
                     <p>{review}</p>
                     <p>{date}</p>
+                </div>
+                <div className='review-img' >
+                    {image && (
+                        <img src={image} alt='review'/>
+                    )}
                 </div>
             </Card>
         </div>
@@ -47,10 +47,10 @@ function ReviewCard (props) {
 export default ReviewCard;
 
 const Card = styled.div`
-    width: 30vw;
-    // box-shadow: 0px 3px 8px gray;
-    border: .75px solid lightgray;
-    border-radius: 2px;
+    width: 40vw;
+    box-shadow: 0px 4px 8px gray;
+    // border: .75px solid lightgray;
+    border-radius: 4px;
     font-size: 1rem;
     text-align: left; 
     display: flex;
@@ -68,7 +68,15 @@ const Card = styled.div`
         width: 100%;
         display: flex;
         flex-direction: flex-start;
-        div{flex-direction: column; margin: 5px 0 0 5px}
+        background: #eeeeef;
+        div{
+            flex-direction: column; 
+            margin: 5px 0 0 5px
+        }
+        p{ 
+            margin: 0;
+            font-size: .75rem
+        }
         img{
             width: 60px;
             height: 60px;
@@ -77,20 +85,21 @@ const Card = styled.div`
         }
     }
     .review-text{
-        margin: 0 auto;
+        margin: 10px;
         height: 100%;
-        padding: 2px;
-        h4{
-            font-weight: 200;
-            font-size: .75rem;
-            padding-top: 5px
-        }
+        p{margin: 0
+        :nth-last-child(1){
+            color: gray;
+        }}
     }
-    .review-img img{
-        width: 100%;
-        height: 120px;
-        object-fit: cover;
-        margin: 0
+    .review-img{
+        display: flex;
+        justify-content: center;
+        img{
+            height: 120px;
+            object-fit: cover;
+            margin: 5px
+        }
     }
     .delete-btn{
         position: absolute;

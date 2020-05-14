@@ -10,6 +10,7 @@ const Toolbar = (props) => {
     const [heartColor, setColor] = useState('gray')
     var isAdded = props.isSaved
 
+    //Function for user to add stylist to their favorite bookmarks
     const handleSave = e => {
         // determine if already saved (later will just filter context.user.bookmarks)
         if(isAdded === true){ setColor('orange') } 
@@ -33,22 +34,12 @@ const Toolbar = (props) => {
             {user && (
                 <>
                     <p style={{color:heartColor}} onClick={handleSave}>❤ Save</p>
-                    <Link to={`/stylist/${stylist.id}/add-review`} params={{ props: props.stylist }}>
-                        <p>+Add Review</p>
+                    <Link to={`/stylist/${stylist.id}/add-review`} params={{ props: props }} stylist={stylist}>
+                        <p>Add Review</p>
                     </Link>
                 </>
             )}
 
-            {stylist && stylist.id === stylist.id && (
-                <>
-                    <Link to={`/stylist/${stylist.id}/edit`} className='edit-btn'>
-                        <p>Edit</p>
-                    </Link>
-                    <Link to={`/stylist/${stylist.id}/add-post`}>
-                        <p>+</p>
-                    </Link>
-                </>
-            )}
 
         </Bar>
     )
@@ -58,6 +49,9 @@ export default Toolbar
 
 const Bar = styled.nav`
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
     a{ padding: 0 5px;
         align-items: center;
     }
@@ -67,8 +61,4 @@ const Bar = styled.nav`
         cursor: pointer;
         :hover{color: orange}
     }    
-    .edit-btn{
-        color: #80808075;
-        :hover{color: #000}
-    }
 `;

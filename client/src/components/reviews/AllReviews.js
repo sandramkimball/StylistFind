@@ -40,8 +40,7 @@ const AllReviews = (props) => {
 
 export default AllReviews
 
-const Page = Styled.div`
-    width: 70vw;   
+const Page = Styled.section` 
     margin: 0 auto;
     margin-bottom: 5vh;
     .return-btn{ 

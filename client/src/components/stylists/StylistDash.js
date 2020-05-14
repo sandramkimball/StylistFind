@@ -37,7 +37,14 @@ const StylistDash = () =>  {
         <Dash className='stylist-dash'>
             <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
             <InfoBox className='info-box'>
-                <Toolbar stylist={stylist} isSaved={isSaved}/>
+                <div className='toolbar'>
+                    <Link to={`/stylist/${stylist.id}/edit`} className='edit-btn'>
+                        <p>Edit</p>
+                    </Link>
+                    <Link to={`/stylist/${stylist.id}/add-post`}>
+                        <p>New Post</p>
+                    </Link>
+                </div>
                 <div className='profile-pic-box'>
                     {user.profile_img !== null &&(
                         <img src={`${user.profile_img}`} alt='profile of user'/>
@@ -94,6 +101,21 @@ const Dash = styled.div`
             flex-wrap: wrap; 
             margin: 0 1px 2px 1px;
         }
+    }
+    .toolbar{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        text-align: left;
+        a{ padding: 0 5px;
+            align-items: center;
+        }
+        p{
+            font-size: 1rem;
+            color: gray;
+            cursor: pointer;
+            :hover{color: orange}
+        } 
     }
 `;
 

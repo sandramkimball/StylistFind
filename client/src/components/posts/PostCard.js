@@ -8,6 +8,7 @@ function PostCard(props) {
     const {first_name, salon} = props.stylist;
     let stylistId = localStorage.getItem('id')
     let isStylist = localStorage.getItem('usertype')
+
     const handleClick = e => {
         e.preventDefault()
         axiosWithAuth()
@@ -16,31 +17,26 @@ function PostCard(props) {
         .catch(err=> console.log('post not deleted', err))
 
     }
-    console.log('is stylist the same?',stylistId, stylist_id)
 
     return (
-        <div>
-            <Card className='post-card'>
-                {isStylist === "stylist" && stylistId === stylist_id && (
-                    <p className='delete-btn' onClick={handleClick}>X</p>
-                )}
-                <Link to={`/stylists/${id}/portfolio`} key={props.id} id={props.id} props={props}>
-                    {image && (<img src={image} alt='user post'/>)}
-                    <p>posted by {first_name}</p>
-                    <p>{salon}</p>
-                    <h4>{comment}</h4>
-                    {/* <p>{date}</p> */}
-                </Link>
-           </Card>
-        </div>
+        <Card className='post-card'>
+            {isStylist === "stylist" && stylistId === stylist_id &&(
+                <button className='delete-btn' onClick={handleClick}>X</button>
+            )}
+            <Link to={`/stylists/${id}/portfolio`} key={props.id} id={props.id} props={props}>
+                {image && (<img src={image} alt='user post'/>)}
+                <p>posted by {first_name}</p>
+                <h4>{comment}</h4>
+            </Link>
+        </Card>
     )
 }
 
 export default PostCard;
 
 const Card = Styled.div`
-    width: 17vw;
-    height: 25vw;
+    height: 28vw;
+    width: 25vw;
     background: #fff;
     display: flex;
     flex-direction: column;
@@ -49,21 +45,34 @@ const Card = Styled.div`
     border-radius: 4px;
     box-sizing: border-box;
     background: #fff;
+    position: relative;
     a{text-decoration: none; color: #000}
     img{
-        object-fit: cover;
+        height: 20vw;
         width: 100%;
-        height: 15vw;
-        margin: 0 auto;
-        padding: none;
+        object-fit: cover;
+        margin-right: 10px;
     }
-    h4{font-size: 1rem; margin: 0; padding: 0 4px;}
-    p{font-size: .85rem; margin: 0;  padding: 0 5px;}
+    h4{
+        font-size: .85rem; 
+        margin: 0; 
+        padding: 5px
+    }
+    p{
+        font-size: .85rem; 
+        margin: 0; 
+        padding: 5px; 
+        color: gray
+    }
     .delete-btn{
-        text-align: right;
-        color: gray;
+        position: absolute;
+        right: 0;
+        border: none;
+        background: none;
         cursor: pointer;
-        size: 1rem;
+        font-size: 2rem;
+        font-weight: 700;
+        z-index: 10;
         :hover{
             color: orange
         }

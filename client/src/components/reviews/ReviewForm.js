@@ -10,9 +10,13 @@ const ReviewForm = (props) => {
     const [newReview, setNewReview] = useState({
         review: '',
         image: '',
-        stylist_id: stylist_id,
         user_id: user.id,
+        stylist_id: stylist_id,
+        // stylist_name: props.stylist_name,
     })
+
+    console.log('props.stylist:', props.stylist)
+    console.log('props:', props)
     
     const handleChange = e => {
         e.preventDefault();
@@ -29,32 +33,32 @@ const ReviewForm = (props) => {
     }
 
     return(
-        <div>
-            {/* <p>You're reviewing {props.stylist.first_name}</p> */}
+        <AddReviewBox onSubmit={handleSubmit}>
+            <h4>Add a Review for</h4>
+            <input 
+                label='upload image'
+                type='file'
+                accept='image/*'
+                name='image'
+                onChange={handleChange}
+                value={props.image}
+            />
+            <textarea 
+                rows='4' 
+                placeholder='How was your experience?' 
+                value={newReview.review}
+                name='review'
+                onChange={handleChange}
+            >
+            </textarea>
             
-            <AddReviewBox onSubmit={handleSubmit}>
-                <textarea 
-                    rows='12' 
-                    cols='20' 
-                    placeholder='How was your experience...' 
-                    value={newReview.review}
-                    name='review'
-                    onChange={handleChange}
-                >
-                </textarea>
-                <h4>Got pics? Add them!</h4>
-                <input 
-                    type='file'
-                    accept='image/*'
-                    name='image'
-                    onChange={handleChange}
-                    value={props.image}
-                />
-
-                <p onClick={handleSubmit}>Submit</p>
-                <Link to={`/stylists/${stylist_id}/dash`} className='return-btn'><p>Cancel</p></Link>
-            </AddReviewBox>
-        </div>
+            <div className='btn-box'>
+                <button onClick={handleSubmit}>Submit</button>
+                <Link to={`/stylists/${stylist_id}/portfolio`}>
+                    <button>Cancel</button>
+                </Link>
+            </div>
+        </AddReviewBox>
     )
     
 }
@@ -62,21 +66,26 @@ const ReviewForm = (props) => {
 export default ReviewForm;
 
 const AddReviewBox = styled.form`
+    width: 40vw;
+    margin: 5vh auto;
+    padding: 5vh 0;
     display: flex;
+    justify-content: center;
+    align-content: space-between;
+    align-items: center;
     flex-direction: column;
-    width: 45vw;
-    margin: auto;
-    padding: 20px;
-    background: orange;
-    border-radius: 2px;
-    input{
-        height: 50px;
-        padding: 10px 0;
-        font-size: 1.25rem;
+    background: #fff;
+    box-shadow: 0 4px 8px gray;
+    border-radius: 4px;
+    h4{
+        margin: 0;
+        font-family: 'Dancing Script', sans-serif;
+        font-size: 1.5rem;
     }
-    textarea{
-        border: none; 
+    textarea{ 
         padding: 4px;
+        margin: 10px 0;
+        width: 90%;
         font-size: 1.25rem;
         font-family: 'Source Sans Pro',sans-serif;
     }
@@ -89,17 +98,31 @@ const AddReviewBox = styled.form`
         border-radius: 2px;
         :hover{cursor: pointer; color: gray}
     }
-    h4{
-        font-family: 'Dancing Script', sans-serif;
-        text-align: left;
-        font-size: 2.25rem;
-        margin: 10px 0 0 0;
+    input{
+        height: 25px;
+        width: 90%;
+        margin: 5px auto;
+        border: 1px solid #80808095;
+        font-size: 1rem;
+        padding: 2px;
+        border-radius: 2px;
     }
-    .return-btn{        
-        text-decoration: none;
-        width: 40%;
-        color: #000;
-        margin: 0 auto;
+    .btn-box{ 
+        display: flex
+        justify-content: space-between
+    }
+    button{
+        background: orange;
+        margin: 5px;
+        font-size: 1rem;
+        width: 15vw;
+        padding: 4px ;
+        color: #fff;
+        border: none;
+        height: 30px;
+        border-radius: 2px;
+        cursor: pointer;
+        :hover{background: #ffb836}
     }
     
 `;

@@ -9,7 +9,7 @@ class AddPost extends React.Component {
         super(props)
         this.state={
             date: Date.now(),
-            stylist_id: localStorage.getItem('id'),
+            stylist_id: props.stylist.id,
             image: null,    
             comment: ''
         }
