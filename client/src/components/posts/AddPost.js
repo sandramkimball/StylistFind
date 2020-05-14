@@ -45,28 +45,30 @@ class AddPost extends React.Component {
 
     render(){
         return (
-            <div> 
-                <PostForm onSubmit={this.handleSubmit}>
-                    <input 
-                        type='file'
-                        accept='image/*'
-                        name='image'
-                        onChange={this.handleImage}
-                        value={this.state.image}
-                    />
-                    <textarea
-                        type='textarea'
-                        name='comment'
-                        rows='6' 
-                        cols='20' 
-                        placeholder='Add a comment...'
-                        onChange={this.handleChange}
-                        value={this.state.comment}
-                    ></textarea>
-                    <p onClick={this.handleSubmit}>Upload</p>
-                    <Link to={`/stylists/${this.state.stylist_id}/dash`} className='return-btn'><p>Cancel</p></Link>
-                </PostForm>
-            </div>
+            <PostForm onSubmit={this.handleSubmit}>
+                <h1>New Post</h1>
+                <input 
+                    type='file'
+                    accept='image/*'
+                    name='image'
+                    onChange={this.handleImage}
+                    value={this.state.image}
+                />
+                <textarea
+                    type='textarea'
+                    name='comment'
+                    rows='6' 
+                    placeholder='Add a comment...'
+                    onChange={this.handleChange}
+                    value={this.state.comment}
+                ></textarea>
+                <div className='btn-box'>
+                    <button onClick={this.handleSubmit}>Upload</button>
+                    <Link to={`/stylists/${this.state.stylist_id}/dash`}>
+                        <button>Cancel</button>
+                    </Link>
+                </div>
+            </PostForm>
         )
     }
 }
@@ -74,48 +76,53 @@ class AddPost extends React.Component {
 export default AddPost;
 
 const PostForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
     width: 40vw;
-    margin: auto;
-    padding: 20px;
-    background: orange;
+    margin: 5vh auto;
+    padding: 5vh 0;
+    display: flex;
+    justify-content: center;
+    align-content: spece-between;
+    align-items: center;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: 0 4px 8px gray;
     border-radius: 4px;
-    input{
-        height: 30px;
-        padding: 10px 0;
-        border-radius: 4px;
-        font-size: 1.05rem;
+    h1{
+        margin: 0;
+        font-family: 'Dancing Script', sans-serif;
+        font-size:2rem;
     }
-    textarea{
-        border: none; 
+    textarea{ 
         padding: 4px;
         margin: 10px 0;
+        width: 90%;
         font-size: 1.25rem;
         font-family: 'Source Sans Pro',sans-serif;
     }
-    input button{ 
-        background: white;
-        border: 1px solid black;
+    input{
+        height: 25px;
+        width: 90%;
+        margin: 5px auto;
+        border: 1px solid #80808095;
         font-size: 1rem;
-        height: 1.25rem
-        :hover{
-            transform: scale(1.025); 
-            border: 1px solid #80808075;
-            color: #80808075;
-        }
-    }
-    p, a.return-btn{        
-        text-decoration: none;
-        text-align: center
-        width: 25%;
-        color: #000;
-        background: #fff;
-        padding: 2px 0;
-        margin: 2px auto;
-        font-size: 1rem;
+        padding: 2px;
         border-radius: 2px;
-        :hover{cursor: pointer; color: gray}
+    }
+    .btn-box{ 
+        display: flex
+        justify-content: space-between
+    }
+    button{
+        background: orange;
+        margin: 5px;
+        font-size: 1rem;
+        width: 15vw;
+        padding: 4px ;
+        color: #fff;
+        border: none;
+        height: 30px;
+        border-radius: 2px;
+        cursor: pointer;
+        :hover{background: #ffb836}
     }
 `;

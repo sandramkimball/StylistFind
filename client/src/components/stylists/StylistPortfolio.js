@@ -1,90 +1,80 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import PostCard from '../posts/PostCard';
 import Toolbar from './Toolbar'
 
-class StylistPortfolio extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            stylist: [],
-            salon: [],
-            posts: [],
-            isSaved: false,
-        }
-        this.handleSave = this.handleSave.bind(this);
-    }
+const StylistPortfolio = (props) =>  {
+    // const [stylist, setStylist] = useContext(UserContext)
+    const [stylist, setStylist] = useState([])
+    const [user, setUser] = useContext(UserContext)
+    const [posts, setPosts] = useState([])
+    const [salon, setSalon] = useState([])
+    const [reviews, setReviews] = useState([])
 
-    handleSave = e => {
-        e.preventDefault();
-        const cssName = (this.state.isSaved === false) ? true : false
-        this.setState({isSaved: cssName})
-        // props.user.bookmarks.push({stylist: this.state.stylist})
+    function isSaved(user, stylist){
+        return true
     }
     
-    componentDidMount(){
-        const { match: { params } } = this.props;
+    useEffect(()=>{
+        const stylist_id = props.match.params.id;
         axiosWithAuth()
-        .get(`/stylists/public/${params.id}`)
+        .get(`/stylists/public/${stylist_id}`)
         .then(res=> { 
-            this.setState({ stylist: res.data });
+            setStylist(res.data);
             return axiosWithAuth()
-            .get(`/stylists/${params.id}/posts`)
+            .get(`/stylists/${stylist_id}/posts`)
             .then(res=> { 
-                this.setState({ posts: res.data });
+                setPosts(res.data);
             })
         })
         .catch(err=>{console.log(err, err.message)});
-    
-    }
+    }, [])
 
 
-    render(){
-        return (
-            <Dash className='stylist-dash'>
-                <Link to='/search'><p className = 'return-to-search'>Return</p></Link>
-                <InfoBox className='info-box'>
-                    <Toolbar stylist={this.state.stylist} isAdded={this.state.isAdded}/>
-                    <div className='profile-pic-box'>
-                        <img src={`${this.state.stylist.profile_img}`} alt='profile of user'/>
-                    </div>
-                    <div className='profile-text'>
-                        <h1>{this.state.stylist.first_name} {this.state.stylist.last_name}</h1> 
-                        <h3>{this.state.stylist.salon}</h3>
-                        <h3>{this.state.stylist.bio}</h3>
-                        <div className='address'>
-                            <p>{this.state.stylist.email}</p>
-                            <p>{this.state.stylist.salon}</p>
-                            <p>{this.state.stylist.street_address}</p>
-                            <p>{this.state.stylist.city} {this.state.stylist.state} {this.state.stylist.zipcode}</p>
-                        </div>
-                    </div>
-                </InfoBox>    
-                <div className = 'gallery'>
-                    <div>
-                        {this.state.posts.map(post=> (
-                            <PostCard 
-                                key={post.id}
-                                id={post.id} 
-                                post={post}
-                                stylist={this.state.stylist}
-                            />
-                        ))}
-                    </div>                        
+    return (
+        <Dash className='stylist-dash'>
+            <InfoBox className='info-box'>
+                <Toolbar stylist={stylist} isSaved={isSaved}/>
+                <div className='profile-pic-box'>
+                    <img src={`${stylist.profile_img}`} alt='profile of user'/>
                 </div>
-            </Dash>
-        )
-    }
+                <div className='profile-text'>
+                    <h1>{stylist.first_name} {stylist.last_name}</h1> 
+                    <h3>{stylist.salon}</h3>
+                    <h3>{stylist.bio}</h3>
+                    <div className='address'>
+                        <p>{stylist.email}</p>
+                        <p>{stylist.salon}</p>
+                        <p>{stylist.street_address}</p>
+                        <p>{stylist.city} {stylist.state} {stylist.zipcode}</p>
+                    </div>
+                </div>
+            </InfoBox>    
+            <div className = 'gallery'>
+                <div>
+                    {posts.map(post=> (
+                        <PostCard 
+                            key={post.id}
+                            id={post.id} 
+                            post={post}
+                            stylist={stylist}
+                        />
+                    ))}
+                </div>                        
+            </div>
+        </Dash>
+    )
 }
 
 export default StylistPortfolio;
 
-const Dash = styled.div`
+const Dash = styled.section`
     display: flex;
     flex-direction: column;
-    margin: auto;
+    margin: 5vh auto;
     justify-content: space-between;
     a{text-decoration: none}
     .gallery{ 

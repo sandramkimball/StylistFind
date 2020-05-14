@@ -6,9 +6,9 @@ import axiosWithAuth from '../utilis/axiosWithAuth'
     
 const Toolbar = (props) => {
     const [user, setUser] = useContext(UserContext)
-    const {id} = props.stylist;
+    const {stylist} = props
     const [heartColor, setColor] = useState('gray')
-    var isAdded = props.added
+    var isAdded = props.isSaved
 
     const handleSave = e => {
         // determine if already saved (later will just filter context.user.bookmarks)
@@ -26,24 +26,25 @@ const Toolbar = (props) => {
     
     return(
         <Bar>
+            <Link to='/search'><p>Return</p></Link>
             
-            <Link to={`/stylist/${id}/reviews`} usertype={'stylist'}><p>Read Reviews</p></Link>
+            <Link to={`/stylist/${stylist.id}/reviews`} usertype={'stylist'}><p>Read Reviews</p></Link>
 
-            {user.usertype === 'user' && (
+            {user && (
                 <>
                     <p style={{color:heartColor}} onClick={handleSave}>❤ Save</p>
-                    <Link to={`/stylist/${id}/add-review`} params={{ props: props.stylist }}>
+                    <Link to={`/stylist/${stylist.id}/add-review`} params={{ props: props.stylist }}>
                         <p>+Add Review</p>
                     </Link>
                 </>
             )}
 
-            {user.usertype ==='stylist' && user.id === id && (
+            {stylist && stylist.id === stylist.id && (
                 <>
-                    <Link to={`/stylist/${id}/edit`} className='edit-btn'>
+                    <Link to={`/stylist/${stylist.id}/edit`} className='edit-btn'>
                         <p>Edit</p>
                     </Link>
-                    <Link to={`/stylist/${id}/add-post`}>
+                    <Link to={`/stylist/${stylist.id}/add-post`}>
                         <p>+</p>
                     </Link>
                 </>
@@ -55,7 +56,7 @@ const Toolbar = (props) => {
 
 export default Toolbar
 
-const Bar = styled.div`
+const Bar = styled.nav`
     display: flex;
     a{ padding: 0 5px;
         align-items: center;

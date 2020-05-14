@@ -25,18 +25,19 @@ const EditUser = (props) => {
         //Format file and headers:
         const fd = new FormData();
         fd.append('userImg', e.target.files[0]);
+        console.log('FD', ...fd)
 
         //Submit file to recieve filePath for user.profile_img:
         axiosWithAuth()
-        .post(`users/${user_id}/upload`, fd, token, { 
-            headers: { 'content-type': 'multipart/form-date' }
+        .post(`users/uploads`, ...fd, token, { 
+            headers: { 'content-type': 'multipart/form-date;boundary=----WebKitFormBoundaryyrV7KO0BoCBuDbTL' }
         })
         .then(res=> {
-            console.log('Image uploaded.', res.data)
-            setUser({...user, profile_img: res.data })
-            props.history.push(`/users/${user_id}/dash`) 
+            console.log('Image uploaded!', res)
+            setUser({...user, profile_img: res.data.filePath})
+            // props.history.push(`/users/${user_id}/dash`) 
         })            
-        .catch(err=> console.log('Client Side Error: Unable to send image.', err.message, err))
+        .catch(err=> console.log('Client Error: Unable to send image.', err.message, err))
     }
 
     //BUG: Submitting data resets context and need to re-login.
@@ -46,10 +47,9 @@ const EditUser = (props) => {
         .put(`/users/${user_id}`, user, token)
         .then(()=> { 
             console.log('Edits were successful.')
-            props.history.push(`/user/${user_id}/dash`)
+            props.history.push(`/login`) 
         })
         .catch(err=> console.log('Client Side Error: Unable to make updates.', err, err.message))
-        console.log('User after Edits Submitted:', user)
     };
 
     return (
@@ -104,17 +104,13 @@ export default EditUser;
 
 
 const EditForm = styled.section`
-    display:flex;
-    width: 30vw;
+    width: 100%;
+    margin: auto;
+    display: flex;
     justify-content: center;
     align-content: spece-between;
     align-items: center;
-    margin: 5vh auto;
-    padding: 20px;
     flex-direction: column;
-    background: #fff;
-    border-radius: 2px;
-    box-shadow: 0px 3px 8px gray;
     img{
         height: 150px;
         width: 150px;
@@ -123,7 +119,7 @@ const EditForm = styled.section`
         background: #e7e7e7;
     }
     h3{
-        margin: 0 0 10px 0; 
+        margin: 0; 
         font-size: 2rem; 
         font-family: 'Dancing Script', cursive
     }
@@ -139,13 +135,15 @@ const EditForm = styled.section`
         margin: 0 20px;
     }   
     a{
-        text-decoration: none;
-        color: black;
-        :hover{transform: scale(1.025); color: #80808095; cursor: pointer}
+        font-size: .8rem; 
+        text-align: right; 
+        text-decoration: none; 
+        color: black; 
+        :hover{color: gray}
     }
-    input, button{
+    input{
         height: 25px;
-        width: 100%
+        width: 50%
         margin: 5px auto;
         border: 1px solid #80808095;
         font-size: 1rem;
@@ -154,12 +152,15 @@ const EditForm = styled.section`
     }
     button{
         background: orange;
-        padding: 3px 12px;
+        margin: 5px auto;
+        font-size: 1rem;
+        max-width: 30%;
+        padding: 4px ;
         color: #fff;
         border: none;
-        cursor: pointer;
-        font-size: 1.25rem;
-        height: 100%;
+        height: 30px;
+        border-radius: 2px;
+        cursor: pointer
     }   
     .img-input p{
         display: none

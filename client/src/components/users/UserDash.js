@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import ReviewCard from '../reviews/ReviewCards';
 import defaultImg from '../../images/default-profile.jpg';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const UserDash = () => {
     const [user, setUser] = useContext(UserContext)
@@ -22,9 +22,8 @@ const UserDash = () => {
             .then(res=> setBookmarks(res.data) )
         })
         .catch(err => console.log(err.response) );
+        console.log('User:', user)
     }, [])
-
-    console.log('User', user)
 
     return (
         <Dash>                   
