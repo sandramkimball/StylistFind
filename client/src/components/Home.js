@@ -54,7 +54,7 @@ class Home extends React.Component {
           <div>
             <h2>One Community for Stylists and Clients</h2>
             <p>Discover and be discovered. Display, post and update your artist portfolio. Share your talents. Review experiences. Save your favorites. Connect with someone who totally feels your vide. Try something new and feel beautiful. Get started today!</p>
-            <Link to='/signup'><button>Join</button></Link>
+            <Link to='/login'><button>Join</button></Link>
           </div>
           <div>
             <img src={hair2} alt='person cutting hiar'/>

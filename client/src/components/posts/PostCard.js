@@ -18,6 +18,12 @@ function PostCard(props) {
 
     }
 
+    const handleDelete = e => {
+        e.preventDefault()
+        // axiosWithAuth()
+        // .delete(`/users/${user_id}/reviews/:id`)
+    }
+
     return (
         <Card className='post-card'>
             {isStylist === "stylist" && stylistId === stylist_id &&(

@@ -1,21 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
-// import axiosWithAuth from '../utilis/axiosWithAuth';
+import axiosWithAuth from '../utilis/axiosWithAuth';
 
 
 function ReviewCard (props) {
     const {image, review, date, profile_img, stylist_id, user_id, user_first, stylist_first, stylist_last} = props.review;
 
+    let userId = localStorage.getItem('id')
+    let isUser = localStorage.getItem('usertype')
+    let newDate = date.split(' ')[0]
+    console.log(isUser, user_id, userId)
+
     const handleDelete = e => {
         e.preventDefault()
-        // axiosWithAuth()
-        // .delete(`/users/${user_id}/reviews/:id`)
+        axiosWithAuth()
+        .delete(`/users/${user_id}/reviews/:id`)
+        .then(res=> console.log('Successfully sent review delete request', res))
+        .catch(err=> console.log('Failed to send review delete request', err))
     }
 
     return (
         <div>
             <Card>
+                {isUser === "user" && userId == user_id &&(
+                    <button className='delete-btn' onClick={handleDelete}>X</button>
+                )}
                 <div className='reviewer-info'>
                     <img src={profile_img} alt='user profile'/>
                     {localStorage.getItem('id') === user_id && (
@@ -35,7 +45,7 @@ function ReviewCard (props) {
                     {image && (
                         <img src={image} alt='review'/>
                     )}
-                    <p>reviewed on {date}</p>
+                    <p>reviewed on {newDate}</p>
                 </div>
             </Card>
         </div>
@@ -51,6 +61,7 @@ const Card = styled.div`
     font-size: 1rem;
     padding-bottom: 5px;
     text-align: left; 
+    position: relative;
     display: flex;
     background: #fff;
     margin: 10px auto;
@@ -98,7 +109,14 @@ const Card = styled.div`
     .delete-btn{
         position: absolute;
         right: 0;
-        color: gray;
-        :hover{color: orange}
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 2rem;
+        font-weight: 700;
+        z-index: 10;
+        :hover{
+            color: orange
+        }
     }
 `;

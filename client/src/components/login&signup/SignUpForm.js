@@ -50,9 +50,9 @@ function SignUpForm(props) {
     .then(res=> {
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('id', res.data.user.id)
-      localStorage.setItem('usertype', 'user')                
-      // setState({isLoggedIn: true})
-      setUser(res.data.user)          
+      localStorage.setItem('usertype', 'user')   
+      setUser(res.data.user)                  
+      props.history.push(`/users/${res.data.user.id}/dash`)        
     })
     .catch(err=>{console.log(err)})
     console.log('context', user)

@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
-function LoginForm(props){
+const LoginForm = (props) =>{
     const [user, setUser] = useContext(UserContext)
     const [state, setState] = useState({
         isStylist: false,
@@ -33,8 +33,7 @@ function LoginForm(props){
                 localStorage.setItem('usertype', 'user')                
                 setState({isLoggedIn: true})
                 setUser(res.data.user)                  
-                //return <Redirect to={`/users/${res.data.user.id}/dash`}/>
-                //props.history.push(`/users/${res.data.user.id}/dash`)
+                props.history.push(`/users/${res.data.user.id}/dash`)
             })
             .catch(err=> {
                 setState({loginFail: true})

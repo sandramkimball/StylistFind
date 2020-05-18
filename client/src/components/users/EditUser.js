@@ -104,13 +104,16 @@ export default EditUser;
 
 
 const EditForm = styled.section`
-    width: 100%;
-    margin: auto;
+    width: 45vw;
+    margin: 5vh auto;
     display: flex;
     justify-content: center;
     align-content: spece-between;
     align-items: center;
     flex-direction: column;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px gray;
     img{
         height: 150px;
         width: 150px;
@@ -143,7 +146,7 @@ const EditForm = styled.section`
     }
     input{
         height: 25px;
-        width: 50%
+        width: 90%
         margin: 5px auto;
         border: 1px solid #80808095;
         font-size: 1rem;
@@ -154,7 +157,6 @@ const EditForm = styled.section`
         background: orange;
         margin: 5px auto;
         font-size: 1rem;
-        max-width: 30%;
         padding: 4px ;
         color: #fff;
         border: none;

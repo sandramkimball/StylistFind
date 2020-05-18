@@ -13,6 +13,18 @@ const UserDash = () => {
     
     useEffect(()=>{
         const token = localStorage.getItem('token')
+        const user_id = localStorage.getItem('id')
+        if(user === null){
+            axiosWithAuth()
+            .get(`/users/${user_id}/`, token) 
+            .then(res=> {              
+                setUser(res.data.user)                  
+            })
+            .catch(err=> {
+                console.log(err, err.message)
+            }) 
+        }
+        
         axiosWithAuth()
         .get(`/users/${user.id}/reviews`, token)
         .then(res=> { 
@@ -84,11 +96,14 @@ const Dash = styled.section`
         background: white;
         box-shadow: 0px 3px 8px gray;
         border-radius: 4px;
-        width: 70vw;
+        width: 75vw;
+        max-height: 50vh;
         height: 100%;
         margin: 5vh auto;
+        overflow: auto;
         div{
             display: flex;
+            flex-direction: column;
             margin: 0 1px 2px 1px;
         }
     }
@@ -98,7 +113,7 @@ const InfoBox = styled.div`
     background: white;
     box-shadow: 0px 3px 8px gray;
     border-radius: 4px;
-    width: 70vw;
+    width: 75vw;
     height: 30vh;
     padding: 10px 5px;
     margin: auto;
