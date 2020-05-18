@@ -32,12 +32,10 @@ function ReviewCard (props) {
                 </div>
                 <div className='review-text'>
                     <p>{review}</p>
-                    <p>{date}</p>
-                </div>
-                <div className='review-img' >
                     {image && (
                         <img src={image} alt='review'/>
                     )}
+                    <p>reviewed on {date}</p>
                 </div>
             </Card>
         </div>
@@ -47,14 +45,13 @@ function ReviewCard (props) {
 export default ReviewCard;
 
 const Card = styled.div`
-    width: 40vw;
-    box-shadow: 0px 4px 8px gray;
-    // border: .75px solid lightgray;
+    width: 70vw;
+    border: .75px solid lightgray;
     border-radius: 4px;
     font-size: 1rem;
+    padding-bottom: 5px;
     text-align: left; 
     display: flex;
-    flex-direction: column;
     background: #fff;
     margin: 10px auto;
     h4{ padding: 0; margin: 0}
@@ -65,10 +62,10 @@ const Card = styled.div`
     }
     .reviewer-info{
         height: 100%;
-        width: 100%;
+        width: 15vw;
         display: flex;
         flex-direction: flex-start;
-        background: #eeeeef;
+        flex-direction: column; 
         div{
             flex-direction: column; 
             margin: 5px 0 0 5px
@@ -90,11 +87,8 @@ const Card = styled.div`
         p{margin: 0
         :nth-last-child(1){
             color: gray;
+            font-style: italic;
         }}
-    }
-    .review-img{
-        display: flex;
-        justify-content: center;
         img{
             height: 120px;
             object-fit: cover;

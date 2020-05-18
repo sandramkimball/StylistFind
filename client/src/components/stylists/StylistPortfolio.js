@@ -36,6 +36,9 @@ const StylistPortfolio = (props) =>  {
 
     return (
         <Dash className='stylist-dash'>
+            <nav className='return-nav'>
+                <Link to='/search'><button className='return-btn'>Return</button></Link>
+            </nav>
             <InfoBox className='info-box'>
                 <Toolbar stylist={stylist} isSaved={isSaved}/>
                 <div className='profile-pic-box'>
@@ -74,7 +77,8 @@ export default StylistPortfolio;
 const Dash = styled.section`
     display: flex;
     flex-direction: column;
-    margin: 5vh auto;
+    margin: 0 auto;
+    margin-bottom: 5vh;
     justify-content: space-between;
     a{text-decoration: none}
     .gallery{ 
@@ -86,6 +90,22 @@ const Dash = styled.section`
             flex-wrap: wrap; 
             margin: 0 1px 2px 1px;
         }
+    }
+    .return-nav{
+        width: 100vw;
+        margin-bottom: 5vh;
+        border-bottom: 1px solid gray;
+        background: #fff;
+        padding: 5px 10px;
+        text-align: left;
+    }
+    .return-btn{ 
+        text-decoration: none;
+        border: none;
+        font-size: 1.25rem;
+        background: none;
+        color: gray
+        :hover{cursor: pointer; color: orange}
     }
 `;
 

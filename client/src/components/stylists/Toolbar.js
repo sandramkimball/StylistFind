@@ -26,9 +26,7 @@ const Toolbar = (props) => {
     }
     
     return(
-        <Bar>
-            <Link to='/search'><p>Return</p></Link>
-            
+        <Bar>            
             <Link to={`/stylist/${stylist.id}/reviews`} usertype={'stylist'}><p>Read Reviews</p></Link>
 
             {user && (

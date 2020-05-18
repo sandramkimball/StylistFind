@@ -20,9 +20,15 @@ const AllReviews = (props) => {
         
     return(
         <Page>
-            {localStorage.getItem('id') === id && (<Link to={`/stylists/${id}/dash`} className='return-btn'><p>Return</p></Link>)}
-            {localStorage.getItem('id') !== id && (<Link to={`/stylists/${id}/portfolio`} className='return-btn'><p>Return</p></Link>)}
-            <div className='container'>
+            <nav>
+                {localStorage.getItem('id') === id && (
+                    <Link to={`/stylists/${id}/dash`}><button>Return</button></Link>
+                )}
+                {localStorage.getItem('id') !== id && (
+                    <Link to={`/stylists/${id}/portfolio`}><button>Return</button></Link>
+                )}
+            </nav>
+            <section className='container'>
                 {!reviews && (
                     <p>You have no reviews.</p>
                 )}
@@ -33,7 +39,7 @@ const AllReviews = (props) => {
                         review={review}
                     />
                 ))}
-            </div>
+            </section>
         </Page>
     )
 }
@@ -43,11 +49,19 @@ export default AllReviews
 const Page = Styled.section` 
     margin: 0 auto;
     margin-bottom: 5vh;
-    .return-btn{ 
-        text-decoration: none;
-        padding: 0 10px;
+    nav{
+        width: 100vw;
+        margin-bottom: 5vh;
+        border-bottom: 1px solid gray;
+        background: #fff;
+        padding: 5px 10px;
         text-align: left;
+    }
+    button{ 
+        text-decoration: none;
+        border: none;
         font-size: 1.25rem;
+        background: none;
         color: gray
         :hover{cursor: pointer; color: orange}
     }
