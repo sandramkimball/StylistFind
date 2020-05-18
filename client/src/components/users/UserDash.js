@@ -7,34 +7,22 @@ import defaultImg from '../../images/default-profile.jpg';
 import { Link } from 'react-router-dom';
 
 const UserDash = () => {
-    const [user, setUser] = useContext(UserContext)
+    const [user, setUser] = useState([])
     const [reviews, setReviews] = useState([])
     const [bookmarks, setBookmarks] = useState([])
+    const token = localStorage.getItem('token')
+    const user_id = localStorage.getItem('id')
     
     useEffect(()=>{
-        const token = localStorage.getItem('token')
-        const user_id = localStorage.getItem('id')
-        if(user === null){
-            axiosWithAuth()
-            .get(`/users/${user_id}/`, token) 
-            .then(res=> {              
-                setUser(res.data.user)                  
-            })
-            .catch(err=> {
-                console.log(err, err.message)
-            }) 
-        }
-        
         axiosWithAuth()
-        .get(`/users/${user.id}/reviews`, token)
-        .then(res=> { 
-            setReviews(res.data)
+        .get(`/users/${user_id}/`, token) 
+        .then(res=> {         
+            setUser(res.data)                  
             return axiosWithAuth()
-            .get(`users/${user.id}/bookmarks`, token)
-            .then(res=> setBookmarks(res.data) )
+            .get(`users/${res.data.id}/reviews`, token)
+            .then(res=> setReviews(res.data) )
         })
         .catch(err => console.log(err.response) );
-        console.log('User:', user)
     }, [])
 
     return (

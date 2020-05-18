@@ -1,14 +1,15 @@
-import React, {useState, useContext} from  'react'
+import React, {useState} from  'react'
 import { UserContext } from '../contexts/UserContext';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import axiosWithAuth from '../utilis/axiosWithAuth'
     
 const Toolbar = (props) => {
-    const [user, setUser] = useContext(UserContext)
     const {stylist} = props
     const [heartColor, setColor] = useState('gray')
     var isAdded = props.isSaved
+    const userType = localStorage.getItem('usertype')
+    const userId = localStorage.getItem('id')
 
     //Function for user to add stylist to their favorite bookmarks
     const handleSave = e => {
@@ -20,7 +21,7 @@ const Toolbar = (props) => {
         e.preventDefault();
         const token = localStorage.getItem('token')
         axiosWithAuth()
-        .post(`/users/${user.id}/bookmarks`, props.stylist.id, token)
+        .post(`/users/${userId}/bookmarks`, props.stylist.id, token)
         .then(res=>console.log(res.message))
         .catch(err=>console.log(err.message))
     }
@@ -29,7 +30,7 @@ const Toolbar = (props) => {
         <Bar>            
             <Link to={`/stylist/${stylist.id}/reviews`} usertype={'stylist'}><p>Read Reviews</p></Link>
 
-            {user && (
+            {userType && userType === 'user' && (
                 <>
                     <p style={{color:heartColor}} onClick={handleSave}>❤ Save</p>
                     <Link to={`/stylist/${stylist.id}/add-review`} params={{ props: props }} stylist={stylist}>

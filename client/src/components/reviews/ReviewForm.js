@@ -1,22 +1,17 @@
-import React, {useState, useContext} from "react";
-import { UserContext } from '../contexts/UserContext';
+import React, { useState } from "react";
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
 const ReviewForm = (props) => {
-    const [user, setUser] = useContext(UserContext)
-    var stylist_id = props.match.params.id;
+    const stylistId = props.match.params.id;
+    const userId = localStorage.getItem('id')
     const [newReview, setNewReview] = useState({
         review: '',
         image: '',
-        user_id: user.id,
-        stylist_id: stylist_id,
-        // stylist_name: props.stylist_name,
+        user_id: userId,
+        stylist_id: stylistId,
     })
-
-    console.log('props.stylist:', props.stylist)
-    console.log('props:', props)
     
     const handleChange = e => {
         e.preventDefault();
@@ -25,11 +20,11 @@ const ReviewForm = (props) => {
 
     const handleSubmit = e => {
         axiosWithAuth()
-        .post(`users/${user.id}/reviews`, newReview)
+        .post(`users/${userId}/reviews`, newReview)
         .then(() => {
-            props.history.push(`/stylists/${stylist_id}/portfolio`);
+            props.history.push(`/stylists/${stylistId}/portfolio`);
         })
-        .catch(err=> console.log(err.message))
+        .catch(err=> console.log('Unable to submit review.',err.message))
     }
 
     return(
@@ -54,7 +49,7 @@ const ReviewForm = (props) => {
             
             <div className='btn-box'>
                 <button onClick={handleSubmit}>Submit</button>
-                <Link to={`/stylists/${stylist_id}/portfolio`}>
+                <Link to={`/stylists/${stylistId}/portfolio`}>
                     <button>Cancel</button>
                 </Link>
             </div>

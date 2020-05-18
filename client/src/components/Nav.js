@@ -6,7 +6,8 @@ import logo from '../images/logo.png'
 
 function Nav(props) {
     const [user, setUser] = useContext(UserContext)
-    const user_id = localStorage.getItem('id')
+    const userId = localStorage.getItem('id')
+    const userType = localStorage.getItem('usertype')
 
     const logout = e => {
         localStorage.clear();
@@ -22,23 +23,23 @@ function Nav(props) {
             <div>
                 <NavLink to='/search' className='search-btn'><p>Search</p></NavLink>                
 
-                {user && user.usertype === 'user' && (
-                    <NavLink to={`/users/${user_id}/dash`}><p>Dashboard</p></NavLink>
+                {userType && userType === 'user' && (
+                    <NavLink to={`/users/${userId}/dash`}><p>Dashboard</p></NavLink>
                 )}
 
-                {user && user.usertype === 'stylist' && (
-                    <NavLink to={`/stylists/${user.id}/dash`}><p>Dashboard</p></NavLink>
+                {userType && userType === 'stylist' && (
+                    <NavLink to={`/stylists/${userId}/dash`}><p>Dashboard</p></NavLink>
                 )}
 
-                {user === null && (
+                {userType === null && (
                     <NavLink to='/login'><p>Login</p></NavLink>
                 )}
 
-                {user === null && (
+                {userType === null && (
                     <NavLink to='/login'><p>Signup</p></NavLink>
                 )}
 
-                {user && (
+                {userType && (
                     <NavLink to='/' onClick={logout}><p>Logout</p></NavLink>
                 )}                
             </div>

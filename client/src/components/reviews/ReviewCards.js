@@ -5,18 +5,19 @@ import axiosWithAuth from '../utilis/axiosWithAuth';
 
 
 function ReviewCard (props) {
-    const {image, review, date, profile_img, stylist_id, user_id, user_first, stylist_first, stylist_last} = props.review;
-
+    const {id, image, review, date, profile_img, stylist_id, user_id, user_first, stylist_first, stylist_last} = props.review;
+    const token = localStorage.getItem('token')
     let userId = localStorage.getItem('id')
     let isUser = localStorage.getItem('usertype')
     let newDate = date.split(' ')[0]
-    console.log(isUser, user_id, userId)
 
     const handleDelete = e => {
-        e.preventDefault()
         axiosWithAuth()
-        .delete(`/users/${user_id}/reviews/:id`)
-        .then(res=> console.log('Successfully sent review delete request', res))
+        .delete(`/users/${user_id}/reviews/${id}`)
+        .then(res=> 
+            console.log('Successfully sent review delete request', res),
+            window.location.reload()
+        )
         .catch(err=> console.log('Failed to send review delete request', err))
     }
 

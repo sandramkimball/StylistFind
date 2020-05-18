@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 
-function LoginLanding() {
+const LoginLanding = (props) => {
     return (
         <Landing className='login-landing'>
-            <LoginForm/>
-            <SignUpForm/>
+            <LoginForm props={props}/>
+            <SignUpForm props={props}/>
         </Landing>
     )
 }

@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import axiosWithAuth from '../utilis/axiosWithAuth'
 import Styled from 'styled-components'
 import ReviewCard from './ReviewCards.js'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const AllReviews = (props) => {
     const[reviews, setReviews] = useState([])
@@ -21,10 +21,10 @@ const AllReviews = (props) => {
     return(
         <Page>
             <nav>
-                {localStorage.getItem('id') === id && (
+                {localStorage.getItem('stylist') ==='stylsit' && localStorage.getItem('id') === id && (
                     <Link to={`/stylists/${id}/dash`}><button>Return</button></Link>
                 )}
-                {localStorage.getItem('id') !== id && (
+                {(
                     <Link to={`/stylists/${id}/portfolio`}><button>Return</button></Link>
                 )}
             </nav>
