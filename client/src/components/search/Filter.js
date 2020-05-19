@@ -1,5 +1,5 @@
 
-export function filterFunction(data, filterOpt, searchTerm) {
+export function filterFunction(data, searchTerm) {
     let target = searchTerm.toLowerCase()
     const results = data.filter(item=> 
         item.salon.toLowerCase().includes(target) ||

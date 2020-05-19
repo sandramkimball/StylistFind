@@ -27,16 +27,18 @@ const EditUser = (props) => {
 
         //Submit file to recieve filePath for user.profile_img:
         axiosWithAuth()
-        .post(`users/uploads`, fd)
+        .put(`users/${user_id}/uploads`, fd, { 
+            headers: { 'content-type': 'multipart/form-data' }
+        })
         .then(res=> {
-            console.log('Image uploaded!', res)
-            setUser({...user, profile_img: res.data.filePath})
+            console.log('Image Sent:', res.data)
+            setUser({...user, profile_img: res.data.file})
             setLoading(false)
         })            
-        .catch(err=> 
-            console.log('Client Error: Unable to send image.', err.message, err),
+        .catch(err=> {
+            console.log('Client Error: Image not sent.', err.message, err)
             setLoading(false)
-        )
+        })
     }
 
     const handleSubmit = e => {        
@@ -45,10 +47,7 @@ const EditUser = (props) => {
         .put(`/users/${user_id}`, user, token, { 
             headers: { 'content-type': 'multipart/form-data' }
         })
-        .then(()=> { 
-            console.log('Edits were successful.')
-            props.history.push(`/users/${user_id}/dash`) 
-        })
+        .then(()=> { props.history.push(`/users/${user_id}/dash`) })
         .catch(err=> console.log('Client Side Error: Unable to make updates.', err, err.message))
     };
 
@@ -64,18 +63,20 @@ const EditUser = (props) => {
 
     return (
         <EditForm className='edit-form'> 
+            <h3>Edit Profile</h3>
+            {isLoading === false && (<img src={user.profile_img != 'null' ? user.profile_img : {defaultImg} } />)}
+            <form onSubmit={handleSubmit} method="PUT" action='/upload' encType="multipart/form-data">
             {isLoading === true && (                        
                 <Loader
                     type="Puff"
                     color="#925967"
-                    height={20}
-                    width={20}
+                    height={150}
+                    width={150}
                     className='loader'
+                    position='fixed'
+                    z-index={20}
                 />
             )}
-            <h3>Edit Profile</h3>
-            <img src={user.profile_img != 'null' ? user.profile_img : {defaultImg} } />
-            <form onSubmit={handleSubmit} method="PUT" action='/upload' encType="multipart/form-data">
             <input 
                 name='userImg'
                 type="file" 

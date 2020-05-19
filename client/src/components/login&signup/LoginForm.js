@@ -93,7 +93,6 @@ const LoginForm = (props) =>{
             {state.loginFail === true && (
                 <p className='login-fail'>Email or Password Incorrect</p>
             )}
-            <Link to='/signup'><p>Don't have an account?</p></Link> 
         </Form>   
 )};
 
@@ -108,13 +107,6 @@ const Form = styled.form`
     align-content: spece-between;
     align-items: center;
     flex-direction: column;
-    a{
-        font-size: .8rem; 
-        text-align: right; 
-        text-decoration: none; 
-        color: black; 
-        :hover{color: gray}
-    }
     h3{
         margin: 0; 
         font-size: 2rem; 

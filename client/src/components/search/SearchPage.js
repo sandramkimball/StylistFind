@@ -8,25 +8,27 @@ import { SearchMap } from './Map.js';
 
 
 const SearchPage = (props) => {
-    const [data, setData] = useState([])
     var recentSearch = localStorage.getItem('searched')
     const [state, setState] = useState({
-        searchTerm: recentSearch || '',
+        searchTerm: '',
         searchResults: [],
         isLoading: true,
         isError: false,
     })
 
     useEffect(()=>{
+        if(recentSearch){
+            setState({searchTerm: recentSearch})
+        }
         axiosWithAuth()
         .get('/search') 
         .then(res=> {
+            let results = filterFunction(res.data, state.searchTerm)
             setState({
-                searchResults: res.data,
+                searchResults: results,
                 isLoading: false,
                 isError: false,
-            })    
-            setData(res.data)          
+            })              
         }) 
         .catch(err=> {
             console.log(err.message, err) 

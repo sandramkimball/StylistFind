@@ -1,14 +1,12 @@
-import React, { useState, useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from "../utilis/axiosWithAuth";
-import {Redirect, Link} from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import defaultImg from '../../images/default-profile.jpg';
 import SalonSignUp from './SalonSignUp';
-// import validateInput from '../utilis/Validator.js';
 
 function SignUpForm(props) {
-  const [user, setUser] = useContext(UserContext)
+  const [user, setUser] = useState([])
   let [salonForm, setForm] = useState(false)
   const [state, setState] = useState({ 
       password: '',
@@ -20,10 +18,9 @@ function SignUpForm(props) {
     })
 
 
-  //populates state with data from form input
+  //Set state with data from form input
   const handleChange = e => {
     setState({ ...state, [e.target.name]: e.target.value });
-    setUser({ ...state, [e.target.name]: e.target.value });
   };
 
   //sets first file to profile_img
@@ -32,30 +29,22 @@ function SignUpForm(props) {
       setUser({ ...user, profile_img: e.target.files[0]});
   }
 
-  //if stylist box is checked, submit btn routes to salon signup form
+  //If stylist, submit routes to salon signup form
   const handleNext = e => {
     e.preventDefault()
     axiosWithAuth()
     .post('/auth/register/stylist', state)
     .then(() => setForm(true) )  
     .catch(err=> console.log(err) )
-    console.log('context', user)
   };
 
-  //if user, submits and routes to login page
+  //if user, submits and routes to dash
   const handleSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
     .post('/auth/register/user', state)
-    .then(res=> {
-      localStorage.setItem('token', res.data.token)
-      localStorage.setItem('id', res.data.user.id)
-      localStorage.setItem('usertype', 'user')   
-      setUser(res.data.user)                  
-      props.history.push(`/users/${res.data.user.id}/dash`)        
-    })
+    .then((res)=> console.log(res))
     .catch(err=>{console.log(err)})
-    console.log('context', user)
   };
 
   return (
@@ -130,7 +119,6 @@ function SignUpForm(props) {
         {salonForm === true && (
           <div>
             <SalonSignUp/>
-            <Link to='/login'><p>Already have an account?</p></Link> 
           </div>
         )}
     </SignupPage>
