@@ -1,18 +1,15 @@
-import React, { useContext, useState } from 'react';
-import { UserContext } from '../contexts/UserContext';
+import React, { useState, useEffect } from 'react';
+import Loader from 'react-loader-spinner';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import styled from 'styled-components';
 import defaultImg from '../../images/default-profile.jpg'
 
 
 const EditUser = (props) => {
-    const [user, setUser] = useContext(UserContext);
+    const [user, setUser] = useState([]);
+    const [isLoading, setLoading] = useState(false)
     const token = localStorage.getItem('token');
     const user_id = localStorage.getItem('id');
-
-    if (user.profile_img === null){
-        setUser({ profile_img: defaultImg })
-    }
 
     const handleChange = e => {
         e.preventDefault()
@@ -21,42 +18,64 @@ const EditUser = (props) => {
 
     const handleImageChange = e => {
         e.preventDefault()
+        setLoading(true)
 
         //Format file and headers:
         const fd = new FormData();
+        fd.append('name', e.target.files[0].name);
         fd.append('userImg', e.target.files[0]);
-        console.log('FD', ...fd)
 
         //Submit file to recieve filePath for user.profile_img:
         axiosWithAuth()
-        .post(`users/uploads`, ...fd, token, { 
-            headers: { 'content-type': 'multipart/form-date;boundary=----WebKitFormBoundaryyrV7KO0BoCBuDbTL' }
-        })
+        .post(`users/uploads`, fd)
         .then(res=> {
             console.log('Image uploaded!', res)
             setUser({...user, profile_img: res.data.filePath})
-            // props.history.push(`/users/${user_id}/dash`) 
+            setLoading(false)
         })            
-        .catch(err=> console.log('Client Error: Unable to send image.', err.message, err))
+        .catch(err=> 
+            console.log('Client Error: Unable to send image.', err.message, err),
+            setLoading(false)
+        )
     }
 
-    //BUG: Submitting data resets context and need to re-login.
     const handleSubmit = e => {        
         e.preventDefault()
         axiosWithAuth()
-        .put(`/users/${user_id}`, user, token)
+        .put(`/users/${user_id}`, user, token, { 
+            headers: { 'content-type': 'multipart/form-data' }
+        })
         .then(()=> { 
             console.log('Edits were successful.')
-            props.history.push(`/login`) 
+            props.history.push(`/users/${user_id}/dash`) 
         })
         .catch(err=> console.log('Client Side Error: Unable to make updates.', err, err.message))
     };
 
+    useEffect(()=>{
+        axiosWithAuth()
+        .get(`/users/${user_id}/`, token) 
+        .then(res=> setUser(res.data) )
+        .catch(err => console.log(err.response) );
+        if (user.profile_img === null){
+            setUser({ profile_img: defaultImg })
+        }
+    }, [])
+
     return (
         <EditForm className='edit-form'> 
-        <h3>Edit Profile</h3>
-        <img src={user.profile_img != 'null' ? user.profile_img : {defaultImg} } />
-        <form onSubmit={handleSubmit} method="PUT" action='/upload' encType="multipart/form-data">
+            {isLoading === true && (                        
+                <Loader
+                    type="Puff"
+                    color="#925967"
+                    height={20}
+                    width={20}
+                    className='loader'
+                />
+            )}
+            <h3>Edit Profile</h3>
+            <img src={user.profile_img != 'null' ? user.profile_img : {defaultImg} } />
+            <form onSubmit={handleSubmit} method="PUT" action='/upload' encType="multipart/form-data">
             <input 
                 name='userImg'
                 type="file" 
@@ -94,7 +113,7 @@ const EditUser = (props) => {
                 </p>
             </div>
         </form>    
-    </EditForm>
+        </EditForm>
     )
 }
 
@@ -106,6 +125,7 @@ export default EditUser;
 const EditForm = styled.section`
     width: 45vw;
     margin: 5vh auto;
+    height: 71vh;
     display: flex;
     justify-content: center;
     align-content: spece-between;
@@ -146,7 +166,7 @@ const EditForm = styled.section`
     }
     input{
         height: 25px;
-        width: 90%
+        width: 90%;
         margin: 5px auto;
         border: 1px solid #80808095;
         font-size: 1rem;

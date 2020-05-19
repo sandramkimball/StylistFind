@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import ReviewCard from '../reviews/ReviewCards';
@@ -54,7 +53,6 @@ const UserDash = () => {
                     {reviews === null && (
                         <p>You have no reviews</p>
                     )}
-                    
                 </div>
             </div>
             <div className='bookmarks'>

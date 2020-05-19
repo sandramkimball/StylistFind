@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
+import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 
 const LoginForm = (props) =>{
-    const [user, setUser] = useContext(UserContext)
+    const [user, setUser] = useState([])
     const [state, setState] = useState({
         isStylist: false,
         isLoggedIn: false,

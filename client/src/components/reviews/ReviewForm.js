@@ -22,6 +22,7 @@ const ReviewForm = (props) => {
         axiosWithAuth()
         .post(`users/${userId}/reviews`, newReview)
         .then(() => {
+            console.log('review sent by user', userId);
             props.history.push(`/stylists/${stylistId}/portfolio`);
         })
         .catch(err=> console.log('Unable to submit review.',err.message))

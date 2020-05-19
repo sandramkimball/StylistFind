@@ -1,11 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
-import {Link} from 'react-router-dom';
 import axiosWithAuth from '../utilis/axiosWithAuth';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+// import DeleteBox from './DeleteBox';
 
 
 function ReviewCard (props) {
     const {id, image, review, date, profile_img, stylist_id, user_id, user_first, stylist_first, stylist_last} = props.review;
+    // const [boxDisplay, setBoxDisplay] = useState()
     const token = localStorage.getItem('token')
     let userId = localStorage.getItem('id')
     let isUser = localStorage.getItem('usertype')
@@ -18,9 +20,10 @@ function ReviewCard (props) {
             console.log('Successfully sent review delete request', res),
             window.location.reload()
         )
-        .catch(err=> console.log('Failed to send review delete request', err))
+        .catch(err=> 
+            console.log('Failed to send review delete request', err),
+        )
     }
-
     return (
         <div>
             <Card>
@@ -29,14 +32,11 @@ function ReviewCard (props) {
                 )}
                 <div className='reviewer-info'>
                     <img src={profile_img} alt='user profile'/>
-                    {localStorage.getItem('id') === user_id && (
-                        <p className='delete-btn' onClick={handleDelete}>X</p>
-                    )}
                     <div>
-                        <h4>{user_first} </h4>
+                        <h4>{user_first}</h4>
                         <p>
                             <Link to={`/stylists/${stylist_id}/portfolio`} key={stylist_id} id={stylist_id} props={props}>
-                               <h4> @{stylist_first} {stylist_last}</h4>
+                                @{stylist_first} {stylist_last}
                             </Link>    
                         </p>
                     </div>

@@ -1,15 +1,14 @@
-import React, {useEffect, useContext, useState} from 'react';
-import {DataContext} from '../contexts/DataContext'
+import React, {useEffect, useState} from 'react';
 import SearchCard from './SearchCard';
 import styled from 'styled-components';
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import Loader from 'react-loader-spinner';
-import {filterFunction} from './Filter.js';
-import {SearchMap} from './Map.js';
+import { filterFunction } from './Filter.js';
+import { SearchMap } from './Map.js';
 
 
 const SearchPage = (props) => {
-    const [data, setData] = useContext(DataContext)
+    const [data, setData] = useState([])
     var recentSearch = localStorage.getItem('searched')
     const [state, setState] = useState({
         searchTerm: recentSearch || '',
@@ -133,13 +132,14 @@ export const handleSubmit=(filterOpt)=> {
 
 
 
-const Container = styled.div`
+const Container = styled.section`
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
     display: flex;
     width: 85vw;  
     height: 70vh;
+    margin-bottom: 20vh;
     div{
         width: 40vw; 
         display: flex;
